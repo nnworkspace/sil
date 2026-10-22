@@ -1,0 +1,45 @@
+# Specification Set Manifest — Figures
+
+set_id: SPEC-SET-FIGURES
+version: "0.1.0"
+title: "Figures Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  A root-level statistics tab answering three questions in the order they are
+  actually asked: what the wardrobe is made of, what it cost and when it
+  arrived, and what actually gets worn. Adds no table and no column — every
+  number is derived from the existing catalogue, so the feature is a read
+  surface over data already kept. A left sidebar carries section navigation and
+  the global filters (active vs including archived, period), so individual
+  modules stay filter-free. Charts are lightweight inline SVG and CSS: no
+  charting dependency, in keeping with the app's restraint.
+
+  The design is shaped by one measured constraint: field coverage is uneven.
+  Category, colour and tags are complete; price and purchase date are in the
+  nineties; wear data covers barely a third of the catalogue. So the dense
+  modules lead, every wear-derived metric states the base it was computed over,
+  and a Gaps module turns the missing data into an actionable list rather than
+  hiding it.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0002   # data layer / Postgres + Drizzle
+  - ADR-0007   # design system
+  - ADR-0014   # test commit type (the query-layer tests land with this feature)
+issue: 181
+
+artefacts:
+  - id: SPEC-FIGURES-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-FIGURES-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-FIGURES-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-FIGURES-DATA
+    file: 30-data-model-spec.md
+    role: specification

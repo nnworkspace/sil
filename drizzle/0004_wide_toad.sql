@@ -1,0 +1,1 @@
+ALTER TABLE "items" ADD COLUMN "prior_wears" integer DEFAULT 0 NOT NULL;

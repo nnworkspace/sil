@@ -1,0 +1,33 @@
+# Specification Set Manifest — Wear Tracking
+
+set_id: SPEC-SET-WEAR
+version: "0.1.0"
+title: "Wear Tracking Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Catalog enhancement: log each wear of a piece (date + optional occasion) and
+  show worn-count, last-worn, and cost-per-wear. Two logging paths — a quick
+  action on the item detail page and editable rows in the edit form. Adds one
+  table (wear_events) and supersedes the reserved wear_count / last_worn_at
+  columns with derived-on-read stats.
+
+decisions:
+  - ADR-0002   # data layer / Postgres + Drizzle
+  - ADR-0006   # validation (Zod)
+issue: 42
+
+artefacts:
+  - id: SPEC-WEAR-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-WEAR-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-WEAR-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-WEAR-DATA
+    file: 30-data-model-spec.md
+    role: specification

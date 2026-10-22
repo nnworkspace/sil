@@ -1,0 +1,48 @@
+# Specification Set Manifest — Berths
+
+set_id: SPEC-SET-BERTHS
+version: "0.2.0"
+title: "Berths Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Where each piece physically lives, and how to find it again. A **berth** is a
+  short storage code on the piece (`items.storage_location`) — `R1-W7R2-S4-L` —
+  shown on the card, beside the brand on the detail page, and searchable. The
+  Berths tab turns that field into a browsable index.
+
+  It adds **no table and no column**: every berth, its piece count and its
+  category summary are derived from the codes on items at read time. A berth is
+  therefore not an entity that can be created or deleted; it exists exactly as
+  long as a piece claims it.
+
+  The notation itself is documented in the Compendium rather than here, because
+  it is knowledge the owner reads rather than behaviour the app implements —
+  see [`SPEC-COMPENDIUM-DATA`](../compendium/30-data-model-spec.md) §5 for the
+  grammar, and `SPEC-BERTHS-FUNC` for what the index does with it.
+
+  This set was written **after** the feature shipped, which its README says
+  plainly. Twice since, a code the owner filed has been rejected by a grammar
+  that turned out to be incomplete rather than a code that was wrong — first a
+  side-and-depth position (`R1-W2R3-D1-LF`, #221), then a cabinet with no rack
+  (`R0-C1-D4`, #251). The rule that came out of it is recorded as `VAL-COMP-12`:
+  the catalogue is authoritative, and where a real code does not parse, the
+  grammar is what needs correcting.
+
+decisions:
+  - ADR-0002   # data layer
+  - ADR-0007   # design system
+  - ADR-0015   # component test tier
+issue: 172
+
+artefacts:
+  - id: SPEC-BERTHS-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-BERTHS-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-BERTHS-INT
+    file: 20-interface-spec.md
+    role: specification

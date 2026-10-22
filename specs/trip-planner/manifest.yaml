@@ -1,0 +1,38 @@
+# Specification Set Manifest — AI Trip Planner
+
+set_id: SPEC-SET-TRIP-PLANNER
+version: "0.1.0"
+title: "AI Trip Planner Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  The smart layer on manual trips: the owner briefs the wardrobe in natural
+  language ("3 days in Copenhagen for a client workshop, a formal dinner, and an
+  evening with a friend") and gets a packing proposal built from real wardrobe
+  pieces, grouped by occasion, with a rationale per piece and any gaps noted.
+  V1 is one-shot and human-in-the-loop: one Gemini call (generateObject + Zod)
+  over a compact text catalog + trip + forecast returns a proposal; every id is
+  validated against the wardrobe (no hallucinated pieces); nothing is committed
+  to trip_items until the owner accepts. Chat-refinement and outfits are next.
+  Reuses the AI stack (ADR-0008). See ADR-0010 for model/interaction/privacy.
+
+decisions:
+  - ADR-0010   # planner: reuse Gemini, one-shot + HITL first
+  - ADR-0008   # AI stack (Gemini via AI SDK, generateObject + Zod)
+  - ADR-0006   # validation (Zod)
+issue: 87
+
+artefacts:
+  - id: SPEC-PLANNER-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-PLANNER-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-PLANNER-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-PLANNER-DATA
+    file: 30-data-model-spec.md
+    role: specification

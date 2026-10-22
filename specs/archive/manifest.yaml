@@ -1,0 +1,38 @@
+# Specification Set Manifest — Archive
+
+set_id: SPEC-SET-ARCHIVE
+version: "0.1.0"
+title: "Archive Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Retiring a piece that has left the wardrobe — sold, gifted, returned, worn out
+  or lost — without losing it. Archiving records a reason, an optional note and
+  the date it left, and keeps everything else (photos, wear history, look and
+  trip membership), unlike delete, which stays the remedy for a wrongly-entered
+  piece and still cascades. Adds no table: three nullable columns on items, where
+  archived_at IS NULL is the single definition of "active", applied inside the
+  shared query helpers so no view can forget it. Adds an /archive route listing
+  archived pieces grouped by category in grid or list view, a Restore action, and
+  a nudge from the delete dialog towards archiving.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0002   # data layer / Postgres + Drizzle
+  - ADR-0006   # validation (Zod)
+issue: 142
+
+artefacts:
+  - id: SPEC-ARCHIVE-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-ARCHIVE-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-ARCHIVE-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-ARCHIVE-DATA
+    file: 30-data-model-spec.md
+    role: specification

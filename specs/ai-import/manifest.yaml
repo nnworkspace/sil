@@ -1,0 +1,34 @@
+# Specification Set Manifest — AI-Assisted Import
+
+set_id: SPEC-SET-AI-IMPORT
+version: "0.2.0"
+title: "AI-Assisted Import Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Phase 1.5 of the wardrobe app: import an item from a brand product page by
+  screenshot (1.5a) or by uploading a saved copy of the page (.html) (1.5b).
+  An LLM (Gemini via the AI SDK) extracts the item fields (and, for the saved
+  page, the official photos); the add-item form is prefilled for the owner to
+  review before saving. Reuses the Catalog item model.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0002   # data layer / item model
+  - ADR-0003   # photo storage
+  - ADR-0006   # validation (Zod)
+  - ADR-0008   # AI stack (Gemini via the AI SDK)
+  - ADR-0009   # 1.5b via saved HTML upload, not URL fetch
+issue: 11
+
+artefacts:
+  - id: SPEC-AIIMPORT-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-AIIMPORT-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-AIIMPORT-INT
+    file: 20-interface-spec.md
+    role: specification

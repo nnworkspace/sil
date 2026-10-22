@@ -1,0 +1,25 @@
+# Local development database. Production uses Neon Postgres on Vercel — the
+# schema and migrations are identical, only DATABASE_URL differs.
+#   Start:  docker compose up -d
+#   Stop:   docker compose down   (add -v to also wipe data)
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: sil-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: sil
+      POSTGRES_PASSWORD: sil
+      POSTGRES_DB: sil
+    ports:
+      - "5434:5432"
+    volumes:
+      - sil-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sil -d sil"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  sil-pgdata:

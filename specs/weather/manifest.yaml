@@ -1,0 +1,29 @@
+# Specification Set Manifest — Weather Strip
+
+set_id: SPEC-SET-WEATHER
+version: "0.1.0"
+title: "Weather Strip Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  A concise 10-day forecast in the header (compact today-chip that expands to
+  ten days) to help decide what to wear. Home location by default, opt-in
+  browser geolocation. Data from Open-Meteo (free, keyless, CORS) fetched
+  client-side and cached ~1h. Nothing persisted server-side.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0008   # free-tier / keyless posture (weather provider follows suit)
+issue: 43
+
+artefacts:
+  - id: SPEC-WEATHER-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-WEATHER-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-WEATHER-INT
+    file: 20-interface-spec.md
+    role: specification

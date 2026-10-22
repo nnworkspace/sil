@@ -1,0 +1,57 @@
+# Specification Set Manifest — Looks
+
+set_id: SPEC-SET-LOOKS
+version: "0.4.0"
+title: "Looks Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Curated Looks — named groups of wardrobe pieces that go together (Phase 4,
+  outfits). A group has a kind: a "set" is an intrinsic co-ord (pieces treated
+  as a matching unit, often the same line or bought in one order), a "look" is a
+  styled combination assembled from independent pieces. Same many-to-many model
+  (looks + look_items). A piece's "matching pieces" is derived from its Looks —
+  on its page: "In these Looks" + "Goes with" (the other pieces across them),
+  curated so it stays signal, not noise. A Look can carry the owner's own photos
+  of the outfit as worn (look_photos); the cover prefers an own photo and falls
+  back to a collage of the member pieces. Pieces sit in a flat grid the owner
+  drags to arrange (look_items.sort). V1 is curated (create/edit/delete,
+  add/remove pieces via the wardrobe picker); v0.2.0 adds own photos (#98),
+  v0.3.0 manual piece ordering (#100), v0.4.0 archive/delete a Look plus the
+  piece-archive reminder (#170); smart suggestions and packing a whole Look onto
+  a trip are v2.
+
+decisions:
+  - ADR-0002   # data layer / Postgres + Drizzle
+  - ADR-0003   # photo storage (Blob | filesystem)
+  - ADR-0006   # validation (Zod)
+issues: [95, 98, 100, 170]
+
+artefacts:
+  - id: SPEC-LOOKS-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-LOOKS-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-LOOKS-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-LOOKS-DATA
+    file: 30-data-model-spec.md
+    role: specification
+
+changelog:
+  - version: "0.4.0"
+    issue: 170
+    summary: "Archive/delete a Look (soft archive_at + reason/note, hard delete); active views exclude archived looks; derived 'incomplete' flag when a member is archived; archiving a piece reminds (no cascade); retired looks listed on /archive. Pieces are never deleted by archiving/deleting a look."
+  - version: "0.3.0"
+    issue: 100
+    summary: "Manual piece order (look_items.sort); flat drag-to-reorder grid on the look page, no category grouping."
+  - version: "0.2.0"
+    issue: 98
+    summary: "Own photos per Look (look_photos); cover prefers an own photo, else the piece-collage."
+  - version: "0.1.0"
+    issue: 95
+    summary: "Initial curated Looks — looks + look_items, list/detail, per-piece In these Looks / Goes with."

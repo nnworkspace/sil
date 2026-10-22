@@ -1,0 +1,32 @@
+# Specification Set Manifest — Authentication
+
+set_id: SPEC-SET-AUTH
+version: "0.1.0"
+title: "Authentication Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Single-owner authentication for the wardrobe app, added before the first
+  public deployment. Real OAuth identity via Auth.js (NextAuth v5) with the
+  Google provider, JWT sessions (no session/user tables), and a fail-closed
+  single-owner allowlist keyed on the verified Google email (OWNER_EMAIL,
+  comma-separated). The whole app is gated by the Next.js 16 proxy (formerly
+  middleware), which redirects any anonymous request to /signin; server
+  components/actions remain the source of truth via auth(). No new data model.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0012   # authentication (this feature)
+issues: [119]
+
+artefacts:
+  - id: SPEC-AUTH-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-AUTH-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-AUTH-INT
+    file: 20-interface-spec.md
+    role: specification

@@ -1,0 +1,44 @@
+# Specification Set Manifest — Trips & Packing
+
+set_id: SPEC-SET-TRIPS
+version: "0.4.0"
+title: "Trips & Packing Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  Phase 3: create a trip (business / vacation) and build a packing list from the
+  wardrobe, tracking packed / not-packed with a progress count. V1 is manual —
+  the owner curates the list; pieces are added from a wardrobe picker on the trip
+  page or an "Add to trip" action on an item page. V1.1 adds a soft, editable
+  packing plan: per-category slots with suggested target counts derived from trip
+  length + type, each opening the picker scoped to that category — still manual
+  (slots guide, never auto-add). Smart ranking within a slot and weather-aware
+  packing remain the next iteration (v0.2). Uses the existing trips / trip_items
+  tables plus a `plan` JSONB column on trips, and display-only reuse of the
+  weather lib for the destination forecast.
+
+  The list can also leave the screen: a Markdown checklist, and a printable
+  sheet (#259) laying the pieces out as a photo grid with a box to tick, made
+  into a PDF by the browser's own print dialogue rather than by a PDF library.
+  Both share one grouping function, so they cannot come to disagree about what
+  belongs where.
+
+decisions:
+  - ADR-0002   # data layer / Postgres + Drizzle
+  - ADR-0006   # validation (Zod)
+issue: 74
+
+artefacts:
+  - id: SPEC-TRIPS-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-TRIPS-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-TRIPS-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-TRIPS-DATA
+    file: 30-data-model-spec.md
+    role: specification

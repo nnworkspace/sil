@@ -1,0 +1,48 @@
+# Specification Set Manifest — Compendium
+
+set_id: SPEC-SET-COMPENDIUM
+version: "0.3.0"
+title: "Compendium Specification Set"
+status: DRAFT
+owner: nnworkspace
+
+description: |
+  A root-level reference area for the knowledge the wardrobe runs on: what its
+  materials are, how its own notation works, and whatever conventions follow.
+  Laid out as a documentation site rather than a report — a persistent section
+  tree on the left, one route per section — because a compendium is navigated,
+  not read top to bottom.
+
+  Two sections ship first. **Materials** explains the fibres, constructions and
+  finishes the catalogue actually contains, each entry carrying the term as the
+  trade uses it (often French or Italian) and an explanation in Chinese.
+  **Berth notation** documents how a storage code such as `R1-W7R2-S4-L` is
+  read and written.
+
+  It adds no table and no column: entries are curated content in the repository,
+  matched at read time against the `material` strings already stored, so the
+  catalogue supplies the examples and nothing has to be maintained twice. Every
+  entry links to the owner's own pieces, and every item links back to what it is
+  made of — which is what makes this a wardrobe feature rather than an
+  encyclopaedia.
+
+decisions:
+  - ADR-0001   # stack
+  - ADR-0002   # data layer
+  - ADR-0007   # design system
+  - ADR-0015   # component test tier (the section tree is tested there)
+issue: 213
+
+artefacts:
+  - id: SPEC-COMPENDIUM-ROOT
+    file: README.md
+    role: overview
+  - id: SPEC-COMPENDIUM-FUNC
+    file: 10-functional-spec.md
+    role: specification
+  - id: SPEC-COMPENDIUM-INT
+    file: 20-interface-spec.md
+    role: specification
+  - id: SPEC-COMPENDIUM-DATA
+    file: 30-data-model-spec.md
+    role: specification
