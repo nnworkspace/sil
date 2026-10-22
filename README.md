@@ -25,6 +25,12 @@ and **shadcn/ui**, **Drizzle ORM** on **PostgreSQL**, and **Vercel Blob** for
 photos. Deployed on **Vercel**. See [ADR-0001](_governance-local/decisions/ADR-0001-tech-stack.md)
 for why.
 
+![Browsing the wardrobe by category, in demo mode with invented pieces](docs/screenshots/browse.png)
+
+![A single piece: details, a link into the Compendium, its berth and its wear history](docs/screenshots/piece.png)
+
+*Screenshots from [demo mode](#demo-mode): every piece, brand and photo is invented.*
+
 ## About this repository
 
 This is the public copy of a personal app that runs in production for its owner.
