@@ -24,18 +24,18 @@ The AI-assisted import feature (Phase 1.5, `specs/ai-import/`, issue #11) needs 
 ## Considered options
 
 1. **Anthropic API (Claude)**: strong quality, no training on API data, but **no ongoing free tier**; pay-per-use (cents).
-2. **Vercel AI Gateway**: unified routing/observability and $5 free credits, but adds Vercel billing and a middleman not needed for one model.
+2. **A hosted AI gateway**: unified routing/observability and $5 free credits, but adds another bill and a middleman not needed for one model.
 3. **Google Gemini via Google AI Studio**: a **genuinely free tier** ample for single-user usage; strong vision + structured output.
 
 ## Decision
 
-Adopt **option 3: Google Gemini via the AI Studio free tier**, called through the **Vercel AI SDK** (`ai`) with the **`@ai-sdk/google`** provider, using **`generateObject`** + a **Zod schema** for structured extraction. Initial model: **`gemini-2.5-flash`** (vision-capable, free-tier eligible), swappable via a single constant.
+Adopt **option 3: Google Gemini via the AI Studio free tier**, called through the **AI SDK** (`ai`) with the **`@ai-sdk/google`** provider, using **`generateObject`** + a **Zod schema** for structured extraction. Initial model: **`gemini-2.5-flash`** (vision-capable, free-tier eligible), swappable via a single constant.
 
 - **Auth:** `GOOGLE_GENERATIVE_AI_API_KEY` (free AI Studio key, no card) in `.env.local`; server-only.
 - **Where it runs:** inside Server Actions, so the key never reaches the client.
 - **Validation:** model output is validated by Zod and re-checked against the item schema (ADR-0006) before it prefills the form (human-in-the-loop, `VAL-IMPORT-*`).
 
-The `ai` SDK keeps this provider-agnostic: switching to Anthropic or the Gateway later is a provider swap, not a rewrite.
+The `ai` SDK keeps this provider-agnostic: switching to Anthropic or a gateway later is a provider swap, not a rewrite.
 
 ## Consequences
 
@@ -49,14 +49,14 @@ The `ai` SDK keeps this provider-agnostic: switching to Anthropic or the Gateway
 
 - On the **free tier, Google may use the data for product improvement.** Acceptable here: imports are **public product-page** screenshots/URLs, not private data. If private inputs ever arise, revisit (paid tier / different provider).
 - Free-tier **rate limits** apply (fine for single-user, on-demand imports).
-- Provider-specific package (`@ai-sdk/google`) rather than the Gateway's unified routing: a deliberate simplicity/cost trade.
+- Provider-specific package (`@ai-sdk/google`) rather than a gateway's unified routing: a deliberate simplicity/cost trade.
 
 **Re-evaluation triggers**
 
 - Usage outgrows the free-tier limits.
 - Private data ever needs to be sent to the model (free-tier data usage becomes unacceptable).
-- Extraction quality proves insufficient (swap the model, or move to Anthropic/Gateway).
+- Extraction quality proves insufficient (swap the model, or move to Anthropic or a gateway).
 
 ## Notes
 
-Implements `specs/ai-import/`. Related: ADR-0001 (stack), ADR-0006 (Zod). Model ids come from the provider (`@ai-sdk/google`) / the Gateway model list, not from memory.
+Implements `specs/ai-import/`. Related: ADR-0001 (stack), ADR-0006 (Zod). Model ids come from the provider's model list (`@ai-sdk/google`), not from memory.

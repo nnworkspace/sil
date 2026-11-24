@@ -48,8 +48,8 @@ function isTransientAIError(err: unknown): boolean {
 }
 
 /**
- * Phase 1.5a: extract item fields from a product-page screenshot (vision LLM via
- * the AI Gateway), for review in the add-item form. Never writes to the DB.
+ * Phase 1.5a: extract item fields from a product-page screenshot (Gemini's vision
+ * model via the AI SDK), for review in the add-item form. Never writes to the DB.
  */
 export async function extractFromScreenshot(
   _prev: ImportResult | null,

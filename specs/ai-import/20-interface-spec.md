@@ -29,7 +29,7 @@ Both run on the server, call the model via the AI SDK, validate the result again
 ## 4. AI SDK integration
 
 - Use the **AI SDK** (`ai`) `generateObject` with a **Zod schema** derived from the item input schema (ADR-0006), so the model returns typed, validated structured output.
-- Provider **`@ai-sdk/google`** (Gemini, AI Studio free tier), model id in a single swappable constant (ADR-0008). Confirm the current AI SDK API with the `vercel:ai-sdk` skill before coding.
+- Provider **`@ai-sdk/google`** (Gemini, AI Studio free tier), model id in a single swappable constant (ADR-0008). Confirm the current AI SDK API against its documentation before coding.
 - Screenshot mode passes the image as a vision input. Saved-page mode parses the uploaded HTML server-side and passes the **JSON-LD `Product`** block, the page **title**, the **meta description** (`og:description`), and the stripped **visible text** to the model. Forwarding the title + meta description matters because some retailers (e.g. Tommy Bahama) render product copy **client-side**, so it lives in `<meta>` / JSON rather than the saved page's visible text. The official image URLs are parsed deterministically (JSON-LD `image[]` → `og:image`) and returned for the form to preview.
 
   Content behind **collapsed accordions** (Product Details, Materials & Care) is generally not in the saved HTML, so the import UI advises expanding sections before *Save As*.
