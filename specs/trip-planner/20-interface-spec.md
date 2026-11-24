@@ -41,7 +41,7 @@ sequenceDiagram
     participant M as Gemini (AI SDK)
     participant D as Drizzle / Postgres
     O->>A: brief + tripId
-    A->>D: save trips.brief; read wardrobe + trip
+    A->>D: save trips.brief, read wardrobe + trip
     A->>M: generateObject(catalog + trip + forecast, Zod schema)
     M-->>A: proposal (occasions x ids + reasons + gaps)
     A->>A: validate ids vs wardrobe (drop unknowns), enrich
