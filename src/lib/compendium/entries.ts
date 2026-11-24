@@ -315,7 +315,7 @@ export const COMPENDIUM_ENTRIES: CompendiumEntry[] = [
     origin: "← the island of Jersey",
     group: "construction",
     explanation:
-      "汗布（单面针织布）是最基本的针织结构：正面全是纵向的”V“字线圈，反面是横向的弧线。因为是线圈而非交织，它天生有弹性、柔软、贴身，即使不含一丝氨纶。T 恤、多数针织上衣都是它。它的固有毛病是边缘会卷（curling），所以下摆和领口通常要加罗纹或折边。",
+      "汗布（单面针织布）是最基本的针织结构：正面全是纵向的“V”字线圈，反面是横向的弧线。因为是线圈而非交织，它天生有弹性、柔软、贴身，即使不含一丝氨纶。T 恤、多数针织上衣都是它。它的固有毛病是边缘会卷（curling），所以下摆和领口通常要加罗纹或折边。",
     recognise:
       "Turn it inside out: the two faces look completely different. Cut edges roll towards the front.",
     wearing: "Comfortable and forgiving; stretches out over a day and recovers in the wash.",
