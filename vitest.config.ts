@@ -14,6 +14,9 @@ const alias = { "@": path.resolve(__dirname, "src") };
  * The split is by file extension rather than by directory: `.test.ts` is pure,
  * `.test.tsx` renders. That way a test lands in the right environment by virtue
  * of what it is, with no configuration to keep in sync.
+ *
+ * One file opts out by a per-file pragma: `src/test/mermaid.test.ts` parses
+ * the docs' Mermaid diagrams, and Mermaid needs a window to do it (#333).
  */
 export default defineConfig({
   test: {
