@@ -45,7 +45,7 @@ export async function logWear(
 
 /**
  * "Log a wear" from an item card in the grid. The card opens a small modal with
- * date (defaulting to the viewer's local today), occasion and note (#129 —
+ * date (defaulting to the viewer's local today), occasion and note (#129;
  * originally a one-tap instant log, #121). Appends a single wear_event and
  * returns the new id so the caller can offer Undo. Revalidates the grids and the
  * item page so wear counts stay fresh.
@@ -78,7 +78,7 @@ export async function quickLogWear(
   }
 }
 
-/** Undo a quick-logged wear from the grid (#121) — deletes it and revalidates
+/** Undo a quick-logged wear from the grid (#121): deletes it and revalidates
  *  the same paths quickLogWear touched. */
 export async function quickUnlogWear(wearId: string, itemId: string): Promise<void> {
   if (!wearId || !itemId) return;
@@ -90,7 +90,7 @@ export async function quickUnlogWear(wearId: string, itemId: string): Promise<vo
 
 /**
  * Edit an existing wear's occasion / note inline on the detail page
- * (OP-EDIT-WEAR). Plain form action — auto-submitted on change/blur.
+ * (OP-EDIT-WEAR). Plain form action, auto-submitted on change/blur.
  */
 export async function updateWear(formData: FormData): Promise<void> {
   const itemId = formData.get("itemId");
@@ -144,7 +144,7 @@ export type BatchWearResult =
  * would then duplicate them.
  *
  * `tripId` is what makes this a *trip-side* batch. Given one, pieces on that
- * trip that are not yet ticked as packed get ticked — wearing a piece on a trip
+ * trip that are not yet ticked as packed get ticked: wearing a piece on a trip
  * is evidence it was in the case, and the packing checklist is routinely left
  * half-filled. Without a `tripId` (the browse grid, a Look) nothing is inferred.
  */
@@ -174,7 +174,7 @@ export async function batchLogWear(
 
       let packedTicked: string[] = [];
       if (tripId) {
-        // Only rows this trip actually holds, and only unticked ones — the
+        // Only rows this trip actually holds, and only unticked ones: the
         // inference runs false → true and never the other way.
         const membership = await tx
           .select({ itemId: tripItems.itemId, packed: tripItems.packed })
@@ -209,7 +209,7 @@ export async function batchLogWear(
 }
 
 /**
- * Undo a whole batch — **including any packed ticks it made**.
+ * Undo a whole batch, **including any packed ticks it made**.
  *
  * An undo that removed the wears but left pieces marked packed would be lying
  * about what it reverted, which is worse than not offering undo at all.

@@ -26,19 +26,19 @@ not needing any cloud credentials to iterate.
 - **Durable, production-grade object storage** served over a CDN, resizable via
   `next/image`.
 - **No write access to the app filesystem in production** on Vercel.
-- **Frictionless local dev** — building and testing uploads without cloud setup.
+- **Frictionless local dev**: building and testing uploads without cloud setup.
 - **Vercel-native** to keep the deployment story simple.
-- **Portability** — the storage choice should sit behind a small interface so it
+- **Portability**: the storage choice should sit behind a small interface so it
   can change without touching feature code.
 
 ## Considered options
 
-1. **Vercel Blob** — native to the platform, public/private support, minimal setup.
-2. **Cloudflare R2 / AWS S3** — S3-compatible, cheap egress (R2), but extra
+1. **Vercel Blob**: native to the platform, public/private support, minimal setup.
+2. **Cloudflare R2 / AWS S3**: S3-compatible, cheap egress (R2), but extra
    accounts/config and not Vercel-native.
-3. **Store bytes in Postgres** — one datastore, but bloats the DB and is poor for
+3. **Store bytes in Postgres**: one datastore, but bloats the DB and is poor for
    CDN delivery.
-4. **Local filesystem only** — trivial in dev, impossible in production on Vercel.
+4. **Local filesystem only**: trivial in dev, impossible in production on Vercel.
 
 ## Decision
 

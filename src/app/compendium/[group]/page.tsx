@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ group: st
  *
  * This route is dynamic rather than four near-identical files, which means it
  * also stands in the way of every unrecognised path under `/compendium`. Hence
- * the `notFound()` on an unknown group — without it, `/compendium/nonsense`
+ * the `notFound()` on an unknown group. Without it, `/compendium/nonsense`
  * would render an empty but perfectly cheerful page.
  *
  * Static segments win over dynamic ones in the App Router, so `/compendium/

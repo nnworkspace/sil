@@ -38,8 +38,8 @@ export function LookForm({ look }: { look?: Look }) {
       <div>
         <Label htmlFor="kind">Kind</Label>
         <select id="kind" name="kind" defaultValue={look?.kind ?? "look"} className={inputCls}>
-          <option value="look">Look — a styled combination</option>
-          <option value="set">Set — a matching co-ord</option>
+          <option value="look">Look: a styled combination</option>
+          <option value="set">Set: a matching co-ord</option>
         </select>
         <FieldError errors={errors.kind} />
       </div>

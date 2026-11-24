@@ -9,7 +9,7 @@ import { Markdown } from "@/components/markdown";
  * Every entry's prose must actually render as Markdown (#243).
  *
  * Found on the Bolero page: **它解决的问题很具体：**一条无袖…  showed its
- * asterisks. It is a CommonMark rule that bites only in Chinese — a closing
+ * asterisks. It is a CommonMark rule that bites only in Chinese: a closing
  * `**` is a valid closer when it is *right-flanking*, which it is not when it
  * sits between a punctuation mark and a letter. `：**一` fails; `**：一` is
  * fine. Nothing about the string looks wrong, and TypeScript, ESLint and the
@@ -29,7 +29,7 @@ const renderedText = (markdown: string) => {
   return text;
 };
 
-describe("#243 — entry prose renders as Markdown", () => {
+describe("#243: entry prose renders as Markdown", () => {
   it("leaves no literal ** anywhere in any entry", () => {
     const offenders: string[] = [];
     for (const entry of COMPENDIUM_ENTRIES) {

@@ -13,7 +13,7 @@ import { isAllowedImage } from "@/lib/images";
 
 export type ActionResult = { ok: false; errors: Record<string, string[]> };
 
-/** Photo limits — identical to item photos (VAL-LOOK-07 mirrors VAL-ITEM-03). */
+/** Photo limits: identical to item photos (VAL-LOOK-07 mirrors VAL-ITEM-03). */
 const MAX_PHOTOS = 10;
 const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 
@@ -93,7 +93,7 @@ export async function updateLook(
 export async function deleteLook(formData: FormData): Promise<void> {
   const id = text(formData, "id");
   if (!id) return;
-  // The pieces themselves are never deleted (#170) — only the look and its
+  // The pieces themselves are never deleted (#170); only the look and its
   // link rows go (look_items cascade on look_id). Capture the members first so
   // we can refresh their "In these looks" after the links disappear.
   const members = await db
@@ -108,7 +108,7 @@ export async function deleteLook(formData: FormData): Promise<void> {
 
 // --- Members ----------------------------------------------------------------
 
-/** Add pieces to a Look — idempotent (`VAL-LOOK-05`), appended after the
+/** Add pieces to a Look: idempotent (`VAL-LOOK-05`), appended after the
  *  current members so the owner's manual order is preserved (#100). */
 export async function addLookItems(formData: FormData): Promise<void> {
   const lookId = text(formData, "lookId");
@@ -252,7 +252,7 @@ export async function deleteLookPhoto(formData: FormData): Promise<void> {
   revalidatePath(`/looks/${lookId}`);
 }
 
-/** Choose a Look's cover — mark one own photo primary, clear the rest
+/** Choose a Look's cover: mark one own photo primary, clear the rest
  *  (`VAL-LOOK-08`). */
 export async function setLookCover(formData: FormData): Promise<void> {
   const lookId = text(formData, "lookId");

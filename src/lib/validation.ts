@@ -64,7 +64,7 @@ export const itemInputSchema = z
     storageLocation: z.string().trim().max(31).nullish(), // VAL-ITEM-12: "Berth" (#172)
     favorite: z.boolean().default(false),
     showFullCover: z.boolean().default(false), // #58: fit whole cover in thumbnails
-    // #69, #191: wears before tracking began. Nullish, not defaulted — an
+    // #69, #191: wears before tracking began. Nullish, not defaulted: an
     // empty field means "not recorded", which is a different fact from a
     // recorded zero, and only the owner can say which one it is.
     priorWears: z.number().int().min(0).nullish(),
@@ -79,7 +79,7 @@ export const itemInputSchema = z
     // 4000, matching `notes` and `description` (#238). It was 1000, which is
     // too small for how a care note is actually written here: the maker's own
     // instruction quoted verbatim first, then separately-labelled advice below.
-    // A real note hit 1099 and could not be saved — and because the value had
+    // A real note hit 1099 and could not be saved, and because the value had
     // been written by SQL during filing, which never sees this schema, the row
     // held a string the UI could not save back.
     care: z.string().max(4000).nullish(),
@@ -118,7 +118,7 @@ export const wearEventInputSchema = z.object({
     (d) => d <= new Date().toISOString().slice(0, 10),
     "A wear can't be in the future", // VAL-WEAR-02
   ),
-  // The occasion tag — one of the occasion vocabulary, or none (VAL-WEAR-06).
+  // The occasion tag: one of the occasion vocabulary, or none (VAL-WEAR-06).
   occasion: z
     .string()
     .trim()
@@ -204,7 +204,7 @@ export const lookInputSchema = z.object({
 export type LookInput = z.infer<typeof lookInputSchema>;
 
 /** Why a look was retired (specs/looks, #170). Unlike items, a look isn't
- *  "sold" — these describe why a curation is no longer active. `piece-archived`
+ *  "sold"; these describe why a curation is no longer active. `piece-archived`
  *  is the value the item-archive reminder pre-fills. */
 export const LOOK_ARCHIVE_REASONS = [
   "no-longer-wear",
@@ -217,7 +217,7 @@ export type LookArchiveReason = (typeof LOOK_ARCHIVE_REASONS)[number];
 
 const LOOK_ARCHIVE_REASON_SET = new Set<string>(LOOK_ARCHIVE_REASONS);
 
-/** Archiving a look (#170) — mirrors the item archive contract: a date, a
+/** Archiving a look (#170). Mirrors the item archive contract: a date, a
  *  reason from the closed vocabulary, and optional free text. */
 export const lookArchiveInputSchema = z.object({
   archivedAt: isoDate.refine(

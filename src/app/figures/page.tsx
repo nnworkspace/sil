@@ -145,7 +145,7 @@ export default async function FiguresPage({
         <h1 className="font-serif text-3xl font-normal tracking-tight">Figures</h1>
         <p className="text-muted-foreground">
           {scope === "all" ? "The whole catalogue" : "The active wardrobe"}
-          {year != null ? `, bought in ${year}` : ""} — what it is made of, what it cost, and when
+          {year != null ? `, bought in ${year}` : ""}: what it is made of, what it cost, and when
           it arrived.
         </p>
       </div>
@@ -200,7 +200,7 @@ export default async function FiguresPage({
                 <div>
                   <h3 className="text-sm font-medium">What it is made of</h3>
                   <p className="mt-0.5 mb-2 text-xs text-muted-foreground">
-                    Every piece counted once, under its main category — so these sum to the{" "}
+                    Every piece counted once, under its main category, so these sum to the{" "}
                     <span className="tabular-nums">{items.length}</span>.
                   </p>
                   <div className="divide-y">
@@ -218,13 +218,13 @@ export default async function FiguresPage({
                   </div>
                 </div>
 
-                {/* And this one: how much counts as X at all — which must
+                {/* And this one: how much counts as X at all, which must
                     include pieces filed there as a secondary. */}
                 <div>
                   <h3 className="text-sm font-medium">How much counts as each</h3>
                   <p className="mt-0.5 mb-2 text-xs text-muted-foreground">
                     A piece counts under every category it is filed in, and a parent includes its
-                    sub-categories — so these deliberately do not sum to the{" "}
+                    sub-categories, so these deliberately do not sum to the{" "}
                     <span className="tabular-nums">{items.length}</span>.
                   </p>
                   <div className="divide-y">
@@ -300,7 +300,7 @@ export default async function FiguresPage({
           <Section id="wear" title="Wear &amp; value">
             {wear.recorded === 0 ? (
               <Empty>
-                No wear history recorded yet under this filter — so there is nothing to rank.
+                No wear history recorded yet under this filter, so there is nothing to rank.
                 Setting a prior count when editing a piece, or logging a wear, starts this off.
               </Empty>
             ) : (
@@ -317,7 +317,7 @@ export default async function FiguresPage({
                   ) : null}{" "}
                   {wear.notRecorded > 0 ? (
                     <span className="text-muted-foreground">
-                      {wear.notRecorded} more have no wear history recorded — see Gaps.
+                      {wear.notRecorded} more have no wear history recorded (see Gaps).
                     </span>
                   ) : null}
                 </p>
@@ -370,7 +370,7 @@ export default async function FiguresPage({
                   </div>
                 ) : null}
                 <p className="text-xs text-muted-foreground">
-                  Cost per wear is shown only where it is defined — a piece with no price, or none
+                  Cost per wear is shown only where it is defined: a piece with no price, or none
                   recorded worn, has none. {cpw.excluded} excluded on that basis.
                 </p>
               </div>
@@ -380,7 +380,7 @@ export default async function FiguresPage({
           <Section
             id="gaps"
             title="Gaps"
-            lede="Not a scolding — a to-do list. Every one of these filled makes some other figure on this page truer."
+            lede="Not a scolding, a to-do list. Every one of these filled makes some other figure on this page truer."
           >
             {dataGaps.length === 0 ? (
               <Empty>Nothing missing under this filter. Remarkable.</Empty>

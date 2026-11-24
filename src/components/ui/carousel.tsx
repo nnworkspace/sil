@@ -182,7 +182,7 @@ function CarouselPrevious({
   // Don't render an arrow that can't scroll (#81). A disabled button would get
   // `pointer-events:none` and let clicks fall THROUGH to the zoom thumbnail
   // behind it (the zoom bug); an enabled-but-dead one shows a not-allowed
-  // cursor. Hiding it avoids both — the arrow only appears when it works.
+  // cursor. Hiding it avoids both: the arrow only appears when it works.
   if (!canScrollPrev) return null
 
   return (
@@ -214,7 +214,7 @@ function CarouselNext({
 }: React.ComponentProps<typeof Button>) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
-  // Only render the arrow when it can scroll — see CarouselPrevious (#81).
+  // Only render the arrow when it can scroll. See CarouselPrevious (#81).
   if (!canScrollNext) return null
 
   return (

@@ -4,7 +4,7 @@ Title format: <type>(<scope>): <imperative subject>
   scope ∈ catalog / trips / ui / db / infra / governance / deps / release
 See _governance-local/decisions/ADR-0005-commit-conventions.md.
 
-Keep "## Tickets" as the LAST section — the squash-merge uses this body, and
+Keep "## Tickets" as the LAST section: the squash-merge uses this body, and
 git-cliff only picks up Refs:/Closes: trailers at the very end.
 -->
 
@@ -20,7 +20,7 @@ git-cliff only picks up Refs:/Closes: trailers at the very end.
 
 ## Test plan
 
-<!-- How this was verified — commands run, flows exercised, screenshots. -->
+<!-- How this was verified: commands run, flows exercised, screenshots. -->
 
 -
 

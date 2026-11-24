@@ -2,7 +2,7 @@
  * Which database failures are worth trying again (#308).
  *
  * On 2026-08-06 production served 500s on every page that reads `items`, with
- * `relation "items" does not exist` — while the table was present and readable
+ * `relation "items" does not exist`, while the table was present and readable
  * from `psql` throughout. The condition cleared by itself. #307 established
  * that the app cannot prevent it: the pooler ignores a client-side
  * `search_path`, Drizzle refuses to qualify to `public`, and the server default
@@ -11,20 +11,20 @@
  * So the app cannot avoid a transient fault. It can survive one.
  *
  * **The list is deliberately short.** A retry that swallows a real error is
- * worse than a failure, because it turns a loud bug into an intermittent one —
+ * worse than a failure, because it turns a loud bug into an intermittent one,
  * and intermittent bugs are the expensive kind. Everything here is a fault of
  * the *connection or the server*, never of the query:
  *
- *   - `42P01` — the one that actually bit. A missing relation is normally a
+ *   - `42P01`: the one that actually bit. A missing relation is normally a
  *     bug, and including it is the uncomfortable choice on this list. It earns
  *     its place because it was observed as a transient on a healthy database,
  *     and because a genuine missing table fails identically on the retry, one
  *     round-trip later, still loudly.
- *   - `57P01` / `57P02` / `57P03` — the server is shutting down, restarting, or
+ *   - `57P01` / `57P02` / `57P03`: the server is shutting down, restarting, or
  *     not yet accepting connections. Precisely a pooled endpoint cycling.
- *   - `53300` / `53400` — out of connections or slots.
- *   - `08000` / `08003` / `08006` — the connection broke underneath us.
- *   - `40001` / `40P01` — serialisation failure and deadlock, which Postgres
+ *   - `53300` / `53400`: out of connections or slots.
+ *   - `08000` / `08003` / `08006`: the connection broke underneath us.
+ *   - `40001` / `40P01`: serialisation failure and deadlock, which Postgres
  *     documents as *retry the transaction*.
  *
  * Notably absent: `23505` and every other constraint violation, syntax errors,

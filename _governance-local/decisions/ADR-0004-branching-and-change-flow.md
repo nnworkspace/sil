@@ -25,20 +25,20 @@ two-branch tiered model or adopt something lighter.
 
 ## Decision drivers
 
-- **No concurrent authors** — the integration problem `dev` solves does not exist.
-- **No publication cadence** — there is no "released" state distinct from "latest"
+- **No concurrent authors**: the integration problem `dev` solves does not exist.
+- **No publication cadence**: there is no "released" state distinct from "latest"
   that a separate `main` must protect.
-- **Keep a review surface** — even solo, a PR is a useful self-review checkpoint,
+- **Keep a review surface**: even solo, a PR is a useful self-review checkpoint,
   a home for CI, and the natural place to link an issue.
-- **Friction calibrated to risk** — a solo hobby app should carry less ceremony than a regulated team publication.
-- **Traceability preserved** — every change still links to an issue (ADR-0005).
+- **Friction calibrated to risk**: a solo hobby app should carry less ceremony than a regulated team publication.
+- **Traceability preserved**: every change still links to an issue (ADR-0005).
 
 ## Considered options
 
-1. **`main` + `dev` + tiered change paths** — a typical team model, carried as-is. Correct for a team; redundant machinery for one author.
-2. **Trunk-based, commit straight to `main`** — lightest possible; loses the PR
+1. **`main` + `dev` + tiered change paths**: a typical team model, carried as-is. Correct for a team; redundant machinery for one author.
+2. **Trunk-based, commit straight to `main`**: lightest possible; loses the PR
    review surface and the clean issue-linking checkpoint.
-3. **GitHub Flow: `main` + short-lived feature branches + PR** — one long-lived
+3. **GitHub Flow (`main` + short-lived feature branches + PR)**: one long-lived
    branch, every change via a branch and a squash-merged PR, releases as tags.
 
 ## Decision
@@ -52,8 +52,8 @@ on `main`. `main` is protected against direct pushes; changes arrive only via PR
 This is a deliberate, recorded **divergence** from the common team-scale
 `main`/`dev` tiered model: the `dev` integration branch and the Tier-1/Tier-2 split
 are dropped because their justifying conditions (concurrent authors, a distinct
-publication rhythm) are absent here. The parts that carry over — a PR review
-surface, squash-merge cleanliness, mandatory issue links, tags as releases — are
+publication rhythm) are absent here. The parts that carry over (a PR review
+surface, squash-merge cleanliness, mandatory issue links, tags as releases) are
 kept.
 
 ## Consequences

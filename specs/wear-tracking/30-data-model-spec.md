@@ -1,4 +1,4 @@
-# Wear Tracking — Data Model Specification
+# Wear Tracking: Data Model Specification
 
 - **Spec ID:** `SPEC-WEAR-DATA`
 - **Part of set:** `SPEC-SET-WEAR` v0.1.0
@@ -6,7 +6,7 @@
 
 ## 1. Purpose and scope
 
-Defines the one new entity this feature adds — `wear_events` — how it relates to `items`, and how the wear stats are derived rather than stored.
+Defines the one new entity this feature adds (`wear_events`), how it relates to `items`, and how the wear stats are derived rather than stored.
 
 ## 2. `wear_events`
 
@@ -22,16 +22,16 @@ One row per logged wear.
 | created at | `created_at` | timestamptz | system | default now |
 
 - **Index** on `item_id` (all reads are per-item); an index on `worn_at` is optional (small, single-user scale).
-- No `updated_at` — `occasion` / `note` are editable in place (`OP-EDIT-WEAR` inline, or the edit-form reconcile `OP-EDIT-WEARS`); the `worn_at` date and row identity stay stable, so no separate modified timestamp is tracked.
+- No `updated_at`. `occasion` / `note` are editable in place (`OP-EDIT-WEAR` inline, or the edit-form reconcile `OP-EDIT-WEARS`); the `worn_at` date and row identity stay stable, so no separate modified timestamp is tracked.
 
 ## 3. Change to `items`
 
-The reserved single-value columns are **superseded and dropped** — the wear stats are derived from `wear_events`, so keeping them would create a second source of truth:
+The reserved single-value columns are **superseded and dropped**. The wear stats are derived from `wear_events`, so keeping them would create a second source of truth:
 
 - **Drop** `items.wear_count` (was `integer default 0`).
 - **Drop** `items.last_worn_at` (was `date`).
 
-(These were reserved/unused in Phase 1 — see `SPEC-CATALOG-DATA` — so dropping them loses no data.)
+(These were reserved/unused in Phase 1, so dropping them loses no data; see `SPEC-CATALOG-DATA`.)
 
 ## 4. Derived stats
 
@@ -43,7 +43,7 @@ Computed on read (never stored), per `SPEC-WEAR-FUNC` §3:
 | last worn | `max(worn_at)` for the item (null ⇒ "never"); `prior_wears` carries no date |
 | cost per wear | `price_paid_cents / worn_count`, only when `price_paid_cents` is set and worn_count > 0 (`VAL-WEAR-05`) |
 
-`items.prior_wears` (`integer NOT NULL DEFAULT 0`, #69) is an owner-set estimate of wears before tracking began — a baseline added to the logged wears so long-owned pieces have a meaningful cost-per-wear from day one.
+`items.prior_wears` (`integer NOT NULL DEFAULT 0`, #69) is an owner-set estimate of wears before tracking began: a baseline added to the logged wears so long-owned pieces have a meaningful cost-per-wear from day one.
 
 The item detail query loads the item's wears (ordered by `worn_at` desc) with the item; count / max / cost-per-wear are computed in the read layer.
 

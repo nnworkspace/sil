@@ -44,7 +44,7 @@ function tripMarkdown(trip: TripWithItems): string {
 
   const days = tripDays(trip.startDate, trip.endDate);
 
-  // The day plan, when there is one (#270) — written before the packing list,
+  // The day plan, when there is one (#270): written before the packing list,
   // because it is the plan and the list is what it produces.
   if (days.length > 0) {
     const plan = dayPlan({ startDate: trip.startDate, endDate: trip.endDate }, items, (a, b) =>
@@ -73,7 +73,7 @@ function tripMarkdown(trip: TripWithItems): string {
       for (const ti of rows) {
         const brand = ti.item.brand ? ` · ${ti.item.brand}` : "";
         // Which days it is planned for, when there is a day plan (#270). One
-        // line however many days it appears under — this is the list you pack
+        // line however many days it appears under: this is the list you pack
         // from, and a repeat wear is still one thing to pack.
         const when = dayLabelsFor(days, ti);
         const days_ = when.length > 0 ? ` _(${when.join(", ")})_` : "";

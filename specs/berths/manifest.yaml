@@ -1,4 +1,4 @@
-# Specification Set Manifest — Berths
+# Specification Set Manifest: Berths
 
 set_id: SPEC-SET-BERTHS
 version: "0.2.0"
@@ -8,7 +8,7 @@ owner: nnworkspace
 
 description: |
   Where each piece physically lives, and how to find it again. A **berth** is a
-  short storage code on the piece (`items.storage_location`) — `R1-W7R2-S4-L` —
+  short storage code on the piece (`items.storage_location`), such as `R1-W7R2-S4-L`,
   shown on the card, beside the brand on the detail page, and searchable. The
   Berths tab turns that field into a browsable index.
 
@@ -18,13 +18,13 @@ description: |
   long as a piece claims it.
 
   The notation itself is documented in the Compendium rather than here, because
-  it is knowledge the owner reads rather than behaviour the app implements —
-  see [`SPEC-COMPENDIUM-DATA`](../compendium/30-data-model-spec.md) §5 for the
+  it is knowledge the owner reads rather than behaviour the app implements.
+  See [`SPEC-COMPENDIUM-DATA`](../compendium/30-data-model-spec.md) §5 for the
   grammar, and `SPEC-BERTHS-FUNC` for what the index does with it.
 
   This set was written **after** the feature shipped, which its README says
   plainly. Twice since, a code the owner filed has been rejected by a grammar
-  that turned out to be incomplete rather than a code that was wrong — first a
+  that turned out to be incomplete rather than a code that was wrong: first a
   side-and-depth position (`R1-W2R3-D1-LF`, #221), then a cabinet with no rack
   (`R0-C1-D4`, #251). The rule that came out of it is recorded as `VAL-COMP-12`:
   the catalogue is authoritative, and where a real code does not parse, the

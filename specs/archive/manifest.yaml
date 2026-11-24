@@ -1,4 +1,4 @@
-# Specification Set Manifest — Archive
+# Specification Set Manifest: Archive
 
 set_id: SPEC-SET-ARCHIVE
 version: "0.1.0"
@@ -7,8 +7,8 @@ status: DRAFT
 owner: nnworkspace
 
 description: |
-  Retiring a piece that has left the wardrobe — sold, gifted, returned, worn out
-  or lost — without losing it. Archiving records a reason, an optional note and
+  Retiring a piece that has left the wardrobe (sold, gifted, returned, worn out
+  or lost) without losing it. Archiving records a reason, an optional note and
   the date it left, and keeps everything else (photos, wear history, look and
   trip membership), unlike delete, which stays the remedy for a wrongly-entered
   piece and still cascades. Adds no table: three nullable columns on items, where

@@ -29,7 +29,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-/** Single source of truth for both layouts — new destinations (Archive, Stats…)
+/** Single source of truth for both layouts: new destinations (Archive, Stats…)
  *  appear in the desktop bar and the mobile drawer automatically (#133). */
 const NAV = [
   // One entry for "show me my clothes": "Wardrobe" (the category overview at /)
@@ -45,7 +45,7 @@ const NAV = [
   // The wardrobe in aggregate (#181): composition, spend, and what gets worn.
   { href: "/figures", label: "Figures", icon: ChartColumn },
   // The reference area (#213): what the pieces are made of, and how the berth
-  // notation works — knowledge about the wardrobe rather than the wardrobe.
+  // notation works. It is knowledge about the wardrobe rather than the wardrobe.
   { href: "/compendium", label: "Compendium", icon: BookOpen },
   // Pieces that have left the wardrobe (#142). Lives in the drawer on phones,
   // which keeps it off the cramped mobile bar at no cost.
@@ -70,7 +70,7 @@ export function SiteHeader({
       return pathname === "/browse" && favOn;
     }
     // The single Browse tab covers the whole browsing surface: the category
-    // overview, an individual category, and the flat grid — unless the
+    // overview, an individual category, and the flat grid, unless the
     // favourites filter is on, which belongs to Favourites.
     if (item.href === "/") {
       return (
@@ -137,7 +137,7 @@ export function SiteHeader({
             </form>
           ) : null}
 
-          {/* Burger — two lines, by owner's request 🍔 */}
+          {/* Burger: two lines, by owner's request 🍔 */}
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger
               aria-label="Open menu"

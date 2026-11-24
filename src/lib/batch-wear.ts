@@ -21,9 +21,9 @@ export type BatchPlan = {
 /**
  * What a batch will actually write.
  *
- * **Deduplicates within the selection.** A piece can reach one batch twice —
- * it may sit in two Looks, or be selected in the grid and also belong to the
- * chosen day — and writing it twice would record a wear that did not happen.
+ * **Deduplicates within the selection.** A piece can reach one batch twice
+ * (it may sit in two Looks, or be selected in the grid and also belong to the
+ * chosen day), and writing it twice would record a wear that did not happen.
  *
  * **Duplicates against the day are reported, not removed.** Wearing the same
  * piece on two separate occasions in one day is real (the office, then dinner),
@@ -54,7 +54,7 @@ export function planBatch(
  *
  * **Wearing a piece on a trip is evidence it was in the case.** The owner does
  * not reliably tick things off while packing, so `packed = false` usually means
- * *not ticked* rather than *not packed* — which makes this inference a gap being
+ * *not ticked* rather than *not packed*, which makes this inference a gap being
  * filled with a fact, not a side effect on unrelated data.
  *
  * Two limits keep it predictable. It only ever goes **false → true**, because

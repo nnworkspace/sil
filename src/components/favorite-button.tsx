@@ -23,7 +23,7 @@ export function FavoriteButton({
   const [prevFavorite, setPrevFavorite] = React.useState(favorite);
   const [pending, start] = React.useTransition();
 
-  // Sync to the server value when it changes (e.g. after revalidation) — the
+  // Sync to the server value when it changes (e.g. after revalidation): the
   // React "reset state during render" pattern, so we never setState in an effect.
   if (favorite !== prevFavorite) {
     setPrevFavorite(favorite);

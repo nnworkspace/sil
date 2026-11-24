@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
  * round-trip and a shared link. Adding a piece to Tuesday re-renders the page,
  * and without this the view would snap back to categories every time.
  *
- * Rendered as tabs rather than a switch because both are destinations — neither
+ * Rendered as tabs rather than a switch because both are destinations: neither
  * is the "off" state of the other.
  */
 export function PlanModeTabs({ mode }: { mode: "category" | "day" }) {

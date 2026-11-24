@@ -21,7 +21,7 @@ import {
 const OCCASION_TAGS = TAG_GROUPS.find((g) => g.kind === "occasion")?.tags ?? [];
 
 const pad = (n: number) => String(n).padStart(2, "0");
-/** The viewer's local date — computed on open, so no server/client mismatch. */
+/** The viewer's local date, computed on open, so no server/client mismatch. */
 const localToday = () => {
   const d = new Date();
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
@@ -30,7 +30,7 @@ const localToday = () => {
 export type BatchWearPiece = { itemId: string; name: string };
 
 /**
- * The dialog behind every batch wear log (#320) — a selection in the grid or
+ * The dialog behind every batch wear log (#320): a selection in the grid or
  * the packing list, a whole Look, or a planned trip day.
  *
  * It carries the same three fields as the single-piece dialog, written
@@ -40,7 +40,7 @@ export type BatchWearPiece = { itemId: string; name: string };
  *     *that* day rather than today, because catching up on the 25th for what
  *     was worn on the 14th is the normal case on the road.
  *   - **A duplicate check runs before writing**, since logging the same piece
- *     twice for one date is nearly always an accident — but wearing something
+ *     twice for one date is nearly always an accident, but wearing something
  *     to the office and then to dinner is real, so it warns rather than blocks.
  *   - **Undo reverts the whole batch**, including any `packed` ticks. An undo
  *     that left those behind would be lying about what it undid.
@@ -56,7 +56,7 @@ export function BatchWearDialog({
   open: boolean;
   onOpenChange: (open: boolean) => void;
   pieces: BatchWearPiece[];
-  /** Present only on the trip surfaces — what makes packed inference possible. */
+  /** Present only on the trip surfaces; it is what makes packed inference possible. */
   tripId?: string | null;
   /** ISO day for a trip-day batch; the dialog opens on it. */
   day?: string | null;
@@ -95,7 +95,7 @@ function BatchWearForm({
   onLogged?: () => void;
 }) {
   // Read once at mount. `localToday` touches the client clock, so it cannot run
-  // during server render — mounting on open is what makes that safe.
+  // during server render; mounting on open is what makes that safe.
   const [today] = React.useState(localToday);
   const [date, setDate] = React.useState(() => defaultWearDate(day, localToday()));
   const [error, setError] = React.useState<string | null>(null);
@@ -105,7 +105,7 @@ function BatchWearForm({
   const [confirmedFor, setConfirmedFor] = React.useState("");
   const [pending, start] = React.useTransition();
 
-  // Re-check whenever the date moves — the warning must describe the date about
+  // Re-check whenever the date moves: the warning must describe the date about
   // to be written, not the one the dialog opened on.
   const ids = pieces.map((p) => p.itemId).join(",");
   React.useEffect(() => {

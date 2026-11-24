@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * A bordered section with a fold/unfold header. Purely a view toggle — the state
+ * A bordered section with a fold/unfold header. Purely a view toggle: the state
  * is client-only and survives Server-Action revalidations (the component stays
  * mounted), so folding never touches any data. Resets to `defaultOpen` on a full
  * navigation. `action` (e.g. a Server-Action form) shows on the right when open.

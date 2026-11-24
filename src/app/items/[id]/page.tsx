@@ -64,7 +64,7 @@ export default async function ItemDetailPage({
   const list = formatPrice(item.listPriceCents, item.currency);
 
   // Group the assigned categories (primary + secondaries) under their top-level
-  // parent, so the line reads "Trousers › Shorts, Culottes · Skirts" — the
+  // parent, so the line reads "Trousers › Shorts, Culottes · Skirts", with the
   // parent shown once even when several sub-categories share it (#168).
   const catLabel = (slug: string) =>
     CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
@@ -88,7 +88,7 @@ export default async function ItemDetailPage({
     <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
       {/* The title keeps a sensible minimum width (basis-72) and grows to fill;
           when the title plus the six-button toolbar don't fit, the toolbar wraps
-          to its own line and the title takes the full width — so the name is
+          to its own line and the title takes the full width, so the name is
           never crushed to one word per line at narrow widths (#157). On wide
           screens flex-1 pushes the toolbar to the right, as before. */}
       <PageHeader
@@ -227,7 +227,7 @@ export default async function ItemDetailPage({
             <Field label="Material">{item.material}</Field>
             {/* The other half of the two-way link (VAL-COMP-09, #213): what
                 this piece is made of, explained. Directly under Material, and
-                only when something matches — `Field` renders nothing for an
+                only when something matches: `Field` renders nothing for an
                 empty child, so a piece with no recognised material simply does
                 not gain a row. Reference, not decoration: plain links, no chips
                 competing with the tags below. */}
@@ -255,7 +255,7 @@ export default async function ItemDetailPage({
             {/* Care is prose, not a scalar (#237). It carries the maker's own
                 instruction quoted verbatim, then separately-labelled advice
                 below, and that separation is held entirely by the emphasis and
-                the bullets — so rendering it flat destroyed the one thing the
+                the bullets, so rendering it flat destroyed the one thing the
                 field is for. It stays in the field list rather than moving out
                 to its own section: the value column is already `col-span-2` and
                 wraps, so a block renders comfortably here, and Care belongs

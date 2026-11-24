@@ -6,7 +6,7 @@ import Link from "next/link";
  * CSS, not SVG and not a charting library: the marks needed are bars, and a
  * dependency would add weight plus a visual dialect the app does not otherwise
  * speak (ADR-0007). Every bar is a labelled row whose value is present as text,
- * so the figure reads without the graphic — and to a screen reader.
+ * so the figure reads without the graphic, and to a screen reader.
  */
 
 /** A labelled horizontal bar, optionally linking somewhere. Used where labels
@@ -23,7 +23,7 @@ export function BarRow({
   label: string;
   /** The magnitude driving the bar's width. */
   value: number;
-  /** How that magnitude is written — "24", "€9,800". Kept separate from the
+  /** How that magnitude is written: "24", "€9,800". Kept separate from the
    *  number so formatting never has to be parsed back out of a string. */
   display: string;
   max: number;
@@ -84,13 +84,13 @@ export function ColumnChart({
 }
 
 /** The base a partial figure was computed over (VAL-FIG-03). Rendered next to
- *  the figure, never omitted — a number without its denominator is a claim the
+ *  the figure, never omitted: a number without its denominator is a claim the
  *  data may not support. */
 export function Base({ base, excluded, noun }: { base: number; excluded: number; noun: string }) {
   if (excluded === 0) return null;
   return (
     <p className="text-xs text-muted-foreground">
-      Across the {base} {noun} with this recorded — {excluded} excluded for want of it.
+      Across the {base} {noun} with this recorded ({excluded} excluded for want of it).
     </p>
   );
 }
@@ -103,8 +103,8 @@ export function Empty({ children }: { children: React.ReactNode }) {
 
 /**
  * A colour-family row: the swatch **is** the datum, so this is literal
- * encoding rather than an assigned palette. The name always sits beside it —
- * identity never rests on colour alone — and the swatch carries a hairline
+ * encoding rather than an assigned palette. The name always sits beside it
+ * (identity never rests on colour alone), and the swatch carries a hairline
  * ring so a near-white family stays visible against the page.
  */
 export function SwatchRow({

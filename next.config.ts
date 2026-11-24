@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // The `jewelry` category was renamed to `jewellery` (#282). Permanent, so a
-  // bookmark or a shared link keeps working — the slug moved, and a moved URL
+  // bookmark or a shared link keeps working: the slug moved, and a moved URL
   // that 404s silently is the one cost a rename must not have.
   async redirects() {
     return [
@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
     },
     // Every request passes through `src/proxy.ts` (the auth gate), and Next.js
     // clones the request body to feed the proxy. That clone has its OWN cap,
-    // defaulting to 10 MB — and on exceeding it Next silently *truncates* the
+    // defaulting to 10 MB, and on exceeding it Next silently *truncates* the
     // stream rather than erroring, so the Server Action receives half a
     // multipart body and the parser throws "Unexpected end of form" (#150).
     // It bites before `serverActions.bodySizeLimit` applies, so both must be

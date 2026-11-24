@@ -1,4 +1,4 @@
-# Specification Set Manifest — Trips & Packing
+# Specification Set Manifest: Trips & Packing
 
 set_id: SPEC-SET-TRIPS
 version: "0.4.0"
@@ -8,11 +8,11 @@ owner: nnworkspace
 
 description: |
   Phase 3: create a trip (business / vacation) and build a packing list from the
-  wardrobe, tracking packed / not-packed with a progress count. V1 is manual —
-  the owner curates the list; pieces are added from a wardrobe picker on the trip
+  wardrobe, tracking packed / not-packed with a progress count. V1 is manual.
+  The owner curates the list; pieces are added from a wardrobe picker on the trip
   page or an "Add to trip" action on an item page. V1.1 adds a soft, editable
   packing plan: per-category slots with suggested target counts derived from trip
-  length + type, each opening the picker scoped to that category — still manual
+  length + type, each opening the picker scoped to that category. It is still manual
   (slots guide, never auto-add). Smart ranking within a slot and weather-aware
   packing remain the next iteration (v0.2). Uses the existing trips / trip_items
   tables plus a `plan` JSONB column on trips, and display-only reuse of the

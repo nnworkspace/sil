@@ -11,14 +11,14 @@
  * `end_date` are Postgres `date` columns holding `YYYY-MM-DD`, and a trip that
  * starts on the 3rd starts on the 3rd in Copenhagen and in Kyoto alike. So
  * the arithmetic is done in UTC and the strings are sliced, never formatted
- * through a local-time `Date` — which is how a trip loses or gains a day for
+ * through a local-time `Date`, which is how a trip loses or gains a day for
  * anyone east or west of the server.
  */
 
 export type TripDay = {
-  /** `YYYY-MM-DD` — the value stored in `trip_item_days.day`. */
+  /** `YYYY-MM-DD`: the value stored in `trip_item_days.day`. */
   iso: string;
-  /** "Mon 3 Aug" — enough to plan by, short enough for a column heading. */
+  /** "Mon 3 Aug": enough to plan by, short enough for a column heading. */
   label: string;
   /** "Day 1", for a trip whose dates say nothing about which day is which. */
   ordinal: number;
@@ -43,7 +43,7 @@ function utcDay(iso: string | null | undefined): number | null {
  * Every day of the trip, inclusive of both ends.
  *
  * Empty when either date is missing, when the end precedes the start, or when
- * the range is longer than `MAX_TRIP_DAYS` — three cases the caller must be
+ * the range is longer than `MAX_TRIP_DAYS`: three cases the caller must be
  * able to tell apart from "a trip with no days", which is why the view asks
  * `tripDays(...).length === 0` and then says *why* rather than rendering an
  * empty frame.
@@ -75,7 +75,7 @@ export function tripDays(
 }
 
 /** Whether a day belongs to this trip. A stored assignment can outlive the
- *  dates that produced it — shortening a trip must not leave a piece filed
+ *  dates that produced it; shortening a trip must not leave a piece filed
  *  under a day the trip no longer has, silently invisible. */
 export function isTripDay(days: readonly TripDay[], iso: string): boolean {
   return days.some((d) => d.iso === iso);

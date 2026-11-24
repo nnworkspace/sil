@@ -8,8 +8,8 @@ import { describe, expect, it, vi } from "vitest";
  *
  * Three shapes in one day: stacked groups with per-group chips, then two chip
  * rows and a flat grid, now two dropdowns. The **behaviour** has not moved
- * through any of it — narrow to a category, narrow again to a sub-type, and
- * the sub-choice never survives a change of category — so these tests are
+ * through any of it (narrow to a category, narrow again to a sub-type, and
+ * the sub-choice never survives a change of category), so these tests are
  * written against that rather than against the control of the week.
  *
  * Component tier (ADR-0015): asserted through the accessibility tree, so a
@@ -56,12 +56,12 @@ const ITEMS: PickerItem[] = [
   piece("e", "Isabella Pumps", "shoes"),
 ];
 
-/** A second set, for the material facet — the fibre lives on the piece, so the
+/** A second set, for the material facet: the fibre lives on the piece, so the
  *  pieces above (all `material: null`) cannot exercise it. */
 const FIBRES: PickerItem[] = [
   piece("f1", "Linen Shift", "dresses", "100% linen"),
   piece("f2", "Silk Slip", "dresses", "100% mulberry silk"),
-  piece("f3", "Silky Cotton Shirt", "dresses", "100% cotton (mercerised — silky sheen)"),
+  piece("f3", "Silky Cotton Shirt", "dresses", "100% cotton (mercerised, silky sheen)"),
   piece("f4", "Unlabelled Dress", "dresses", null),
 ];
 
@@ -90,7 +90,7 @@ const choose = async (
 ) => {
   await user.click(await screen.findByRole("button", { name: dropdown }));
   await user.click(await screen.findByRole("menuitemradio", { name: option }));
-  // Escape, because in jsdom the menu does not actually unmount on select —
+  // Escape, because in jsdom the menu does not actually unmount on select:
   // Base UI's exit is animation-driven and jsdom runs no animations, so the
   // popup keeps `data-open` forever. Without closing it, the next `choose`
   // clicks its trigger through an open overlay. This is a test-environment
@@ -106,7 +106,7 @@ const visible = () =>
     .filter((t) => ITEMS.some((i) => t.includes(i.name)))
     .map((t) => ITEMS.find((i) => t.includes(i.name))!.name);
 
-describe("#296 — the category dropdown", () => {
+describe("#296: the category dropdown", () => {
   it("shows the whole wardrobe until a category is chosen", async () => {
     // "All categories" is the default. Anything else would hide pieces from
     // someone who opened the picker to find one specific thing.
@@ -143,7 +143,7 @@ describe("#296 — the category dropdown", () => {
   });
 });
 
-describe("#296 — the sub-category dropdown", () => {
+describe("#296: the sub-category dropdown", () => {
   const openDresses = async () => {
     const user = await openPicker();
     await choose(user, "Category", "Dresses");
@@ -212,12 +212,12 @@ describe("#296 — the sub-category dropdown", () => {
 /**
  * The material facet (#299).
  *
- * #263 gave Browse a material filter and never gave this dialog one — `PickerItem`
+ * #263 gave Browse a material filter and never gave this dialog one; `PickerItem`
  * could not even carry the question. The picker is arguably where it matters
  * more: browse is for looking things up, the picker is for choosing what to
  * pack, and "which of these are linen" is what a summer trip asks.
  */
-describe("#299 — filtering the picker by material", () => {
+describe("#299: filtering the picker by material", () => {
   const openWith = async (items: PickerItem[]) => {
     const user = userEvent.setup();
     render(
@@ -263,8 +263,8 @@ describe("#299 — filtering the picker by material", () => {
   });
 
   it("drops a piece with no material recorded", async () => {
-    // It cannot be claimed for a fibre it does not name — the same restraint
-    // the Compendium matcher shows.
+    // It cannot be claimed for a fibre it does not name. That is the same
+    // restraint the Compendium matcher shows.
     const user = await openWith(FIBRES);
     await pickFibre(user, "Cotton");
     expect(names()).toEqual(["Silky Cotton Shirt"]);

@@ -11,7 +11,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
  *
  * There was no error boundary at all, so when production briefly could not
  * resolve its tables, every affected page showed Next.js's default: *"This page
- * couldn't load — A server error occurred."* To an owner away from her desk
+ * couldn't load. A server error occurred."* To an owner away from her desk
  * that is indistinguishable from having lost her wardrobe.
  *
  * Three things this must do, and one it must not.
@@ -22,7 +22,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
  *   - **Say what is true and what is likely**, without pretending to know
  *     which. "Usually brief" is a hint, not a diagnosis.
  *   - **Offer `reset()` before a reload.** It re-renders the segment on the
- *     server, which is exactly what recovers from a transient fault — and it
+ *     server, which is exactly what recovers from a transient fault, and it
  *     costs a fraction of a full document reload on a phone.
  *
  * What it must **not** do is make a real bug look like weather. The `digest` is
@@ -50,7 +50,7 @@ export default function Error({
         This page didn’t load
       </h1>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        Something went wrong reaching your wardrobe. <strong>Nothing has been lost</strong> — this
+        Something went wrong reaching your wardrobe. <strong>Nothing has been lost</strong>: this
         is a display problem, not a data one. It is usually brief, so trying again often works.
       </p>
 

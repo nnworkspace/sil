@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Markdown } from "@/components/markdown";
 
 /**
- * "In this wardrobe" — the pieces an entry describes
+ * "In this wardrobe": the pieces an entry describes
  * (SPEC-COMPENDIUM-INT §4.2, VAL-COMP-05 / VAL-COMP-10).
  *
  * The list is always derived, never stored, so it cannot go stale. When nothing

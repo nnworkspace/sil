@@ -27,8 +27,8 @@ export function escapeRegex(value: string): string {
  * Below this length a query must match the **start** of a word; at or above it
  * it may also match inside one.
  *
- * Four, because the only matches the strict rule loses are compound tails —
- * *Boatneck*, *Crewneck*, *camelwool* — and every one of them is reached by a
+ * Four, because the only matches the strict rule loses are compound tails
+ * (*Boatneck*, *Crewneck*, *camelwool*), and every one of them is reached by a
  * query of four characters or more, while the false positives that prompted the
  * fix came from three ("red" inside *collared*). Nine real matches bought back,
  * ninety-six false ones kept out.
@@ -45,7 +45,7 @@ export function wordPrefixPattern(query: string): string {
   return `\\y${escapeRegex(query.trim())}`;
 }
 
-/** Whether this query may also match inside a word — see `COMPOUND_QUERY_MIN`. */
+/** Whether this query may also match inside a word (see `COMPOUND_QUERY_MIN`). */
 export function allowsInsideWord(query: string): boolean {
   return query.trim().length >= COMPOUND_QUERY_MIN;
 }

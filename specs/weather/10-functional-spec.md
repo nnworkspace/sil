@@ -1,4 +1,4 @@
-# Weather Strip — Functional Specification
+# Weather Strip: Functional Specification
 
 - **Spec ID:** `SPEC-WEATHER-FUNC`
 - **Part of set:** `SPEC-SET-WEATHER` v0.1.0
@@ -10,26 +10,26 @@ Defines what the weather widget shows, how the location is chosen, how raw weath
 
 ## 2. Operations
 
-### 2.1 Show the forecast — `OP-WEATHER-SHOW`
+### 2.1 Show the forecast: `OP-WEATHER-SHOW`
 
 - **Purpose:** show the next ~10 days at a glance.
 - **Trigger:** the owner opens any page (the widget lives in the header).
-- **Behaviour:** two chips — **home** (Berlin) and **travel** (destination) — each fetches its own 10-day daily forecast and shows a **compact chip**: a home/plane marker + today's condition icon + high temperature.
+- **Behaviour:** two chips, **home** (Berlin) and **travel** (destination), each fetches its own 10-day daily forecast and shows a **compact chip**: a home/plane marker + today's condition icon + high temperature.
 - **Outcome:** both chips are visible on every page; a cached forecast renders instantly, refreshing in the background when stale.
 
-### 2.2 Expand to 10 days — `OP-WEATHER-EXPAND`
+### 2.2 Expand to 10 days: `OP-WEATHER-EXPAND`
 
 - **Purpose:** see all ten days.
 - **Trigger:** the owner clicks the chip.
 - **Behaviour:** a popover lists each day: weekday, condition icon, and **high / low** temperature; the active location's name is shown.
 - **Outcome:** the ten-day outlook; clicking away closes it.
 
-### 2.3 Change a chip's location — `OP-WEATHER-LOCATE`
+### 2.3 Change a chip's location: `OP-WEATHER-LOCATE`
 
 - **Purpose:** point a chip at a different place.
 - **Behaviour, by chip:**
-  - **Home** — a **"Use my location"** toggle requests browser geolocation (never automatic, `VAL-WEATHER-02`); on grant, refetch for those coordinates; **"Home"** switches back. On denial, stay on home with a subtle notice.
-  - **Travel** — the owner **types a city** into the change-city input; it is **geocoded** (Open-Meteo geocoder) and the chip refetches for that city; **"Reset"** returns to the default (Vienna).
+  - **Home**: a **"Use my location"** toggle requests browser geolocation (never automatic, `VAL-WEATHER-02`); on grant, refetch for those coordinates; **"Home"** switches back. On denial, stay on home with a subtle notice.
+  - **Travel**: the owner **types a city** into the change-city input; it is **geocoded** (Open-Meteo geocoder) and the chip refetches for that city; **"Reset"** returns to the default (Vienna).
 - **Outcome:** the chip reflects the chosen location; the choice **persists per chip** (localStorage) until changed.
 
 ## 3. Condition mapping
@@ -52,10 +52,10 @@ Temperatures are shown in **°C**, rounded to whole degrees.
 
 | Rule ID | Validation |
 |:--|:--|
-| `VAL-WEATHER-01` | Uses a **keyless, free** provider (Open-Meteo); no API key, and only coordinates are sent — no wardrobe data or PII. |
+| `VAL-WEATHER-01` | Uses a **keyless, free** provider (Open-Meteo); no API key, and only coordinates are sent (no wardrobe data or PII). |
 | `VAL-WEATHER-02` | Geolocation is **only requested on explicit owner action** (the "use my location" toggle); the app never auto-prompts. |
 | `VAL-WEATHER-03` | The forecast is **cached ~1 hour** (client-side) per location to limit requests; a fresh cache renders without a network call. |
-| `VAL-WEATHER-04` | Any failure (network, provider error, geolocation denied/unavailable) **degrades gracefully** — the widget hides or shows a subtle placeholder; it never blocks or errors the page. |
+| `VAL-WEATHER-04` | Any failure (network, provider error, geolocation denied/unavailable) **degrades gracefully**. The widget hides or shows a subtle placeholder; it never blocks or errors the page. |
 | `VAL-WEATHER-05` | `weathercode` is mapped to the fixed condition set (§3); unknown codes fall back to "cloudy". |
 | `VAL-WEATHER-06` | The **home** location is a configured default (city + coordinates); editing it from the UI is out of scope for now (a later settings enhancement). |
 

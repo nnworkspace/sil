@@ -39,7 +39,7 @@ describe("category tree (#78)", () => {
   });
 });
 
-describe("VAL-ITEM-02 — a piece's categories", () => {
+describe("VAL-ITEM-02: a piece's categories", () => {
   it("matches on the primary category", () => {
     expect(isInCategory(PLAIN_DRESS, "dresses")).toBe(true);
   });
@@ -64,10 +64,10 @@ describe("VAL-ITEM-02 — a piece's categories", () => {
   });
 });
 
-describe("#180 regression — cross-filed pieces must be visible", () => {
+describe("#180 regression: cross-filed pieces must be visible", () => {
   it("scoping to knitwear includes a piece filed there as a secondary", () => {
-    // The bug: the trip picker tested only `item.category`, so this piece —
-    // primary `tops`, secondary `knitwear` — was hidden. Only a fraction of the knitwear
+    // The bug: the trip picker tested only `item.category`, so this piece
+    // (primary `tops`, secondary `knitwear`) was hidden. Only a fraction of the knitwear
     // pieces were shown.
     const inKnitwear = categoryMatcher("knitwear");
     expect(inKnitwear(KNIT_TOP_SECONDARY)).toBe(true);
@@ -116,7 +116,7 @@ describe("the tag vocabulary (#204)", () => {
     expect(occasion?.tags).toContain("occasion-only");
   });
 
-  it("keeps `occasion` alongside it — the two compose, they do not replace", () => {
+  it("keeps `occasion` alongside it: the two compose, they do not replace", () => {
     // A piece stays `occasion` and *gains* the narrowing, so existing filters
     // and the 100-odd pieces already tagged keep working.
     const occasion = TAG_GROUPS.find((g) => g.kind === "occasion");
@@ -132,7 +132,7 @@ describe("the tag vocabulary (#204)", () => {
 });
 
 describe("normaliseSecondaries (#206)", () => {
-  it("adds the parent of the primary — a Shirts piece is also in Tops", () => {
+  it("adds the parent of the primary: a Shirts piece is also in Tops", () => {
     expect(normaliseSecondaries("shirts", [])).toEqual(["tops"]);
   });
 
@@ -143,12 +143,12 @@ describe("normaliseSecondaries (#206)", () => {
 
   it("never returns the primary itself", () => {
     // Ticking the primary, or something whose parent *is* the primary, must not
-    // put the primary into the secondaries — categoryMatcher already matches it.
+    // put the primary into the secondaries: categoryMatcher already matches it.
     expect(normaliseSecondaries("tops", ["tops"])).toEqual([]);
     expect(normaliseSecondaries("tops", ["shirts"])).toEqual(["shirts"]);
   });
 
-  it("drops a stale parent when the primary moves — the staleness guard", () => {
+  it("drops a stale parent when the primary moves (the staleness guard)", () => {
     // The piece was `shirts` and carried `tops`. Re-filed as `trousers`, the
     // old parent is simply not re-derived, so it disappears rather than
     // lingering and keeping the piece in Tops for ever.
@@ -166,7 +166,7 @@ describe("normaliseSecondaries (#206)", () => {
     ]);
   });
 
-  it("is idempotent — re-saving an already-normalised piece changes nothing", () => {
+  it("is idempotent: re-saving an already-normalised piece changes nothing", () => {
     const once = normaliseSecondaries("shirts", ["knitwear"]);
     expect(normaliseSecondaries("shirts", once).sort()).toEqual(once.sort());
   });

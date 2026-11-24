@@ -11,9 +11,9 @@ import { PrintButton } from "@/components/print-button";
  * The whole PDF feature rests on this button: every browser's print dialogue
  * offers **Save as PDF** as a destination, so this is what turns a web page
  * into the file that goes in the suitcase. No PDF library, no server-side image
- * fetching — which is why it is worth a test despite being four lines.
+ * fetching, which is why it is worth a test despite being four lines.
  */
-describe("#259 — the print button", () => {
+describe("#259: the print button", () => {
   it("opens the browser's print dialogue", async () => {
     const print = vi.fn();
     vi.stubGlobal("print", print);

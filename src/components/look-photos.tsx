@@ -34,17 +34,17 @@ export type LookPhoto = {
 /**
  * The owner's own photos of a Look (#98): a cover-first grid with set-cover (★)
  * and remove (✕) controls, plus an upload button. When empty, just the upload
- * control — the piece-collage stands in as the cover meanwhile.
+ * control; the piece-collage stands in as the cover meanwhile.
  *
  * Each photo opens the shared full-screen viewer (#195), the same one item
- * pages use — a look photo is usually a full-length shot of the outfit as worn,
+ * pages use: a look photo is usually a full-length shot of the outfit as worn,
  * so it is precisely the photo worth looking at closely.
  *
  * Three targets sit in the same square, and each does exactly one thing: the
  * photo enlarges, ★ sets the cover, ✕ deletes. The controls are siblings of the
  * photo button rather than nested inside it, so a click on either cannot reach
  * the photo; they also stop propagation explicitly, so that stays true if the
- * markup is ever restructured. **Deleting always asks first** — it is
+ * markup is ever restructured. **Deleting always asks first**: it is
  * irreversible and the ✕ sits directly on top of the photo.
  */
 export function LookPhotos({ lookId, photos: given }: { lookId: string; photos: LookPhoto[] }) {
@@ -95,7 +95,7 @@ export function LookPhotos({ lookId, photos: given }: { lookId: string; photos: 
       await deleteLookPhoto(fd);
       setConfirming(null);
       // The viewer may be showing the photo that just went, and every index
-      // behind it has shifted — close rather than show the wrong one.
+      // behind it has shifted, so close rather than show the wrong one.
       setViewerAt(null);
       toast.success("Photo removed");
       router.refresh();
@@ -130,7 +130,7 @@ export function LookPhotos({ lookId, photos: given }: { lookId: string; photos: 
 
       {photos.length === 0 ? (
         <p className="text-sm text-muted-foreground">
-          No photo yet — the collage of its pieces is used as the cover meanwhile.
+          No photo yet. The collage of its pieces is used as the cover meanwhile.
         </p>
       ) : (
         <ul className="grid grid-cols-2 gap-2 sm:grid-cols-3">

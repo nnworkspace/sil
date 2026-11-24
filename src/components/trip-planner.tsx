@@ -22,7 +22,7 @@ type Piece = {
 };
 
 /**
- * "Plan my trip" — the AI planner panel (specs/trip-planner, ADR-0010). One model
+ * "Plan my trip": the AI planner panel (specs/trip-planner, ADR-0010). One model
  * call returns a proposal of real wardrobe pieces grouped by occasion, reviewed
  * as a list or a grid, which the owner adds. Nothing is committed until "Add
  * selected". Human-in-the-loop.

@@ -36,7 +36,7 @@ describe("sleeve", () => {
 
   it("is not fooled by a denial", () => {
     // Inherited from the Compendium matcher, which had to learn this.
-    expect(piece({ description: "not sleeveless — it has proper long sleeves" }).sleeve).toBe(
+    expect(piece({ description: "not sleeveless: it has proper long sleeves" }).sleeve).toBe(
       "long",
     );
   });
@@ -74,7 +74,7 @@ describe("fit", () => {
 
   it("#229: takes bare 'fitted' from a name but never from prose", () => {
     // The catalogue writes "fitted yoke", "fitted bodice", "worn open over a
-    // fitted top" — none of which describe the garment's own fit.
+    // fitted top", none of which describe the garment's own fit.
     expect(piece({ name: "Fitted Shirt" }).fit).toBe("slim");
     expect(piece({ description: "long pleats from a fitted yoke" }).fit).toBeUndefined();
     expect(piece({ description: "worn open over a fitted top it traces the figure" }).fit)
@@ -86,7 +86,7 @@ describe("fit", () => {
   });
 });
 
-describe("length — the category rule", () => {
+describe("length: the category rule", () => {
   it("puts a dress on the mini→maxi scale", () => {
     expect(deriveFacets({ category: "dresses", name: "Midi Shirt Dress" }).length).toBe("midi");
     expect(deriveFacets({ category: "skirts", description: "knee-length" }).length).toBe("knee");
@@ -151,7 +151,7 @@ describe("the whole derivation", () => {
   });
 });
 
-describe("#229 — the three faults the first dry run exposed", () => {
+describe("#229: the three faults the first dry run exposed", () => {
   it("reads a length word separated from 'sleeve' by an adjective", () => {
     // This catalogue almost never writes "long sleeves" plainly. Fixed phrases
     // alone found only a handful of pieces.
@@ -168,7 +168,7 @@ describe("#229 — the three faults the first dry run exposed", () => {
   });
 
   it("does not read a trouser leg length as a sleeve length", () => {
-    // "High-Waist Wide-Leg Corduroy Trousers (3/4)" — the German copy says
+    // "High-Waist Wide-Leg Corduroy Trousers (3/4)": the German copy says
     // 7/8-Länge. Trousers have no sleeves.
     expect(
       deriveFacets({ category: "trousers", name: "High-Waist Wide-Leg Corduroy Trousers (3/4)" })
@@ -192,14 +192,14 @@ describe("#229 — the three faults the first dry run exposed", () => {
   });
 });
 
-describe("#229 — notes describe other garments, not this one", () => {
+describe("#229: notes describe other garments, not this one", () => {
   it("ignores a facet word that belongs to a different piece", () => {
     // Every one of these is real, and each tagged the wrong garment.
     const styling = (notes: string) => deriveFacets({ category: "tops", notes });
     expect(styling("the ideal fine layer to wear under the cropped blazers").length)
       .toBeUndefined();
     expect(styling("COS styles it over slim black cropped trousers").length).toBeUndefined();
-    expect(styling("wide beige culottes — and cropped ones at that").length).toBeUndefined();
+    expect(styling("wide beige culottes, and cropped ones at that").length).toBeUndefined();
     expect(styling("reads almost like a full A-line midi skirt on the body").silhouette)
       .toBeUndefined();
   });

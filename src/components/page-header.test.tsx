@@ -8,7 +8,7 @@ import { PageHeader } from "@/components/page-header";
  * The shared page heading (#305).
  *
  * **What this tier can and cannot say.** jsdom has no layout engine, so it
- * cannot see the thing this component exists for — that a long title wraps
+ * cannot see the thing this component exists for: that a long title wraps
  * instead of pushing the actions off the screen. #294 is the cautionary tale:
  * a control shipped at zero height and every component test passed.
  *
@@ -16,11 +16,11 @@ import { PageHeader } from "@/components/page-header";
  * instead of seven, no horizontal scroll), and these tests guard the two things
  * jsdom *can* see: that every slot renders, and that the classes this component
  * exists to guarantee are actually on the heading. Asserting a class is usually
- * a smell — here the classes **are** the contract, because four pages
+ * a smell, but here the classes **are** the contract, because four pages
  * previously each remembered a different subset of them.
  */
 
-describe("#305 — PageHeader", () => {
+describe("#305: PageHeader", () => {
   it("renders the title as the page's level-1 heading", () => {
     render(<PageHeader title="Autumn Design Week Workshops and Studio Visits in Copenhagen" />);
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
@@ -65,7 +65,7 @@ describe("#305 — PageHeader", () => {
     const { container } = render(
       <PageHeader title="x" actions={<button type="button">E</button>} />,
     );
-    // `firstElementChild` twice, not a `div > div` selector — `container` is
+    // `firstElementChild` twice, not a `div > div` selector: `container` is
     // itself a div, so that selector matches the wrapper first.
     const textColumn = container.firstElementChild?.firstElementChild;
     expect(textColumn?.className).toContain("min-w-0");

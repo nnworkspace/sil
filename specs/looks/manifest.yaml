@@ -1,4 +1,4 @@
-# Specification Set Manifest — Looks
+# Specification Set Manifest: Looks
 
 set_id: SPEC-SET-LOOKS
 version: "0.4.0"
@@ -7,11 +7,11 @@ status: DRAFT
 owner: nnworkspace
 
 description: |
-  Curated Looks — named groups of wardrobe pieces that go together (Phase 4,
+  Curated Looks: named groups of wardrobe pieces that go together (Phase 4,
   outfits). A group has a kind: a "set" is an intrinsic co-ord (pieces treated
   as a matching unit, often the same line or bought in one order), a "look" is a
   styled combination assembled from independent pieces. Same many-to-many model
-  (looks + look_items). A piece's "matching pieces" is derived from its Looks —
+  (looks + look_items). A piece's "matching pieces" is derived from its Looks,
   on its page: "In these Looks" + "Goes with" (the other pieces across them),
   curated so it stays signal, not noise. A Look can carry the owner's own photos
   of the outfit as worn (look_photos); the cover prefers an own photo and falls
@@ -54,4 +54,4 @@ changelog:
     summary: "Own photos per Look (look_photos); cover prefers an own photo, else the piece-collage."
   - version: "0.1.0"
     issue: 95
-    summary: "Initial curated Looks — looks + look_items, list/detail, per-piece In these Looks / Goes with."
+    summary: "Initial curated Looks: looks + look_items, list/detail, per-piece In these Looks / Goes with."

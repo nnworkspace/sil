@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-/** "Add to trip" on an item page — pick a trip to add this piece to. Idempotent
+/** "Add to trip" on an item page: pick a trip to add this piece to. Idempotent
  *  (`VAL-TRIP-05`): re-adding is a no-op, confirmed gently with a toast. */
 export function AddToTrip({
   itemId,

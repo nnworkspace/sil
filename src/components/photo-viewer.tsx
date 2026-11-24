@@ -7,8 +7,8 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
  * The full-screen photo viewer (#195).
  *
  * Extracted verbatim from `PhotoGallery`, which owned it alone until look
- * photos needed the same behaviour. It is deliberately **one** implementation:
- * the zoom/pan handling below is the accumulation of several rounds of fixes —
+ * photos needed the same behaviour. It is deliberately **one** implementation.
+ * The zoom/pan handling below is the accumulation of several rounds of fixes:
  * pan clamping so a stray drag cannot strand the image off-centre (#127), and
  * sizing to the *visual* viewport so a phone does not show only a corner of the
  * photo (#131). A second copy would have to earn all of that again, and would
@@ -29,7 +29,7 @@ export type ViewerPhoto = { id: string; url: string };
 
 const MIN_SCALE = 1;
 const MAX_SCALE = 8;
-const WHEEL_FACTOR = 1.15; // fixed step per wheel tick — smooth, matches the original viewer
+const WHEEL_FACTOR = 1.15; // fixed step per wheel tick: smooth, matches the original viewer
 
 export function PhotoViewer({
   photos,
@@ -49,7 +49,7 @@ export function PhotoViewer({
   const panRef = React.useRef({ x: 0, y: 0 });
 
   // Keep the latest onStep/onClose reachable from the listeners without making
-  // them effect dependencies — re-subscribing on every parent render would drop
+  // them effect dependencies: re-subscribing on every parent render would drop
   // an in-flight drag.
   const stepRef = React.useRef(onStep);
   const closeRef = React.useRef(onClose);
@@ -63,9 +63,9 @@ export function PhotoViewer({
     if (!img) return;
     // Clamp the pan to the amount the scaled image actually overflows the
     // visible box. At scale 1 the image already fits, so the pan is forced back
-    // to 0 and it stays dead-centre — previously a stray drag could slide it
+    // to 0 and it stays dead-centre; previously a stray drag could slide it
     // into a corner with no way to recover (#127). Measure the overlay (sized to
-    // the visual viewport) rather than window.inner* — on phones those describe
+    // the visual viewport) rather than window.inner*: on phones those describe
     // the layout viewport and are wrong while the URL bar shows or the page is
     // pinch-zoomed (#131).
     const box = overlayRef.current;
@@ -111,7 +111,7 @@ export function PhotoViewer({
       setScale(scaleRef.current * (e.deltaY < 0 ? WHEEL_FACTOR : 1 / WHEEL_FACTOR));
     };
     const onMouseDown = (e: MouseEvent) => {
-      // Only pan when zoomed in — matches the touch handler. Chrome fires
+      // Only pan when zoomed in, which matches the touch handler. Chrome fires
       // compatibility mouse events after a tap, so without this a plain tap on a
       // phone dragged the un-zoomed image off-centre (#127).
       if (e.button !== 0 || scaleRef.current <= 1) return;
@@ -196,8 +196,8 @@ export function PhotoViewer({
   }, [index, apply, reset]);
 
   // Size and position the viewer to the *visual* viewport, and keep the page
-  // behind it from scrolling. On phones the layout viewport — what `inset-0` and
-  // vh/vw units describe — is larger than what is actually on screen while the
+  // behind it from scrolling. On phones the layout viewport (what `inset-0` and
+  // vh/vw units describe) is larger than what is actually on screen while the
   // URL bar is visible or the page is pinch-zoomed, so the viewer was drawn
   // bigger than the screen and only a corner of the photo was visible (#131).
   React.useEffect(() => {

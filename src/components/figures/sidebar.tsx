@@ -5,7 +5,7 @@ import Link from "next/link";
  * global filters, so no module carries a private filter that could contradict
  * it (VAL-FIG-06).
  *
- * Filters are links, not form state — a filtered view is linkable, survives a
+ * Filters are links, not form state: a filtered view is linkable, survives a
  * refresh and the back button behaves. Section links are plain anchors, so
  * navigation works with JavaScript disabled.
  */

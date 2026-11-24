@@ -40,7 +40,7 @@ const localToday = () => {
 /**
  * The item page's lifecycle actions (specs/archive). Archive and Delete live in
  * one component so the delete confirmation can hand straight over to the archive
- * modal (OP-ARCHIVE-INSTEAD) — deleting a piece you really owned destroys its
+ * modal (OP-ARCHIVE-INSTEAD): deleting a piece you really owned destroys its
  * history, so the destructive path stays possible but is no longer the obvious
  * one. An archived piece shows Restore instead of Archive.
  */
@@ -52,9 +52,9 @@ export function ItemActions({
 }: {
   id: string;
   name: string;
-  /** Whether the piece is archived — drives Archive vs Restore. */
+  /** Whether the piece is archived, which drives Archive vs Restore. */
   archived: boolean;
-  /** The active looks this piece is in — after archiving, they become
+  /** The active looks this piece is in. After archiving, they become
    *  "incomplete", so we remind the owner to edit them (#170). No cascade. */
   looks?: { id: string; name: string }[];
 }) {
@@ -132,7 +132,7 @@ export function ItemActions({
           <DialogHeader>
             <DialogTitle>Archive this piece?</DialogTitle>
             <DialogDescription>
-              It leaves your active wardrobe but keeps everything — photos, wear
+              It leaves your active wardrobe but keeps everything: photos, wear
               history, and the looks and trips it was part of.
             </DialogDescription>
           </DialogHeader>
@@ -214,7 +214,7 @@ export function ItemActions({
           {!archived ? (
             <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
               Deleting is for pieces entered by mistake. If you really owned this
-              and it&apos;s gone — sold, gifted, lost —{" "}
+              and it&apos;s gone (sold, gifted, lost),{" "}
               <strong className="text-foreground">archive</strong> it instead to
               keep its history.
             </div>
@@ -240,7 +240,7 @@ export function ItemActions({
         </DialogContent>
       </Dialog>
 
-      {/* After archiving a piece that was in looks, remind (not cascade) — the
+      {/* After archiving a piece that was in looks, remind (not cascade): the
           looks now contain a retired piece and may need editing (#170). */}
       <Dialog open={reminderOpen} onOpenChange={setReminderOpen}>
         <DialogContent className="sm:max-w-sm">
@@ -248,8 +248,8 @@ export function ItemActions({
             <DialogTitle>This piece was in {looks.length === 1 ? "a look" : "some looks"}</DialogTitle>
             <DialogDescription>
               {name} has left your wardrobe, so {looks.length === 1 ? "this look is" : "these looks are"}{" "}
-              now incomplete. The {looks.length === 1 ? "look" : "looks"} kept their other pieces —
-              edit or retire {looks.length === 1 ? "it" : "them"} when you like.
+              now incomplete. The {looks.length === 1 ? "look" : "looks"} kept their other pieces.
+              Edit or retire {looks.length === 1 ? "it" : "them"} when you like.
             </DialogDescription>
           </DialogHeader>
 

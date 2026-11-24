@@ -10,14 +10,14 @@ import { tripDays, type TripDay } from "@/lib/trip-days";
  *
  * Four kinds of group come out, in this order, and each earns its place:
  *
- *   1. **Across all days** — the shoes, the blazer, the earrings. Things that
+ *   1. **Across all days**: the shoes, the blazer, the earrings. Things that
  *      serve the whole trip and would be silly to file under a date.
  *   2. **One group per day** of the trip, including the empty ones: an empty
  *      Thursday is the most useful thing this view can tell you.
- *   3. **Unscheduled** — packed, but not yet placed. Every piece in every trip
+ *   3. **Unscheduled**: packed, but not yet placed. Every piece in every trip
  *      that existed before this feature starts here, so it must be visible or
  *      they vanish without being gone.
- *   4. **Orphaned days** — assignments whose date is no longer inside the trip,
+ *   4. **Orphaned days**: assignments whose date is no longer inside the trip,
  *      which happens the moment someone shortens a trip. Shown, and labelled,
  *      rather than silently dropped: the piece is still packed and the plan
  *      still says something about it.
@@ -27,7 +27,7 @@ export type DayAssigned = { day: string };
 export type PlannableItem<T> = { itemId: string; everyDay: boolean; days: DayAssigned[] } & T;
 
 export type DayGroup<T> = {
-  /** `all` | an ISO day | `unscheduled` | `orphan` — stable, and used as a key. */
+  /** `all` | an ISO day | `unscheduled` | `orphan`: stable, and used as a key. */
   key: string;
   label: string;
   /** The ISO day a piece would be assigned to by adding it here; null when the
@@ -44,7 +44,7 @@ export type DayPlan<T> = {
   noDaysReason: "no-dates" | "bad-range" | "too-long" | null;
 };
 
-/** Why `tripDays` came back empty — the view says which, rather than showing an
+/** Why `tripDays` came back empty: the view says which, rather than showing an
  *  empty frame and leaving the owner to guess what it wants from them. */
 function reasonFor(start: string | null, end: string | null): DayPlan<never>["noDaysReason"] {
   if (!start || !end) return "no-dates";
@@ -86,8 +86,8 @@ export function dayPlan<T>(
   // states, and conflating them would make the second one meaningless.
   //
   // The test is "no day assignments at all", not "no assignment in range". A
-  // piece whose only day fell outside a shortened trip has been placed — it is
-  // an orphan, below — and listing it here as well would show it twice.
+  // piece whose only day fell outside a shortened trip has been placed (it is
+  // an orphan, below), and listing it here as well would show it twice.
   groups.push({
     key: "unscheduled",
     label: "Not scheduled yet",

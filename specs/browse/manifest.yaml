@@ -1,4 +1,4 @@
-# Specification Set Manifest — Browse, Filter & Search
+# Specification Set Manifest: Browse, Filter & Search
 
 set_id: SPEC-SET-BROWSE
 version: "0.5.0"
@@ -12,7 +12,7 @@ description: |
   search (name / brand / material / colour / tags). v0.2.0 (#105) reshapes the UI
   into a collapsible "Search & filter" panel with one multi-select dropdown per
   facet, and makes the same panel available on category pages (AND-combined with
-  the category roll-up). Server-side, URL-reflected, no new data model — a
+  the category roll-up). Server-side, URL-reflected, no new data model: a
   read-only lens over the Catalog item model. v0.4.0 (#135) adds a favourites
   toggle, which the Favourites nav entry deep-links to. Keyword-only; semantic/AI
   search is a future phase.

@@ -9,7 +9,7 @@ import { lookArchiveInputSchema } from "@/lib/validation";
 
 export type ArchiveResult = { ok: true } | { ok: false; error: string };
 
-/** The member item ids of a look — their item pages show "In these looks", which
+/** The member item ids of a look: their item pages show "In these looks", which
  *  changes when the look is archived/restored (an archived look drops out). */
 async function memberItemIds(lookId: string): Promise<string[]> {
   const rows = await db
@@ -28,7 +28,7 @@ function revalidateLookPaths(lookId: string, itemIds: string[]) {
 /**
  * Archive a look (#170). Soft, reversible: the look, its members and its photos
  * are all kept, it simply stops counting as an active look (archived_at IS NULL
- * ⇒ active). The pieces inside are untouched — only the look leaves active
+ * ⇒ active). The pieces inside are untouched; only the look leaves active
  * views, and it drops out of each member's "In these looks". Re-archiving
  * updates the values rather than erroring.
  */

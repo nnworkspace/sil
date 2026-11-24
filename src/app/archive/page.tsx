@@ -13,7 +13,7 @@ export const dynamic = "force-dynamic";
 
 type Archived = Awaited<ReturnType<typeof getArchivedItems>>[number];
 
-/** One compact row in the list view — easier to scan a long history than cards. */
+/** One compact row in the list view: easier to scan a long history than cards. */
 function ArchiveRow({ item }: { item: Archived }) {
   const photo = item.photos[0];
   return (
@@ -48,7 +48,7 @@ function ArchiveRow({ item }: { item: Archived }) {
 
 type ArchivedLook = Awaited<ReturnType<typeof getArchivedLooks>>[number];
 
-/** An archived look on the unified archive (#170) — its cover (own photo or the
+/** An archived look on the unified archive (#170): its cover (own photo or the
  *  member collage) with the reason/date, clickable through to the look. */
 function ArchivedLookCard({ look }: { look: ArchivedLook }) {
   const cover = look.coverUrls[0];
@@ -81,7 +81,7 @@ function ArchivedLookCard({ look }: { look: ArchivedLook }) {
 
 /**
  * The archive (specs/archive, OP-VIEW-ARCHIVE; looks added in #170): everything
- * that has left the wardrobe — pieces grouped by category, then retired looks —
+ * that has left the wardrobe (pieces grouped by category, then retired looks),
  * ordered newest-gone-first, so it reads as a timeline. Everything stays
  * clickable; an archived piece or look opens and edits (or restores) normally.
  */
@@ -134,8 +134,8 @@ export default async function ArchivePage({
           <Archive className="mx-auto mb-3 size-8 text-muted-foreground" />
           <p className="text-muted-foreground">Nothing archived yet.</p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Archiving retires a piece you no longer own — sold, gifted, lost or
-            worn out — while keeping its photos and wear history. Deleting is only
+            Archiving retires a piece you no longer own (sold, gifted, lost or
+            worn out) while keeping its photos and wear history. Deleting is only
             for pieces entered by mistake.
           </p>
         </div>

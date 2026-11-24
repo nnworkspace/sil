@@ -1,6 +1,6 @@
 /**
  * Weather helpers (specs/weather). Open-Meteo is free, keyless, and CORS-enabled,
- * so the widget fetches it directly from the client — no server route, no secret.
+ * so the widget fetches it directly from the client: no server route, no secret.
  */
 
 import {

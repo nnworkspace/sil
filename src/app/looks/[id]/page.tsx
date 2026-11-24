@@ -117,7 +117,7 @@ export default async function LookDetailPage({
           <span className="text-muted-foreground">
             · contains {archivedMembers.length}{" "}
             {archivedMembers.length === 1 ? "piece" : "pieces"} that left the
-            wardrobe — edit the look to keep it wearable.
+            wardrobe. Edit the look to keep it wearable.
           </span>
         </div>
       ) : null}
@@ -159,7 +159,7 @@ export default async function LookDetailPage({
       {total === 0 ? (
         <div className="rounded-lg border border-dashed py-16 text-center">
           <p className="text-muted-foreground">
-            This look is empty — add the pieces that make it up.
+            This look is empty. Add the pieces that make it up.
           </p>
         </div>
       ) : (

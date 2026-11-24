@@ -13,7 +13,7 @@ import {
  * "Wore this today" on a Look (#320).
  *
  * A Look **is** a set of pieces that go together, so logging one is the case
- * batch wear logging exists for — and it needs no selection at all.
+ * batch wear logging exists for, and it needs no selection at all.
  *
  * This is also why the looks *list* deliberately has no selection mode: picking
  * two rows there could log eight pieces with the count invisible at the moment

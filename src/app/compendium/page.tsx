@@ -14,7 +14,7 @@ export default function CompendiumPage() {
       <h1 className="font-serif text-3xl font-normal tracking-tight">Compendium</h1>
       <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">
         The knowledge this wardrobe runs on: what its pieces are made of, and how its own
-        notation works. Everything here is anchored in the catalogue — an entry earns its
+        notation works. Everything here is anchored in the catalogue: an entry earns its
         place by explaining something you own.
       </p>
 

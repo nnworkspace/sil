@@ -80,7 +80,7 @@ export async function deleteTrip(formData: FormData): Promise<void> {
 
 // --- Packing list -----------------------------------------------------------
 
-/** Add one or more pieces to a trip. Idempotent — re-adding is a no-op
+/** Add one or more pieces to a trip. Idempotent: re-adding is a no-op
  *  (`VAL-TRIP-05`, on-conflict-do-nothing). Only existing items are linked. */
 export async function addTripItems(formData: FormData): Promise<void> {
   const tripId = text(formData, "tripId");

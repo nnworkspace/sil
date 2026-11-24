@@ -44,12 +44,12 @@ export type PlanResult =
   | { ok: false; error: string };
 
 const AI_BUSY_MESSAGE =
-  "The AI planner is busy right now — please wait a moment and try again.";
+  "The AI planner is busy right now. Please wait a moment and try again.";
 
 const AI_QUOTA_MESSAGE =
-  "The AI planner has reached its usage limit — the free AI tier caps how many plans you can generate per minute and per day. Please wait a little and try again; if it keeps happening you've likely hit today's limit, which resets tomorrow. You can build the packing list manually in the meantime.";
+  "The AI planner has reached its usage limit: the free AI tier caps how many plans you can generate per minute and per day. Please wait a little and try again; if it keeps happening you've likely hit today's limit, which resets tomorrow. You can build the packing list manually in the meantime.";
 
-/** The free-tier usage limit was hit — HTTP 429 / RESOURCE_EXHAUSTED. Kept
+/** The free-tier usage limit was hit (HTTP 429 / RESOURCE_EXHAUSTED). Kept
  *  distinct from a transient overload so the owner gets a clear message (an
  *  immediate retry won't help a daily cap). */
 function isQuotaError(err: unknown): boolean {
@@ -62,7 +62,7 @@ function isQuotaError(err: unknown): boolean {
   );
 }
 
-/** Transient AI failure (overload / timeout) worth retrying — excludes quota. */
+/** Transient AI failure (overload / timeout) worth retrying. Excludes quota. */
 function isTransientAIError(err: unknown): boolean {
   const e = RetryError.isInstance(err) ? err.lastError : err;
   if (APICallError.isInstance(e)) {
@@ -92,7 +92,7 @@ function tripDays(start: string | null, end: string | null): number | null {
 /**
  * Generate a packing proposal for a trip from the owner's brief (OP-PLAN-GENERATE).
  * Saves the brief, calls the model once, validates every proposed id against the
- * wardrobe (drops unknowns — no hallucinated pieces), and returns an enriched
+ * wardrobe (drops unknowns, so no hallucinated pieces), and returns an enriched
  * proposal for review. Writes NOTHING to the packing list (that is `addTripItems`
  * on accept). See specs/trip-planner + ADR-0010.
  */
@@ -122,7 +122,7 @@ export async function planTrip(
 
   const items = await getBrowseItems(NO_FILTERS);
   if (items.length === 0) {
-    return { ok: false, error: "Your wardrobe is empty — add some pieces first." };
+    return { ok: false, error: "Your wardrobe is empty. Add some pieces first." };
   }
   const catalogItems: CatalogItem[] = items.map((i) => ({
     id: i.id,
@@ -133,7 +133,7 @@ export async function planTrip(
     tags: i.tags,
   }));
 
-  // Destination forecast — best-effort, never blocks (SPEC-TRIPS §forecast).
+  // Destination forecast: best-effort, never blocks (SPEC-TRIPS §forecast).
   let forecast: string | null = null;
   if (trip.destination) {
     try {
@@ -147,7 +147,7 @@ export async function planTrip(
         }
       }
     } catch {
-      /* forecast unavailable — proceed without it */
+      /* forecast unavailable; proceed without it */
     }
   }
 

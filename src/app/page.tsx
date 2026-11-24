@@ -51,7 +51,7 @@ export default async function Home() {
           </p>
         </div>
         {/* The home page lists categories, not pieces, so there is nothing here
-            to narrow — this field is an entry point and submits to /browse
+            to narrow. This field is an entry point and submits to /browse
             (#240). Deliberately not live: navigating away after one keystroke
             would be worse than useless. */}
         <div className="flex w-full flex-wrap items-center gap-3 sm:w-auto sm:justify-end">
@@ -88,7 +88,7 @@ export default async function Home() {
                         </span>
                       </div>
                     ) : (
-                      // No imagery yet — the plain centred placeholder.
+                      // No imagery yet: the plain centred placeholder.
                       <div className="flex h-full flex-col items-center justify-center gap-1 bg-muted/40 p-4 text-center">
                         <span className="text-lg font-medium">{category.label}</span>
                         <span className="text-sm text-muted-foreground">

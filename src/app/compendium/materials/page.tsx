@@ -24,7 +24,7 @@ export const metadata = {
  *
  * Two counts are shown per group and they mean different things: how many terms
  * are written, and how many pieces those terms describe between them. The
- * second is a set union, not a sum — a cotton poplin shirt is one piece under
+ * second is a set union, not a sum: a cotton poplin shirt is one piece under
  * Constructions however many entries within the group it matches (VAL-COMP-05).
  */
 export default async function MaterialsPage() {
@@ -67,7 +67,7 @@ export default async function MaterialsPage() {
 
       <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
         Every count on these pages is worked out from the catalogue as the page loads, by reading
-        the composition labels and the descriptions — nothing is written down twice. Across the
+        the composition labels and the descriptions. Nothing is written down twice. Across the
         groups the numbers overlap freely: a linen shirt is counted under Fibres and again under
         Constructions, because it is an answer to both questions.
       </p>

@@ -7,15 +7,15 @@ import { compareBerths } from "@/lib/berths";
  *
  * The load-bearing test is the double-digit one. Every wardrobe, rack and shelf
  * number in the catalogue is a single digit today, so a plain string sort gives
- * the right answer by luck — and would go on giving it until the first shelf 10,
+ * the right answer by luck, and would go on giving it until the first shelf 10,
  * at which point nothing fails and the list is simply wrong.
  */
 
 const sorted = (codes: string[]) => [...codes].sort(compareBerths);
 
-describe("#227 — berths read as a walk through the room", () => {
+describe("#227: berths read as a walk through the room", () => {
   it("compares numbers as numbers, not as text", () => {
-    // Lexically this is S10, S2, S3 — which is the bug this test exists for.
+    // Lexically this is S10, S2, S3; that is the bug this test exists for.
     expect(sorted(["R1-W6R2-S10", "R1-W6R2-S3", "R1-W6R2-S2"])).toEqual([
       "R1-W6R2-S2",
       "R1-W6R2-S3",
@@ -85,7 +85,7 @@ describe("#227 — berths read as a walk through the room", () => {
   });
 });
 
-describe("#251 — sorting a cabinet beside the wardrobes", () => {
+describe("#251: sorting a cabinet beside the wardrobes", () => {
   it("puts room 0 first, such as a hallway you walk through", () => {
     expect(["R1-W6R2-S4", "R0-C1-D4"].sort(compareBerths)).toEqual([
       "R0-C1-D4",

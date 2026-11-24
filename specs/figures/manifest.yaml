@@ -1,4 +1,4 @@
-# Specification Set Manifest — Figures
+# Specification Set Manifest: Figures
 
 set_id: SPEC-SET-FIGURES
 version: "0.1.0"
@@ -9,7 +9,7 @@ owner: nnworkspace
 description: |
   A root-level statistics tab answering three questions in the order they are
   actually asked: what the wardrobe is made of, what it cost and when it
-  arrived, and what actually gets worn. Adds no table and no column — every
+  arrived, and what actually gets worn. Adds no table and no column: every
   number is derived from the existing catalogue, so the feature is a read
   surface over data already kept. A left sidebar carries section navigation and
   the global filters (active vs including archived, period), so individual

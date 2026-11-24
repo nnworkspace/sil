@@ -21,24 +21,24 @@ account. The owner has prior experience with other frontend frameworks; Next.js/
 
 ## Decision drivers
 
-- **Vercel-native deployment** — zero-config deploy, image optimization, server
+- **Vercel-native deployment**: zero-config deploy, image optimization, server
   functions, preview URLs.
-- **Ecosystem density** — the richest supply of components, answers, and (relevant
+- **Ecosystem density**: the richest supply of components, answers, and (relevant
   here) LLM training data, since the app is built largely with AI assistance.
-- **Learning value** — the owner wants to meet the one modern idea they had not
+- **Learning value**: the owner wants to meet the one modern idea they had not
   yet worked with: React Server Components.
 - **Speed to ship** for a personal project.
-- **Stack portability as a hedge** — the domain is captured in stack-agnostic
+- **Stack portability as a hedge**: the domain is captured in stack-agnostic
   specs, so the framework is a reversible choice, not a life sentence.
 
 ## Considered options
 
-1. **Next.js (App Router) + React + TypeScript** — largest ecosystem, best Vercel
+1. **Next.js (App Router) + React + TypeScript**: largest ecosystem, best Vercel
    integration, Server Components; React is new to the owner.
-2. **Nuxt + Vue** — leverages the owner's Vue familiarity; smaller ecosystem, less
+2. **Nuxt + Vue**: leverages the owner's Vue familiarity; smaller ecosystem, less
    Vercel mindshare.
-3. **SvelteKit** — excellent DX and small bundles; smallest ecosystem of the three.
-4. **Astro** — strongest for content-heavy sites, weaker for a highly interactive app.
+3. **SvelteKit**: excellent DX and small bundles; smallest ecosystem of the three.
+4. **Astro**: strongest for content-heavy sites, weaker for a highly interactive app.
 
 ## Decision
 
@@ -60,7 +60,7 @@ open by writing the domain in portable specs (see ADR-0000 and the spec approach
 **Negative / accepted trade-offs**
 
 - React's model (re-render + hooks, Server/Client component split) is new to the
-  owner — a real learning curve.
+  owner, a real learning curve.
 - shadcn's `base-nova` preset uses Base UI, not Radix, so some copy-paste
   snippets from the wider shadcn/Radix ecosystem need small adaptation (e.g.
   `render` prop instead of `asChild`).
@@ -70,7 +70,7 @@ open by writing the domain in portable specs (see ADR-0000 and the spec approach
 
 - Server Components friction outweighs the benefit for this app's needs.
 - The specs mature enough that regenerating the app in another stack (e.g. Nuxt)
-  becomes attractive — the portability hedge is deliberately exercisable.
+  becomes attractive; the portability hedge is deliberately exercisable.
 - Vercel ceases to be the deployment target.
 
 ## Notes

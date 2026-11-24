@@ -32,7 +32,7 @@ export default async function NewItemPage({
         </h1>
         {copiedFrom ? (
           <p className="mt-1 text-sm text-muted-foreground">
-            Duplicated from an existing piece — change the colour and add photos,
+            Duplicated from an existing piece. Change the colour and add photos,
             then save as a new item.
           </p>
         ) : null}

@@ -17,7 +17,7 @@ export const dynamic = "force-dynamic";
  *
  * The owner wants one sheet that works in two places at once: read on a phone
  * while packing, and printed on A4 to tick off in pen. That is the constraint
- * that shapes everything here — two columns on a phone, four on paper, and a
+ * that shapes everything here: two columns on a phone, four on paper, and a
  * checkbox that is a **drawn square rather than a control**.
  *
  * The square is deliberate. The trip page already owns packed/unpacked state;
@@ -25,8 +25,8 @@ export const dynamic = "force-dynamic";
  * nothing would be worse than one that plainly does not, so it is a border and
  * nothing else, in both media.
  *
- * The photo leads because the owner asked to recognise a piece at a glance —
- * the name is confirmation, not identification.
+ * The photo leads because the owner asked to recognise a piece at a glance.
+ * The name is confirmation, not identification.
  */
 
 const label = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
@@ -86,7 +86,7 @@ export default async function TripPrintPage({
             {packed} of {items.length} packed
           </p>
         </div>
-        {/* Hidden in print — a button on paper is just a grey rectangle. */}
+        {/* Hidden in print: a button on paper is just a grey rectangle. */}
         <div className="flex items-center gap-3 print:hidden">
           {days.length > 0 ? (
             <a
@@ -124,13 +124,13 @@ export default async function TripPrintPage({
 
       {groups.length === 0 ? (
         <p className="py-10 text-center text-sm text-muted-foreground">
-          Nothing packed yet — add pieces from the wardrobe.
+          Nothing packed yet. Add pieces from the wardrobe.
         </p>
       ) : (
         // Photos are the point of this sheet, but nine categories of one piece
         // each is mostly whitespace at four columns. Five columns with a
         // slightly shorter photo roughly halves the page count without making a
-        // garment unrecognisable — measured on a real trip, below.
+        // garment unrecognisable (measured on a real trip, below).
         <div className="space-y-6 print:space-y-3">
           {groups.map(({ slug, label: catLabel, rows }) => (
             // A category never splits across a page: a heading stranded at the

@@ -51,7 +51,7 @@ export default async function LooksPage() {
         <div className="rounded-lg border border-dashed py-16 text-center">
           <Layers className="mx-auto size-10 text-muted-foreground" />
           <p className="mt-3 text-muted-foreground">
-            No looks yet. Group pieces that go together — a matching set or a styled look.
+            No looks yet. Group pieces that go together: a matching set or a styled look.
           </p>
           <div className="mt-4 flex justify-center">
             <NewLookButton />

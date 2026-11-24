@@ -7,13 +7,13 @@ import { inferTags, toFormValues } from "@/lib/extraction";
  *
  * The importer prefills the add form and the owner reviews it, so every tag
  * here is a *proposal* she can untick. What these tests defend is that the
- * proposal is **read out of the page** rather than invented — the same rule a
+ * proposal is **read out of the page** rather than invented: the same rule a
  * hand-filed piece gets, from the same functions.
  */
 
 const extracted = (o: Record<string, unknown>) => ({ name: null, ...o });
 
-describe("#107 — facets come from the extracted text", () => {
+describe("#107: facets come from the extracted text", () => {
   it("reads the facets a product page states", () => {
     const tags = inferTags(
       extracted({
@@ -29,7 +29,7 @@ describe("#107 — facets come from the extracted text", () => {
 
   it("reads a facet that only the feature list mentions", () => {
     // The extraction contract preserves the bulleted feature list precisely so
-    // this works — "Never drop or flatten a bullet list".
+    // this works: "Never drop or flatten a bullet list".
     const tags = inferTags(
       extracted({ name: "Poplin Shirt", description: "- Grandad collar\n- Long cuffed sleeves" }),
       "shirts",

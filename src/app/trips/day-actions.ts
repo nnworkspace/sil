@@ -12,7 +12,7 @@ import { tripDays, isTripDay } from "@/lib/trip-days";
  *
  * Every action here is **idempotent and additive**: assigning a piece to a day
  * it is already on is a no-op, and assigning one that is not yet on the trip
- * adds it first. That is what lets the picker be the same picker everywhere —
+ * adds it first. That is what lets the picker be the same picker everywhere:
  * "add this to Tuesday" should not fail because the piece was not packed yet.
  *
  * The one invariant worth stating: `trip_items` remains the single membership.
@@ -42,7 +42,7 @@ async function ensurePacked(tripId: string, itemId: string) {
 }
 
 /** Only days the trip actually has may be written. A day outside the range is
- *  rejected rather than stored — the view can *show* an orphan left behind by
+ *  rejected rather than stored: the view can *show* an orphan left behind by
  *  a shortened trip, but it must never be able to create one. */
 async function tripHasDay(tripId: string, day: string): Promise<boolean> {
   const trip = await db.query.trips.findFirst({
@@ -68,7 +68,7 @@ export async function assignToDay(formData: FormData) {
   revalidate(tripId);
 }
 
-/** Take a piece off a day. It stays packed — that is the whole point of
+/** Take a piece off a day. It stays packed. That is the whole point of
  *  keeping membership and planning apart. */
 export async function unassignFromDay(formData: FormData) {
   const tripId = field(formData, "tripId");
@@ -89,7 +89,7 @@ export async function unassignFromDay(formData: FormData) {
 }
 
 /**
- * Move a piece into — or out of — "Across all days".
+ * Move a piece into, or out of, "Across all days".
  *
  * Turning it **on** clears the piece's individual days. Holding both would
  * mean the same piece showing under Monday *and* under a group that says it is

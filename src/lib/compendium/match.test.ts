@@ -12,7 +12,7 @@ import { COMPENDIUM_ENTRIES, findEntry } from "@/lib/compendium/entries";
  * are really in the catalogue.
  */
 
-describe("containsToken — boundaries", () => {
+describe("containsToken: boundaries", () => {
   it("matches a token surrounded by digits, punctuation or spaces", () => {
     expect(containsToken("95% viscose, 5% elastan.", "viscose")).toBe(true);
     expect(containsToken("95% viscose, 5% elastan.", "elastan")).toBe(true);
@@ -22,7 +22,7 @@ describe("containsToken — boundaries", () => {
   it("does not match inside a longer word", () => {
     // `ribbon` turns up in real product copy; `rib` must not find it.
     expect(containsToken("silk ribbon tie", "rib")).toBe(false);
-    // `camelwool` is real too — which is why the wool entry lists it explicitly
+    // `camelwool` is real too, which is why the wool entry lists it explicitly
     // rather than relying on `wool` to reach inside the word.
     expect(containsToken("52% camelwool, 48% polyester", "wool")).toBe(false);
     expect(containsToken("52% camelwool, 48% polyester", "camelwool")).toBe(true);
@@ -45,7 +45,7 @@ describe("containsToken — boundaries", () => {
 describe("negation", () => {
   it("does not claim a material the text explicitly denies", () => {
     // The real case: a jumper whose hem is "left to roll instead of being
-    // finished with a rib welt" was listed under Rib — the one construction it
+    // finished with a rib welt" was listed under Rib, the one construction it
     // does not have.
     expect(containsToken("left to roll instead of being finished with a rib welt", "rib")).toBe(
       false,
@@ -72,7 +72,7 @@ describe("negation", () => {
   });
 });
 
-describe("matchesPiece — rules", () => {
+describe("matchesPiece: rules", () => {
   const cottonShirt = { material: "100% cotton poplin", description: null, notes: null };
 
   it("matches on the material field by default", () => {
@@ -112,11 +112,11 @@ describe("tokens that earn their place", () => {
 
   it("still finds every genuine corduroy piece", () => {
     // Every corduroy piece in this catalogue says the word somewhere in its
-    // own text — which is exactly why the bare `cord` token was redundant.
+    // own text, which is exactly why the bare `cord` token was redundant.
     for (const text of [
       "100% cotton (fine-wale corduroy)",
-      "the cord is a medium wale — pure cotton corduroy with real weight",
-      "angenehm weicher, warmer cord — soft, warm corduroy",
+      "the cord is a medium wale: pure cotton corduroy with real weight",
+      "angenehm weicher, warmer cord (soft, warm corduroy)",
       "needlecord, finer than a classic wale",
     ]) {
       expect(matchesPiece(findEntry("corduroy")!.match, { material: text }), text).toBe(true);
@@ -125,7 +125,7 @@ describe("tokens that earn their place", () => {
 });
 
 describe("the entry set itself", () => {
-  it("has unique slugs — a slug is a URL contract", () => {
+  it("has unique slugs: a slug is a URL contract", () => {
     const slugs = COMPENDIUM_ENTRIES.map((e) => e.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
   });
@@ -156,7 +156,7 @@ describe("the entry set itself", () => {
       // string                                        should match       should not
       ["72% cotton, 23% nylon, 5% elastane", ["cotton", "polyamide", "elastane"], ["polyester"]],
       ["100% mulberry silk", ["silk"], ["cotton"]],
-      ["100% cotton (mercerised — silky sheen)", ["cotton", "mercerised"], ["silk"]],
+      ["100% cotton (mercerised, silky sheen)", ["cotton", "mercerised"], ["silk"]],
       ["shell: 94% cotton, 6% elastane (120 gsm)", ["cotton", "elastane"], ["wool"]],
       ["sterling silver", [], ["cotton", "silk"]],
     ];
@@ -177,7 +177,7 @@ describe("the entry set itself", () => {
  * Two more ways a mention is not a property (#243), both found by sweeping the
  * live catalogue after three new entries were written.
  */
-describe("#243 — mentions that describe something else", () => {
+describe("#243: mentions that describe something else", () => {
   it("does not file a piece by a cross-reference to another piece", () => {
     // A note on a cardigan that links to another piece. The link names a *jacquard* jacket,
     // and the cardigan was being filed under Jacquard because of it.
@@ -212,14 +212,14 @@ describe("#243 — mentions that describe something else", () => {
  * Every string below has the shape of a real one, from a catalogue sweep when
  * `/compendium/materials/denim` listed about half its pieces wrongly.
  */
-describe("#267 — a garment worn *with* this one is not this one's cloth", () => {
+describe("#267: a garment worn *with* this one is not this one's cloth", () => {
   const denim = (text: string) =>
     matchesPiece({ tokens: ["denim"], fields: ["description", "notes"] }, { notes: text });
 
   it("does not read a colour-pairing list as a composition", () => {
     // Colour notes of the kind an owner writes. "Denim" here is a
     // shade to sit beside, not a cloth this garment is made of.
-    expect(denim("Cobalt is a cool, saturated blue — it sits with charcoal, ivory and denim")).toBe(
+    expect(denim("Cobalt is a cool, saturated blue: it sits with charcoal, ivory and denim")).toBe(
       false,
     );
     expect(denim("Pale blue is cool and quiet: it belongs with navy, charcoal, white and denim")).toBe(
@@ -245,7 +245,7 @@ describe("#267 — a garment worn *with* this one is not this one's cloth", () =
         { notes: "**How I wear it:** over a jersey vest, buttoned on a cold morning" },
       ),
     ).toBe(false);
-    expect(denim("White sits under everything — the new denim jacket, the blazers")).toBe(false);
+    expect(denim("White sits under everything (the new denim jacket, the blazers)")).toBe(false);
   });
 
   it("reads 'a denim look' as the denial it is", () => {
@@ -264,13 +264,13 @@ describe("#267 — a garment worn *with* this one is not this one's cloth", () =
       "Cut from a notably heavyweight, thick denim that holds its shape",
       "Cropped jacket in nubby, slub-textured denim.",
       "premium undyed cotton denim, heavier than the Linden & Co version",
-      "A cape in pale bleached denim — cut as a true cape",
+      "A cape in pale bleached denim, cut as a true cape",
     ]) {
       expect(denim(text), text).toBe(true);
     }
   });
 
-  it("does not read 'styled with' as pairing — it usually means 'features'", () => {
+  it("does not read 'styled with' as pairing: it usually means 'features'", () => {
     // The case the catalogue sweep caught, and the reason `styled with` is not
     // in the guard: this is a true A-line, and the first draft hid it.
     const description =
@@ -288,19 +288,19 @@ describe("#267 — a garment worn *with* this one is not this one's cloth", () =
 
   it("leaves 'over' alone when it is not about layering", () => {
     // `over` is the broadest token in the guard, and the lookbehind is only 44
-    // characters — far enough back and the mention survives.
+    // characters: far enough back and the mention survives.
     expect(denim("Bought over the summer sale, this is a rigid cotton denim five-pocket")).toBe(
       true,
     );
   });
 });
 
-describe("#243 — a link target is not prose", () => {
+describe("#243: a link target is not prose", () => {
   it("does not match on the URL of a Compendium link", () => {
     // The wrap top: the sentence says it is *not* one, and the link address is
     // what filed it as one.
     const notes =
-      "This is not a bolero, though Maison Verre file it as one — see [what makes something one](/compendium/materials/bolero)";
+      "This is not a bolero, though Maison Verre file it as one; see [what makes something one](/compendium/materials/bolero)";
     expect(matchesPiece({ tokens: ["bolero"], fields: ["notes"] }, { notes })).toBe(false);
   });
 

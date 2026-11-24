@@ -3,11 +3,11 @@ import { COMPENDIUM_ENTRIES } from "@/lib/compendium/entries";
 /**
  * Filtering the wardrobe by what a piece is made of (#263).
  *
- * `material` is free text — 189 distinct strings — so this cannot be an enum
+ * `material` is free text (189 distinct strings), so this cannot be an enum
  * over stored values. It does not need to be: the Compendium already holds a
  * curated, tested vocabulary of fibres, each carrying every spelling a label
  * might use (`polyamide` / `polyamid` / `nylon`). Deriving the filter from
- * those entries means the filter and the glossary **cannot disagree** — the
+ * those entries means the filter and the glossary **cannot disagree**: the
  * same discipline `colorFamiliesOf` enforces for colour (`VAL-BROWSE-17`).
  *
  * **Fibres only, deliberately.** A composition label lists fibres; *poplin* and
@@ -18,8 +18,8 @@ import { COMPENDIUM_ENTRIES } from "@/lib/compendium/entries";
 export type MaterialFacet = { key: string; label: string; tokens: readonly string[] };
 
 /**
- * In the glossary's own order — naturals, then regenerated cellulose, then
- * synthetics — rather than by how many pieces match. That order is a fact about
+ * In the glossary's own order (naturals, then regenerated cellulose, then
+ * synthetics) rather than by how many pieces match. That order is a fact about
  * fibres; a frequency order would reshuffle itself as the wardrobe changed.
  */
 export const MATERIAL_FACETS: MaterialFacet[] = COMPENDIUM_ENTRIES.filter(
@@ -50,13 +50,13 @@ const escapeRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
  * label.
  *
  * Re-measured 2026-08-02 across all 357 material strings: **zero links, zero
- * pairing phrases, and one negation** — *"Linen (exact composition not stated
- * on the saved page)"*, a parenthetical note rather than a composition, and
- * harmless because no fibre name follows the *not*. It is also the warning the
- * original note gave: if `material` starts carrying sentences, re-measure this
- * rather than trusting it.
+ * pairing phrases, and one negation**. The negation is *"Linen (exact
+ * composition not stated on the saved page)"*, a parenthetical note rather
+ * than a composition, and harmless because no fibre name follows the *not*.
+ * It is also the warning the original note gave: if `material` starts
+ * carrying sentences, re-measure this rather than trusting it.
  *
- * Returned as patterns for the caller to bind as parameters — never
+ * Returned as patterns for the caller to bind as parameters, never
  * interpolated. `~*` binds tighter than `||`, and building the pattern inside
  * the SQL string once made every keyword search return zero rows in silence.
  */

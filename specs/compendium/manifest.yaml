@@ -1,4 +1,4 @@
-# Specification Set Manifest — Compendium
+# Specification Set Manifest: Compendium
 
 set_id: SPEC-SET-COMPENDIUM
 version: "0.3.0"
@@ -9,8 +9,8 @@ owner: nnworkspace
 description: |
   A root-level reference area for the knowledge the wardrobe runs on: what its
   materials are, how its own notation works, and whatever conventions follow.
-  Laid out as a documentation site rather than a report — a persistent section
-  tree on the left, one route per section — because a compendium is navigated,
+  Laid out as a documentation site rather than a report (a persistent section
+  tree on the left, one route per section), because a compendium is navigated,
   not read top to bottom.
 
   Two sections ship first. **Materials** explains the fibres, constructions and
@@ -23,7 +23,7 @@ description: |
   matched at read time against the `material` strings already stored, so the
   catalogue supplies the examples and nothing has to be maintained twice. Every
   entry links to the owner's own pieces, and every item links back to what it is
-  made of — which is what makes this a wardrobe feature rather than an
+  made of, which is what makes this a wardrobe feature rather than an
   encyclopaedia.
 
 decisions:

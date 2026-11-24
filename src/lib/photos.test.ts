@@ -8,7 +8,7 @@ import { inPhotoOrder, photoCaption, stepIndex } from "@/lib/photos";
  * Only the pure part is covered here: the viewer's zoom and pan are DOM- and
  * gesture-bound and stay manually verified. What matters for correctness is
  * that stepping wraps in both directions and never yields an index outside the
- * list — an out-of-range index blanks the viewer mid-browse.
+ * list: an out-of-range index blanks the viewer mid-browse.
  */
 describe("stepIndex", () => {
   it("advances and wraps past the end", () => {
@@ -17,7 +17,7 @@ describe("stepIndex", () => {
     expect(stepIndex(2, 1, 3)).toBe(0);
   });
 
-  it("goes back and wraps past the start — never a negative index", () => {
+  it("goes back and wraps past the start, never a negative index", () => {
     expect(stepIndex(2, -1, 3)).toBe(1);
     expect(stepIndex(1, -1, 3)).toBe(0);
     expect(stepIndex(0, -1, 3)).toBe(2);
@@ -48,7 +48,7 @@ describe("stepIndex", () => {
  * this catalogue is a retailer still with neither, and the wrong behaviour is
  * to render an empty caption or to treat "no date" as "very old".
  */
-describe("#244 — photoCaption", () => {
+describe("#244: photoCaption", () => {
   it("says nothing when neither is recorded", () => {
     // The common case by a wide margin. The caller renders nothing at all.
     expect(photoCaption({})).toBeNull();
@@ -76,7 +76,7 @@ describe("#244 — photoCaption", () => {
   });
 });
 
-describe("#244 — inPhotoOrder", () => {
+describe("#244: inPhotoOrder", () => {
   const p = (id: string, over: Record<string, unknown> = {}) => ({ id, sort: 0, ...over });
 
   it("keeps the chosen cover first, whatever its date", () => {

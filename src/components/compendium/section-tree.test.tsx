@@ -28,7 +28,7 @@ vi.mock("next/link", () => ({
 
 import { SectionTree } from "@/components/compendium/section-tree";
 
-describe("VAL-COMP-08 — the tree says where you are", () => {
+describe("VAL-COMP-08: the tree says where you are", () => {
   it("marks the current section, and only that one", () => {
     pathname.mockReturnValue("/compendium/berth-notation");
     render(<SectionTree />);
@@ -70,7 +70,7 @@ describe("VAL-COMP-08 — the tree says where you are", () => {
  * overview and its four groups became pages, so the tree has children for the
  * first time.
  */
-describe("#265 — the groups under Materials", () => {
+describe("#265: the groups under Materials", () => {
   it("offers every group without needing anything expanded first", () => {
     // The children are not behind a disclosure, and this is the reason: the
     // split exists so the groups can be seen and picked.
@@ -118,7 +118,7 @@ describe("the phone disclosure", () => {
   });
 
   it("names the parent section from inside an entry page", () => {
-    // Shut, the button is the only thing telling the reader where they are —
+    // Shut, the button is the only thing telling the reader where they are, so
     // "Sections" would be a wasted line when the answer is known.
     pathname.mockReturnValue("/compendium/materials/linen");
     render(<SectionTree />);

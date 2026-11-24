@@ -8,7 +8,7 @@
  *
  * Each group is also a page (`/compendium/fibres` and friends). The `slug` is
  * written out rather than derived from the label, because a URL that is a
- * lower-cased label is a URL that changes when someone rewords a heading —
+ * lower-cased label is a URL that changes when someone rewords a heading,
  * and slugs here are a contract (VAL-COMP-07).
  *
  * Note the asymmetry that is deliberate: a *group* lives at `/compendium/cuts`,
@@ -39,7 +39,7 @@ export const ENTRY_GROUPS: CompendiumGroup[] = [
     slug: "constructions",
     label: "Constructions",
     blurb:
-      "How the thread was turned into cloth — woven or knitted, and in what pattern. The same fibre behaves quite differently depending on this.",
+      "How the thread was turned into cloth: woven or knitted, and in what pattern. The same fibre behaves quite differently depending on this.",
   },
   {
     group: "finish",
@@ -49,7 +49,7 @@ export const ENTRY_GROUPS: CompendiumGroup[] = [
   },
   {
     // Added in #243. The first three groups all answer "what is this made of";
-    // this one answers "what shape is it" — a different question, and a kind of
+    // this one answers "what shape is it", a different question, and a kind of
     // word the owner meets just as often on a product page.
     group: "cut",
     slug: "cuts",

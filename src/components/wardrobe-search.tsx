@@ -14,21 +14,21 @@ const LABEL = "Search the wardrobe";
  *
  * It used to live inside the collapsed "Search & filter" panel, which meant the
  * most-used control on the page was two clicks away and invisible until you
- * went looking. It now sits in the page header, beside **Add a piece** — one
+ * went looking. It now sits in the page header, beside **Add a piece**: one
  * implementation, used by the category pages, `/browse` and the home page.
  *
  * **Two modes, because the home page has nothing to filter.**
  *
- * - `live` (category pages, `/browse`) — a list is already on screen, so typing
+ * - `live` (category pages, `/browse`): a list is already on screen, so typing
  *   narrows it, debounced, through the URL. State stays in the URL so a
  *   filtered view is still shareable and survives a refresh.
- * - `submit` (home) — the home page shows category tiles, not pieces. There is
+ * - `submit` (home): the home page shows category tiles, not pieces. There is
  *   nothing to narrow, so the field is an *entry point*: Enter goes to
  *   `/browse?q=…`. It deliberately does not navigate on each keystroke, which
  *   would send you to Browse after one letter.
  *
  * On a phone it collapses to its icon and opens to a full-width bar when
- * touched — a header holding a title, a search bar and a button does not fit,
+ * touched: a header holding a title, a search bar and a button does not fit,
  * and the bar is the one that can be summoned on demand.
  */
 export function WardrobeSearch({
@@ -54,8 +54,8 @@ export function WardrobeSearch({
 
   /**
    * The last value this field itself put into the URL. Anything arriving in `q`
-   * that differs came from somewhere else — "Clear all" in the filter panel, or
-   * the back button — and must be adopted. Comparing against the *prop* alone
+   * that differs came from somewhere else ("Clear all" in the filter panel, or
+   * the back button) and must be adopted. Comparing against the *prop* alone
    * would fight the debounce: a keystroke landing inside the 300 ms window
    * would be reset to the older committed value.
    */
@@ -71,12 +71,12 @@ export function WardrobeSearch({
   React.useEffect(() => () => clearTimeout(debounce.current), []);
 
   /**
-   * Focus the bar after it opens — but only when the *owner* opened it, never
+   * Focus the bar after it opens, but only when the *owner* opened it, never
    * on mount, which would steal focus on every page load that carries a query.
    *
    * This has to be an effect rather than a `focus()` inside the click handler:
    * while collapsed the field is `display:none`, and focusing a hidden element
-   * silently does nothing. A `requestAnimationFrame` was not enough either — it
+   * silently does nothing. A `requestAnimationFrame` was not enough either: it
    * can run before the browser has applied the new layout. By the time an
    * effect runs the DOM is committed and the field is really there.
    */
@@ -124,7 +124,7 @@ export function WardrobeSearch({
       className={cn("flex items-center", open && "w-full sm:w-auto", className)}
     >
       {/* Phone affordance: the icon alone until it is asked for. `sm:hidden`
-          takes it away from `sm` up, where the bar is always shown — but once
+          takes it away from `sm` up, where the bar is always shown, but once
           open it is not rendered at all, rather than merely hidden. A button
           left in the tree with `display:none` is a button a screen reader can
           still be walked onto in some engines, and it would announce a control

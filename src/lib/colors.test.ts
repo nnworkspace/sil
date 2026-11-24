@@ -16,7 +16,7 @@ import { OFF_WHITE } from "@/test/fixtures/catalogue";
 const matchesFamily = (color: string | null, keys: string[]) =>
   colorKeywords(keys).some((kw) => (color ?? "").toLowerCase().includes(kw));
 
-describe("#105 — colour families", () => {
+describe("#105: colour families", () => {
   it("matches a free-text colour by keyword", () => {
     expect(matchesFamily(OFF_WHITE.color, ["white"])).toBe(true);
     expect(matchesFamily("Palace Blue", ["blue"])).toBe(true);
@@ -59,7 +59,7 @@ describe("colour names that fight the substring matcher (#211)", () => {
     expect(colorFamiliesOf("blueberry milk")).toContain("pink");
   });
 
-  it("no longer reports Blue for it — #211 removed that limitation", () => {
+  it("no longer reports Blue for it: #211 removed that limitation", () => {
     // This test previously asserted the opposite, and said so: "a known
     // limitation, not an oversight". The keyword hack made the piece findable
     // under Pink at the cost of it also answering Blue. Now the colour declares
@@ -77,12 +77,12 @@ describe("colour names that fight the substring matcher (#211)", () => {
 /**
  * A colour declaring its family (#211).
  *
- * The rule had been re-implemented in four places — the SQL browse filter, the
+ * The rule had been re-implemented in four places: the SQL browse filter, the
  * Figures colour module, the trip picker, and this file's own helper. These
  * tests are written against `colorFamiliesOf` because it is now the only place
  * the question is answered.
  */
-describe("#211 — one rule, and colours that declare their family", () => {
+describe("#211: one rule, and colours that declare their family", () => {
   it("puts a declared colour in exactly the family it declares", () => {
     // COS named a pale pink shirt "blueberry milk". "blueberry" contains "blue".
     expect(colorFamiliesOf("blueberry milk")).toEqual(["pink"]);
@@ -96,7 +96,7 @@ describe("#211 — one rule, and colours that declare their family", () => {
     expect(colorFamiliesOf("olive")).toEqual(["green"]);
   });
 
-  it("#211: keeps multi-family colours multi — that is not the bug", () => {
+  it("#211: keeps multi-family colours multi (that is not the bug)", () => {
     // Roughly a quarter of a real catalogue's colours match more than one family, and almost all of
     // them are right. An override must not be reached for these.
     expect(colorFamiliesOf("navy / white")).toEqual(expect.arrayContaining(["blue", "white"]));
@@ -115,7 +115,7 @@ describe("#211 — one rule, and colours that declare their family", () => {
     expect(colorFamiliesOf("")).toEqual([]);
   });
 
-  it("no override is redundant — each one changes the answer", () => {
+  it("no override is redundant: each one changes the answer", () => {
     // An override that agrees with the guess is dead weight and should be
     // deleted rather than left to look like a rule.
     for (const [color, declared] of Object.entries(COLOR_OVERRIDES)) {
@@ -127,7 +127,7 @@ describe("#211 — one rule, and colours that declare their family", () => {
   });
 });
 
-describe("#211 — the SQL filter honours the same overrides", () => {
+describe("#211: the SQL filter honours the same overrides", () => {
   it("excludes a declared colour from the family it only looks like", () => {
     // Selecting Blue must not return the blueberry-milk shirt, even though a
     // keyword matches it.
@@ -150,8 +150,8 @@ describe("#211 — the SQL filter honours the same overrides", () => {
 describe("bronze", () => {
   it("lands in the neutrals, where brown and camel live", () => {
     // Added when a light bronze shoe matched no family at all and was therefore
-    // invisible to the colour filter. Bronze is a warm dark metal — nearer
-    // camel than gold — so it belongs with the browns rather than the yellows.
+    // invisible to the colour filter. Bronze is a warm dark metal, nearer
+    // camel than gold, so it belongs with the browns rather than the yellows.
     expect(colorFamiliesOf("light bronze")).toEqual(["neutral"]);
     expect(colorFamiliesOf("bronze")).toContain("neutral");
   });

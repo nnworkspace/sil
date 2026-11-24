@@ -22,7 +22,7 @@ const stepBtn =
 /**
  * The packing plan (#90, specs/trips §3.5): editable per-category slots. Each has
  * a ± target, a remove, and a "+ Add" that opens the picker scoped to that
- * category. A server component — the controls are Server-Action forms.
+ * category. A server component: the controls are Server-Action forms.
  */
 export function PackingPlan({
   tripId,
@@ -72,7 +72,7 @@ export function PackingPlan({
         <form action={suggestTripPlan} className="flex flex-wrap items-center gap-3">
           <input type="hidden" name="tripId" value={tripId} />
           <p className="text-sm text-muted-foreground">
-            Plan how much to pack per category — a guided way to fill the list.
+            Plan how much to pack per category: a guided way to fill the list.
           </p>
           {!hasDates ? (
             <label className="text-sm text-muted-foreground">
@@ -96,7 +96,7 @@ export function PackingPlan({
         <div className="space-y-3">
           {slots.length === 0 ? (
             <p className="text-sm text-muted-foreground">
-              No slots yet — add a category below, or re-suggest.
+              No slots yet. Add a category below, or re-suggest.
             </p>
           ) : (
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">

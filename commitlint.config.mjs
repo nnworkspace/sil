@@ -1,10 +1,10 @@
 /**
- * Commitlint configuration — enforces Conventional Commits.
+ * Commitlint configuration: enforces Conventional Commits.
  * See _governance-local/decisions/ADR-0005-commit-conventions.md
  *
  * Format: <type>(<scope>): <subject>
  *
- *   <body — optional, free-flowing prose>
+ *   <body: optional, free-flowing prose>
  *
  *   Refs: #N        (or Closes: #N)
  *
@@ -47,7 +47,7 @@ const config = {
     // A small, deliberate type vocabulary. `tech` is the umbrella for
     // build/CI/perf/dependency work so there is never a hard choice. `test`
     // (ADR-0014) is the one carve-out, and its rule is mechanical: use it only
-    // when the commit changes nothing but tests, fixtures or test config — a
+    // when the commit changes nothing but tests, fixtures or test config. A
     // fix that ships with its regression test stays a `fix`.
     'type-enum': [
       2,

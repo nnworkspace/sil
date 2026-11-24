@@ -29,7 +29,7 @@ export function LookPieces({ lookId, pieces }: { lookId: string; pieces: LookPie
   const [dragId, setDragId] = React.useState<string | null>(null);
   const [, startTransition] = React.useTransition();
 
-  // Re-sync when the server sends a new order (add/remove/refresh) — the React
+  // Re-sync when the server sends a new order (add/remove/refresh): the React
   // "reset state during render" pattern, so we never setState in an effect.
   const incoming = seq(pieces);
   const [syncedSeq, setSyncedSeq] = React.useState(incoming);

@@ -66,7 +66,7 @@ export function FacetDropdown({
   );
 }
 
-/** Sort control (#109) — single-select. Shared by the filter panel and the
+/** Sort control (#109): single-select. Shared by the filter panel and the
  *  wardrobe picker (#113). */
 export function SortDropdown({
   value,
@@ -99,7 +99,7 @@ export function SortDropdown({
  * A single-select dropdown, for a choice with too many options to show at once
  * (#296).
  *
- * The same mechanics as `SortDropdown` — a radio group in a scrollable menu —
+ * The same mechanics as `SortDropdown` (a radio group in a scrollable menu),
  * generalised, because the wardrobe picker needs two of them and neither is
  * about sorting.
  *

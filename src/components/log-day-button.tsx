@@ -12,7 +12,7 @@ import {
 /**
  * "Log this day" on a planned trip day (#320).
  *
- * The set already exists as data, so there is nothing to select — the day holds
+ * The set already exists as data, so there is nothing to select: the day holds
  * its pieces and one tap records them. This is the case selection UI would only
  * get in the way of.
  *
@@ -26,7 +26,7 @@ export function LogDayButton({
   pieces,
 }: {
   tripId: string;
-  /** ISO date of the day — becomes the wear date. */
+  /** ISO date of the day, which becomes the wear date. */
   day: string;
   /** The day's display label, for the button's accessible name. */
   label: string;

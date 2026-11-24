@@ -13,10 +13,10 @@ import { cn, fileInputClass } from "@/lib/utils";
 import { IMAGE_ACCEPT } from "@/lib/images";
 
 /**
- * Import panel on the add-item page (specs/ai-import, §UI). Two tabs — from a
- * screenshot (1.5a) or from a saved product page (1.5b) — each running its
+ * Import panel on the add-item page (specs/ai-import, §UI). Two tabs, from a
+ * screenshot (1.5a) or from a saved product page (1.5b), each running its
  * extraction Server Action and handing the result to the parent to prefill the
- * form (human-in-the-loop — nothing is saved here).
+ * form (human-in-the-loop: nothing is saved here).
  */
 export function ImportPanel({
   onImported,
@@ -118,7 +118,7 @@ function HtmlImport({
           <span className="font-medium">expand any collapsed sections</span> (Details,
           Materials…), then choose{" "}
           <span className="font-medium">Save As → “Webpage, Complete”</span> and upload
-          the file. We read its details <em>and</em> the official photos — no screenshot
+          the file. We read its details <em>and</em> the official photos. No screenshot
           needed.
         </p>
       </div>

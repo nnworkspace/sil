@@ -1,4 +1,4 @@
-# Figures — Data Model Specification
+# Figures: Data Model Specification
 
 - **Spec ID:** `SPEC-FIGURES-DATA`
 - **Part of set:** `SPEC-SET-FIGURES` v0.1.0
@@ -8,7 +8,7 @@
 
 Figures **adds no table, no column and no migration**. Every number is derived from the existing catalogue. This document is therefore not a storage contract but a **metric contract**: for each figure, what it counts, what it excludes, and what it yields when the data is absent.
 
-That precision is the point. A metric with a vague definition is one that quietly changes meaning between the dashboard, a test and a conversation — and this feature exists to be trusted.
+That precision is the point. A metric with a vague definition is one that quietly changes meaning between the dashboard, a test and a conversation, and this feature exists to be trusted.
 
 ## 2. Base sets
 
@@ -16,7 +16,7 @@ Every metric is computed over one of these, and names which:
 
 | Set | Definition |
 |:--|:--|
-| **Active** | `archived_at IS NULL` — the default for every figure (`VAL-FIG-01`) |
+| **Active** | `archived_at IS NULL`, the default for every figure (`VAL-FIG-01`) |
 | **All** | active plus archived, only when the sidebar scope says so |
 | **Priced** | Active ∩ `price_paid_cents IS NOT NULL` |
 | **Dated** | Active ∩ `purchased_at IS NOT NULL` |
@@ -42,8 +42,8 @@ wearRecorded(piece) = piece.prior_wears IS NOT NULL OR piece has wear_events
 
 | State | Meaning |
 |:--|:--|
-| `prior_wears IS NULL`, no events | **Not recorded** — nobody has said. A gap to fill. |
-| `prior_wears = 0`, no events | **Never worn** — recorded, and a genuine finding. |
+| `prior_wears IS NULL`, no events | **Not recorded**: nobody has said. A gap to fill. |
+| `prior_wears = 0`, no events | **Never worn**: recorded, and a genuine finding. |
 | otherwise | Worn, `wearTotal` times |
 
 Both of the first two give `wearTotal = 0`, which is precisely why no wear figure may read a zero as a measurement without asking `wearRecorded` first.
@@ -55,7 +55,7 @@ costPerWear(piece) = price_paid_cents / wearTotal(piece)     when price is known
                    = undefined                                otherwise
 ```
 
-**Undefined stays undefined** (`VAL-FIG-07`). It is not `€0`, not infinity, and — unlike the browse sort, which divides by `max(1, wears)` so that an unworn piece still orders sensibly — Figures does **not** substitute 1. A leaderboard that ranked a €400 unworn coat as "€400 per wear" would be asserting something the data does not say. Excluded pieces are counted and reported.
+**Undefined stays undefined** (`VAL-FIG-07`). It is not `€0` and not infinity. Unlike the browse sort, which divides by `max(1, wears)` so that an unworn piece still orders sensibly, Figures does **not** substitute 1. A leaderboard that ranked a €400 unworn coat as "€400 per wear" would be asserting something the data does not say. Excluded pieces are counted and reported.
 
 ### 3.3 Total value
 
@@ -76,7 +76,7 @@ Delegated entirely to `categoryMatcher` / `countAcrossCategories` (`VAL-FIG-02`,
 
 - Sub-category counts **roll up** into the parent: `dresses` includes `shirt-dresses` and `slip-dresses`.
 - A piece filed in two families is counted **once** across them (culottes are trousers *and* skirts).
-- Therefore **category counts do not sum to the wardrobe size** — a multi-category piece appears under each of its categories (`VAL-FIG-05`).
+- Therefore **category counts do not sum to the wardrobe size**: a multi-category piece appears under each of its categories (`VAL-FIG-05`).
 
 The complementary count (`VAL-FIG-11`) files each piece **once**, under the top-level ancestor of its **primary** category only:
 
@@ -103,7 +103,7 @@ Parsed best-effort from the free-text `material` by keyword: wool (incl. cashmer
 
 ### 3.7 Colour families
 
-Reuses `colorKeywords` from [`src/lib/colors.ts`](../../src/lib/colors.ts) (#105) — the same keyword matching the browse colour filter uses, so a family on Figures and the same family in browse always agree. A colour matching no family is counted as unclassified.
+Reuses `colorKeywords` from [`src/lib/colors.ts`](../../src/lib/colors.ts) (#105), the same keyword matching the browse colour filter uses, so a family on Figures and the same family in browse always agree. A colour matching no family is counted as unclassified.
 
 ## 4. Data-quality counters (the Gaps module)
 
@@ -111,7 +111,7 @@ Each is a count over Active, with a link to the matching filtered view:
 
 | Gap | Definition |
 |:--|:--|
-| No wear data | `prior_wears IS NULL` and no `wear_events` — a recorded zero is **not** a gap (#191) |
+| No wear data | `prior_wears IS NULL` and no `wear_events`; a recorded zero is **not** a gap (#191) |
 | No price | `price_paid_cents IS NULL` |
 | No purchase date | `purchased_at IS NULL` |
 | No material | `material IS NULL` or blank |
@@ -122,8 +122,8 @@ These are **counters, not assertions**: a non-zero value is a task, never a fail
 
 ## 5. Performance
 
-The catalogue is in the low hundreds of pieces, so every figure is computed by reading the active rows once per request and aggregating in memory — the same approach the category counts already take. This keeps the metric definitions in TypeScript where they can be unit-tested, rather than split across hand-written SQL. Should the wardrobe reach a size where that matters, the aggregation moves into SQL behind the same helper signatures, and the tests stay valid.
+The catalogue is in the low hundreds of pieces, so every figure is computed by reading the active rows once per request and aggregating in memory, the same approach the category counts already take. This keeps the metric definitions in TypeScript where they can be unit-tested, rather than split across hand-written SQL. Should the wardrobe reach a size where that matters, the aggregation moves into SQL behind the same helper signatures, and the tests stay valid.
 
 ## 6. Change history
 
-v0.1.0 — first draft (#181). No schema change: Figures reads `items`, `item_photos` and `wear_events` as they stand.
+v0.1.0: first draft (#181). No schema change: Figures reads `items`, `item_photos` and `wear_events` as they stand.

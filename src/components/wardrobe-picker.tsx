@@ -33,7 +33,7 @@ export type PickerItem = {
   category: string;
   secondaryCategories: string[];
   photoUrl: string | null;
-  // For the picker's filters (#113) + sort — sourced from the browse rows.
+  // For the picker's filters (#113) + sort, sourced from the browse rows.
   tags: string[];
   color: string | null;
   /** The composition label, for the material facet (#299). Its absence is why
@@ -49,11 +49,11 @@ export type PickerItem = {
 
 const label = (slug: string) => CATEGORIES.find((c) => c.slug === slug)?.label ?? slug;
 
-/** "Add from wardrobe" — a multi-select picker rendered as a **thumbnail grid**,
+/** "Add from wardrobe": a multi-select picker rendered as a **thumbnail grid**,
  *  with a pinned **Selected** tray (removable chips) above the scrolling grid.
  *  Grouped by category, or filtered to one category (`scope`). Already-added
  *  pieces are disabled. Generic over the target: it posts the selected ids (as
- *  `itemIds`) plus a `contextField`=`contextId` hidden input to `action` — used
+ *  `itemIds`) plus a `contextField`=`contextId` hidden input to `action`. Used
  *  by both trips (addTripItems) and looks (addLookItems) (#90, #95). */
 export function WardrobePicker({
   action,
@@ -74,7 +74,7 @@ export function WardrobePicker({
   scope?: string;
   triggerLabel?: string;
   compact?: boolean;
-  /** Extra hidden fields posted with the selection — the day a piece is being
+  /** Extra hidden fields posted with the selection: the day a piece is being
    *  planned for (#270). Kept generic so the picker stays one component. */
   extra?: Record<string, string>;
 }) {
@@ -127,7 +127,7 @@ export function WardrobePicker({
    * `cat` is the chosen top-level category (undefined = All) and `sub` the
    * chosen child within it (undefined = the roll-up, `"none"` = filed at the
    * parent with no sub-type). One of each, because only one category is on
-   * screen at a time now — #280 keyed the sub-choice per group because every
+   * screen at a time now; #280 keyed the sub-choice per group because every
    * group was rendered at once, and that is exactly what changed.
    *
    * Local dialog state, not the URL: the picker is a modal, so its state is not
@@ -148,14 +148,14 @@ export function WardrobePicker({
   const activeFilters = selectedTags.size + selectedColors.size + selectedMaterials.size;
 
   /**
-   * Material, through the **same vocabulary** the browse filter uses (#299) —
+   * Material, through the **same vocabulary** the browse filter uses (#299):
    * `MATERIAL_FACETS`, derived from the Compendium's fibre entries, so there is
    * no second token list to drift (`VAL-BROWSE-18`).
    *
    * The matching differs, and deliberately: browse hands SQL an approximation
    * because SQL cannot call the matcher per row, while the picker has the
-   * pieces in memory and can use `containsToken` itself — boundaries, negation
-   * guard and all. The same rule, applied more precisely, not a different one.
+   * pieces in memory and can use `containsToken` itself (boundaries, negation
+   * guard and all). The same rule, applied more precisely, not a different one.
    */
   const matchesMaterial = (i: PickerItem) => {
     if (selectedMaterials.size === 0) return true;
@@ -195,7 +195,7 @@ export function WardrobePicker({
    *
    * `shown` has already been through search, tags, colour and sort. The chips
    * narrow it in two steps, and the counts on them are computed from the same
-   * filtered set — so a chip reading `0` tells you not to click it, rather than
+   * filtered set, so a chip reading `0` tells you not to click it, rather than
    * promising pieces the current search has already excluded.
    */
   const root = scope ?? cat;
@@ -205,8 +205,8 @@ export function WardrobePicker({
   const narrow = (rows: PickerItem[]) => {
     if (!root || !sub) return rows;
     // `none` is the "Not categorised" bucket: filed at the parent itself, with
-    // no sub-type chosen — the honest counterpart of the roll-up, and how a
-    // piece missing its sub-type gets noticed at all.
+    // no sub-type chosen. It is the honest counterpart of the roll-up, and how
+    // a piece missing its sub-type gets noticed at all.
     if (sub === "none") return rows.filter((i) => i.category === root);
     const inChild = categoryMatcher(sub);
     return rows.filter((i) => inChild(i));
@@ -222,7 +222,7 @@ export function WardrobePicker({
    *
    * They were chips until the dialog showed what that costs: height is the
    * scarce resource here (`max-h-88vh`), and fourteen categories wrap to two
-   * rows on a desktop and four or five on a phone — every one of them taken
+   * rows on a desktop and four or five on a phone, every one of them taken
    * from the pieces, which are the thing the picker exists to show. A dropdown
    * is one row on both, and matches the sort control already beside it.
    *
@@ -264,7 +264,7 @@ export function WardrobePicker({
         options={[
           { value: "all", label: `All ${label(root).toLowerCase()}` },
           ...kids.map((k) => ({ value: k.slug, label: k.label })),
-          // Filed at the parent with no sub-type chosen — the honest
+          // Filed at the parent with no sub-type chosen: the honest
           // counterpart of the roll-up. Offered only when there are any.
           ...(hasDirect ? [{ value: "none", label: "Not categorised" }] : []),
         ]}
@@ -345,7 +345,7 @@ export function WardrobePicker({
       {/* An explicit row template, so the child count here is load-bearing:
           six children, six tracks, and `1fr` must land on the scrolling grid.
           #284 added the category chooser without extending this and it
-          inherited the `1fr` track — which, with the grid then on an implicit
+          inherited the `1fr` track, which, with the grid then on an implicit
           `auto` row and the dialog capped at 88vh, left it zero free space to
           occupy. It collapsed to its own scrollbar, silently: no error, and a
           component test cannot see it, because jsdom has no layout (#294).
@@ -462,7 +462,7 @@ export function WardrobePicker({
           <p className="text-xs text-muted-foreground">Nothing selected yet.</p>
         )}
 
-        {/* One grid child whatever the state — see the note on DialogContent. */}
+        {/* One grid child whatever the state. See the note on DialogContent. */}
         <div className="flex flex-wrap items-center gap-2">
           {categoryChooser}
           {subChooser}

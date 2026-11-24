@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 /** Grid / list switch for the archive (specs/archive §7). URL-reflected, so a
  *  chosen view survives refresh and can be shared. Written generically enough to
- *  be reused on browse later — that reuse is out of scope here. */
+ *  be reused on browse later, but that reuse is out of scope here. */
 export function ArchiveViewToggle({ view }: { view: "grid" | "list" }) {
   const router = useRouter();
   const pathname = usePathname();

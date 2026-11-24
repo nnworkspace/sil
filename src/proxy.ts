@@ -1,5 +1,5 @@
 /**
- * Next.js 16 "proxy" (formerly middleware) — the optimistic auth gate (#119).
+ * Next.js 16 "proxy" (formerly middleware): the optimistic auth gate (#119).
  *
  * Auth.js's `auth` wrapper runs the `authorized` callback and redirects any
  * request without an owner session to `/signin`. This is an optimistic check

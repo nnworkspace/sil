@@ -21,7 +21,7 @@ import { COMPENDIUM_ENTRIES } from "@/lib/compendium/entries";
 const matches = (pattern: string, material: string) =>
   new RegExp(pattern.replace(/\\y/g, "\\b"), "i").test(material);
 
-describe("#263 — the vocabulary comes from the Compendium", () => {
+describe("#263: the vocabulary comes from the Compendium", () => {
   it("offers exactly the glossary's fibre entries", () => {
     const fibres = COMPENDIUM_ENTRIES.filter(
       (e) => e.group === "fibre" && (e.match?.tokens?.length ?? 0) > 0,
@@ -38,7 +38,7 @@ describe("#263 — the vocabulary comes from the Compendium", () => {
   });
 
   it("keeps the glossary's order rather than sorting by frequency", () => {
-    // Naturals, then regenerated cellulose, then synthetics — a fact about
+    // Naturals, then regenerated cellulose, then synthetics: a fact about
     // fibres. A frequency order would reshuffle as the wardrobe changed.
     expect(MATERIAL_KEYS.indexOf("cotton")).toBeLessThan(MATERIAL_KEYS.indexOf("viscose"));
     expect(MATERIAL_KEYS.indexOf("viscose")).toBeLessThan(MATERIAL_KEYS.indexOf("polyester"));
@@ -50,7 +50,7 @@ describe("#263 — the vocabulary comes from the Compendium", () => {
   });
 });
 
-describe("#263 — the patterns SQL is given", () => {
+describe("#263: the patterns SQL is given", () => {
   it("finds a fibre inside a blend", () => {
     const [linen] = materialPatterns(["linen"]);
     expect(matches(linen, "54% linen, 43% viscose, 3% elastane")).toBe(true);
@@ -59,9 +59,10 @@ describe("#263 — the patterns SQL is given", () => {
 
   it("does not match a fibre inside another word", () => {
     // The mistake this catalogue has already made twice: `silk` is inside
-    // *silky*, and `100% cotton (mercerised — silky sheen)` is a real string.
+    // *silky*, and `100% cotton (mercerised, silky sheen)` is, punctuation
+    // aside, a real string.
     const [silk] = materialPatterns(["silk"]);
-    expect(matches(silk, "100% cotton (mercerised — silky sheen)")).toBe(false);
+    expect(matches(silk, "100% cotton (mercerised, silky sheen)")).toBe(false);
     expect(matches(silk, "55% silk, 45% linen")).toBe(true);
   });
 

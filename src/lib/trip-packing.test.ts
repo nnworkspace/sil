@@ -9,7 +9,7 @@ import { TOP_LEVEL_CATEGORIES } from "@/lib/categories";
  *
  * Extracted when the printable sheet grew the same grouping the Markdown export
  * already had. The tests below are mostly about the two decisions that are easy
- * to get wrong in either copy — order, and a piece appearing exactly once.
+ * to get wrong in either copy: order, and a piece appearing exactly once.
  */
 
 const row = (name: string, category: string, packed = false) => ({
@@ -17,7 +17,7 @@ const row = (name: string, category: string, packed = false) => ({
   packed,
 });
 
-describe("#259 — packingGroups", () => {
+describe("#259: packingGroups", () => {
   it("groups by category and sorts by name inside each", () => {
     const groups = packingGroups([
       row("Wide-Leg Trousers", "trousers"),
@@ -49,7 +49,7 @@ describe("#259 — packingGroups", () => {
 
   it("lists a piece exactly once", () => {
     // A bolero is also in Tops and Outerwear via its secondaries. On a packing
-    // sheet it must appear once — you pack the garment, not its filings.
+    // sheet it must appear once: you pack the garment, not its filings.
     const groups = packingGroups([row("Lace-Back Bolero", "boleros")]);
     expect(groups.flatMap((g) => g.rows)).toHaveLength(1);
   });
@@ -59,11 +59,11 @@ describe("#259 — packingGroups", () => {
  * Rolling up to the parent (#286).
  *
  * #259 grouped by the piece's own category and justified it with "a piece must
- * appear exactly once" — an argument about *secondary* categories, which does
+ * appear exactly once", an argument about *secondary* categories, which does
  * not apply to rolling the primary up. Meanwhile the fine grouping split four
  * garments across three headings, with Shoes between Dresses and Shirt Dresses.
  */
-describe("#286 — the roll-up", () => {
+describe("#286: the roll-up", () => {
   it("puts a shirt dress under Dresses", () => {
     const groups = packingGroups([
       row("Flared Poplin Dress", "dresses"),
@@ -115,10 +115,10 @@ describe("#286 — the roll-up", () => {
  * Ordering a group by the trip's own sequence (#288).
  *
  * Name order was the only sensible one before there was a day plan. With one,
- * the list can read as an itinerary — and the owner's rule for a repeat wear is
+ * the list can read as an itinerary, and the owner's rule for a repeat wear is
  * its **first** outing, not its last.
  */
-describe("#288 — day order inside a group", () => {
+describe("#288: day order inside a group", () => {
   const DAYS = tripDays("2026-08-03", "2026-08-06"); // Mon–Thu
 
   const dressOn = (name: string, days: string[] = [], everyDay = false) => ({

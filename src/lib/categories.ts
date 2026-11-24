@@ -9,9 +9,9 @@
 
 // Categories form a tree: an entry with a `parent` slug is a sub-category of it
 // (#78). Currently only Jewellery has children; the model supports any depth so
-// other roots can nest later. An item is filed under any node — a leaf (e.g.
-// `rings`) or a parent (`jewellery`) — and a parent's page/count/covers roll up
-// all its descendants.
+// other roots can nest later. An item is filed under any node: a leaf (e.g.
+// `rings`) or a parent (`jewellery`). A parent's page/count/covers roll up all
+// its descendants.
 export const CATEGORIES = [
   { slug: "dresses", label: "Dresses" },
   { slug: "tops", label: "Tops" },
@@ -24,7 +24,7 @@ export const CATEGORIES = [
   { slug: "skirts", label: "Skirts" },
   { slug: "outerwear", label: "Outerwear" },
   { slug: "underwear-and-pyjamas", label: "Underwear and Pyjamas" },
-  // Sport / outdoor / gym pieces — kept out of Trousers and Tops so workout
+  // Sport / outdoor / gym pieces, kept out of Trousers and Tops so workout
   // and technical gear doesn't mix into everyday-wear browsing (#163).
   { slug: "activewear", label: "Activewear" },
   { slug: "shoes", label: "Shoes" },
@@ -36,7 +36,7 @@ export const CATEGORIES = [
   { slug: "jumpers", label: "Jumpers", parent: "tops" },
   { slug: "cardigans", label: "Cardigans", parent: "tops" },
   // Boleros (#243, widened in #245). A bolero is a *cut*, not a construction,
-  // which makes it the odd one out beside Shirts and Jumpers — it spans knit
+  // which makes it the odd one out beside Shirts and Jumpers: it spans knit
   // and woven, and holds a lace knit, a satin evening piece, a lined jacquard
   // jacket and several cropped blazers. It earns a bucket for the reason a
   // filter cannot solve: they were scattered across Outerwear, Blazers and
@@ -47,14 +47,14 @@ export const CATEGORIES = [
   // first pass):
   //
   //   1. **The hem sits above the waist**, or optically does. This is the one
-  //      that "cropped" does not settle — several genuinely cropped blazers
+  //      that "cropped" does not settle: several genuinely cropped blazers
   //      land *on* the waist and are not boleros.
-  //   2. **A clean neckline** — round, V or stand. A notch lapel disqualifies
+  //   2. **A clean neckline**: round, V or stand. A notch lapel disqualifies
   //      it: a short blazer with lapels is still a blazer.
   //
   // Whether the front fastens is deliberately irrelevant; that was the rule in
   // #243 and the owner replaced it. Being a layer is typical but *not*
-  // required — a cropped poplin shirt qualifies.
+  // required: a cropped poplin shirt qualifies.
   //
   // Note this is not the trade definition, which does require an open front.
   // The Compendium's `bolero` entry carries both so the app and the glossary
@@ -65,20 +65,20 @@ export const CATEGORIES = [
   // assigned, and a description reading "ends at the natural waist" is not
   // evidence, several having been written from product shots.
   { slug: "boleros", label: "Boleros", parent: "tops" },
-  // Trousers sub-types (#166) — garment types/cuts that roll up into the
-  // Trousers tile; /category/<slug> filters to just those. Fabric (corduroy,
+  // Trousers sub-types (#166): garment types/cuts that roll up into the
+  // Trousers tile, and /category/<slug> filters to just those. Fabric (corduroy,
   // wool…) and pure silhouette (wide-leg, tapered) are deliberately NOT
-  // sub-categories — those are the material field and the #106 style filters.
+  // sub-categories: those are the material field and the #106 style filters.
   { slug: "jeans", label: "Jeans", parent: "trousers" },
   { slug: "culottes", label: "Culottes", parent: "trousers" },
   { slug: "shorts", label: "Shorts", parent: "trousers" },
-  // Dress sub-types (#166) — genuine garment types, not silhouettes (which are
+  // Dress sub-types (#166): genuine garment types, not silhouettes (which are
   // the #106 filters). Roll up into the Dresses tile.
   { slug: "shirt-dresses", label: "Shirt Dresses", parent: "dresses" },
   { slug: "slip-dresses", label: "Slip Dresses", parent: "dresses" },
   // British throughout, slug included (#282). #279 changed only the label and
-  // left the slug, on the grounds that a slug is a URL and a stored value —
-  // then the measurement came back: zero pieces filed at the parent, six
+  // left the slug, on the grounds that a slug is a URL and a stored value.
+  // Then the measurement came back: zero pieces filed at the parent, six
   // carrying it as a secondary, no trip-plan slot. Cheap enough to do properly,
   // and `/category/jewelry` redirects permanently so no bookmark breaks.
   { slug: "jewellery", label: "Jewellery" },
@@ -101,7 +101,7 @@ export function childrenOf(slug: string) {
   return CATEGORIES.filter((c) => "parent" in c && c.parent === slug);
 }
 
-/** Top-level categories (no parent) — what the home grid shows. */
+/** Top-level categories (no parent): what the home grid shows. */
 export const TOP_LEVEL_CATEGORIES = CATEGORIES.filter((c) => !("parent" in c));
 
 /** A slug plus every descendant slug (any depth), for roll-up (#78). A leaf
@@ -130,7 +130,7 @@ export type Categorised = {
  * Two rules, both the owner's:
  *
  *   1. **A ticked child implies its parent.** Tick `jeans` and the piece is in
- *      `trousers` too — so the parent is stored, not merely derived at read
+ *      `trousers` too, so the parent is stored, not merely derived at read
  *      time, because the owner wants the stored data to say what is true.
  *   2. **The primary is never a secondary.** It is set by its own control and
  *      would be redundant here; `categoryMatcher` already matches on it.
@@ -150,7 +150,7 @@ export function normaliseSecondaries(primary: string, ticked: readonly string[])
   };
   for (const t of ticked) addWithAncestors(t);
   // The primary's own parent comes along for the same reason a ticked child's
-  // does — the piece genuinely is in it.
+  // does: the piece genuinely is in it.
   const p = parentOf(primary);
   if (p) addWithAncestors(p);
   out.delete(primary);
@@ -160,14 +160,14 @@ export function normaliseSecondaries(primary: string, ticked: readonly string[])
 /**
  * The single rule for "is this piece in that category" (#180).
  *
- * A piece belongs to a category when the slug — **or any of its descendants**
- * (#78) — is either its **primary** `category` or one of its
+ * A piece belongs to a category when the slug, **or any of its descendants**
+ * (#78), is either its **primary** `category` or one of its
  * `secondary_categories` (#71). Counting on the primary alone silently drops
  * cross-filed pieces; summing sibling categories double-counts the ones filed
  * in two. Both mistakes are easy to make by hand, so every count, filter and
  * roll-up in the app goes through this rule instead of re-deriving it.
  *
- * Use `categoryMatcher` when testing many pieces against one slug — it hoists
+ * Use `categoryMatcher` when testing many pieces against one slug: it hoists
  * the descendant set out of the loop.
  */
 export function categoryMatcher(slug: string): (piece: Categorised) => boolean {
@@ -177,7 +177,7 @@ export function categoryMatcher(slug: string): (piece: Categorised) => boolean {
     (piece.secondaryCategories ?? []).some((s) => subtree.has(s));
 }
 
-/** Whether a single piece belongs to a category — see `categoryMatcher`. */
+/** Whether a single piece belongs to a category (see `categoryMatcher`). */
 export function isInCategory(piece: Categorised, slug: string): boolean {
   return categoryMatcher(slug)(piece);
 }
@@ -192,13 +192,13 @@ export function countAcrossCategories(
   return pieces.filter((p) => matchers.some((m) => m(p))).length;
 }
 
-/** Tags grouped by kind. Free to extend — used for tagging and filtering. */
+/** Tags grouped by kind. Free to extend; used for tagging and filtering. */
 export const TAG_GROUPS = [
   {
     kind: "occasion",
     label: "Occasion",
     // `occasion` says a piece is *fit for* a dressed occasion; `occasion-only`
-    // says it is fit for nothing else (#204). The two compose — a piece keeps
+    // says it is fit for nothing else (#204). The two compose: a piece keeps
     // `occasion` and gains the narrowing. The test is not formality but cost:
     // the piece asks something an ordinary day will not pay, because it is
     // uncomfortable beyond an hour or two, needs constant adjusting, demands
@@ -216,13 +216,13 @@ export const TAG_GROUPS = [
     tags: ["spring", "summer", "autumn", "winter"],
   },
   {
-    // How demanding a piece is to look after — the wardrobe splits sharply
+    // How demanding a piece is to look after. The wardrobe splits sharply
     // between machine-washable cottons and dry-clean-only silks and linens.
     kind: "care",
     label: "Care",
     tags: ["easy-care", "hand-wash", "dry-clean", "delicate"],
   },
-  // Style facets (#106) — the garment's shape, filtered like any other tag.
+  // Style facets (#106): the garment's shape, filtered like any other tag.
   // Populated from the description at add-time / backfill and (later) AI-inferred.
   {
     kind: "neck",

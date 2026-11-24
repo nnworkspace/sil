@@ -7,7 +7,7 @@ import { colorKeywordsForQuery } from "@/lib/colors";
  * The keyword-search rule (`VAL-BROWSE-04`, #222).
  *
  * The owner searched "red" in *tops* and her burgundy piece did not appear.
- * Two faults, pulling opposite ways — matching far too much, and too little —
+ * Two faults, pulling opposite ways (matching far too much, and too little),
  * and these tests pin both, because either could be undone by a plausible
  * simplification.
  *
@@ -19,7 +19,7 @@ import { colorKeywordsForQuery } from "@/lib/colors";
 const matchesPrefix = (haystack: string, query: string) =>
   new RegExp(wordPrefixPattern(query).replace(/\\y/g, "\\b"), "i").test(haystack);
 
-describe("VAL-BROWSE-04 — matching at a word start", () => {
+describe("VAL-BROWSE-04: matching at a word start", () => {
   it("does not find a short query inside a longer word", () => {
     // The fault the owner hit: `collared` is on most shirts, and it contains
     // "red". A bare substring returned dozens of pieces for "red", only a handful of them red.
@@ -84,7 +84,7 @@ describe("escaping", () => {
   });
 });
 
-describe("#222 — a query that names a colour family", () => {
+describe("#222: a query that names a colour family", () => {
   it("reaches the colours in that family, so 'red' finds burgundy", () => {
     const kws = colorKeywordsForQuery("red");
     expect(kws).toContain("burgundy");
@@ -98,7 +98,7 @@ describe("#222 — a query that names a colour family", () => {
   });
 
   it("does not expand a query that merely names one member colour", () => {
-    // Typing "burgundy" should not drag in every crimson and wine piece — that
+    // Typing "burgundy" should not drag in every crimson and wine piece. That
     // answers a question the owner did not ask.
     expect(colorKeywordsForQuery("burgundy")).toEqual([]);
     expect(colorKeywordsForQuery("navy")).toEqual([]);

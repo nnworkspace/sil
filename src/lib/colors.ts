@@ -1,7 +1,7 @@
 /**
  * Colour families for the browse/category colour filter (#105).
  *
- * The `color` field is free text (dozens of distinct values — "cobalt blue",
+ * The `color` field is free text (dozens of distinct values: "cobalt blue",
  * "midnight blue", "flamingo", "off-white"…). Rather than a messy exact-value
  * list, the filter offers a small set of base **families**; a piece belongs to a
  * family when its `color` string contains any of the family's keywords (matched
@@ -10,8 +10,8 @@
  */
 
 // `swatch` is a representative colour for the family, used on the Figures
-// dashboard (#181). It is a *literal* encoding — the mark shows the thing it
-// counts — not an assigned categorical palette, so every swatch is paired
+// dashboard (#181). It is a *literal* encoding (the mark shows the thing it
+// counts), not an assigned categorical palette, so every swatch is paired
 // with its name and identity never rests on colour alone.
 export const COLOR_FAMILIES = [
   { key: "black", label: "Black", swatch: "#1c1c1c", keywords: ["black"] },
@@ -52,7 +52,7 @@ export type ColorFamilyKey = (typeof COLOR_FAMILIES)[number]["key"];
 /**
  * Colours that **declare** their family instead of having it guessed (#211).
  *
- * Keyed by the whole `color` string, lower-cased — an exact statement about one
+ * Keyed by the whole `color` string, lower-cased: an exact statement about one
  * colour name, not another guessing rule. When a colour appears here its
  * families are used and substring matching is skipped entirely.
  *
@@ -69,7 +69,7 @@ export const COLOR_OVERRIDES: Record<string, readonly ColorFamilyKey[]> = {
 };
 
 /**
- * The families a colour string belongs to — **the single rule**, and the only
+ * The families a colour string belongs to: **the single rule**, and the only
  * place it is decided.
  *
  * It had been re-implemented four times over (the SQL browse filter, the
@@ -93,9 +93,9 @@ export function isInColorFamily(color: string | null | undefined, key: string): 
  * What a SQL filter needs to honour the overrides, since it cannot call
  * `colorFamiliesOf` per row:
  *
- * - `keywords` — the ordinary substring match for the selected families
- * - `exactly`  — colour strings the override *puts into* a selected family
- * - `notExactly` — colour strings the override *keeps out*, which must be
+ * - `keywords`: the ordinary substring match for the selected families
+ * - `exactly`: colour strings the override *puts into* a selected family
+ * - `notExactly`: colour strings the override *keeps out*, which must be
  *   excluded even when a keyword would otherwise match them
  */
 export function colorMatchSpec(keys: string[]): {
@@ -123,12 +123,12 @@ export function colorKeywords(keys: string[]): string[] {
  * The colour keywords a *search query* should reach (#222).
  *
  * The owner searched "red" and her burgundy top did not appear: `burgundy`
- * contains no "red", so it was never a candidate — even though the colour
+ * contains no "red", so it was never a candidate, even though the colour
  * *filter* has known it is Red since #105. The search box simply never asked.
  *
  * Expansion happens only when the query names a **family** (its key or label),
  * never when it names a member keyword. Typing "red" should reach burgundy;
- * typing "burgundy" should not drag in every crimson and wine piece — that
+ * typing "burgundy" should not drag in every crimson and wine piece. That
  * would be answering a question the owner did not ask.
  *
  * Returns `[]` when the query names no family, which leaves the search

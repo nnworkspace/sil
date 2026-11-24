@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
  * **Save as PDF** as a destination, so one button gives both the paper copy and
  * the file, with no PDF library and no server-side image fetching.
  *
- * A client component for one reason — `window.print()` needs the browser. It is
+ * A client component for one reason: `window.print()` needs the browser. It is
  * kept apart from the page so the page itself stays a server component and the
  * list is rendered on the server, which matters when the list is long.
  */

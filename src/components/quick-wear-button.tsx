@@ -22,7 +22,7 @@ import {
 const OCCASION_TAGS = TAG_GROUPS.find((g) => g.kind === "occasion")?.tags ?? [];
 
 const pad = (n: number) => String(n).padStart(2, "0");
-/** The viewer's local date — computed on open, so no server/client mismatch. */
+/** The viewer's local date, computed on open, so no server/client mismatch. */
 const localToday = () => {
   const d = new Date();
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;

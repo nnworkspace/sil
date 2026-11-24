@@ -6,7 +6,7 @@ import * as React from "react";
  * The boundary of last resort (#308).
  *
  * `error.tsx` replaces a *page* and keeps the shell. This one catches a failure
- * in the root layout itself — the header, the fonts, the theme provider — where
+ * in the root layout itself (the header, the fonts, the theme provider), where
  * there is no shell left to keep. Next requires it to render its own `<html>`
  * and `<body>`, because it is replacing the document.
  *
@@ -42,7 +42,7 @@ export default function GlobalError({
         <div style={{ maxWidth: "28rem", textAlign: "center" }}>
           <h1 style={{ fontSize: "1.5rem", fontWeight: 400, margin: 0 }}>Sil couldn’t start</h1>
           <p style={{ color: "#666", fontSize: "0.9rem", lineHeight: 1.6 }}>
-            The app failed to load. <strong>Nothing has been lost</strong> — your wardrobe is
+            The app failed to load. <strong>Nothing has been lost</strong>: your wardrobe is
             stored in the database and is untouched by this.
           </p>
           <button

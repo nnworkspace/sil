@@ -3,8 +3,8 @@
  *
  * Every piece should carry `season` tags (spring/summer/autumn/winter) so the
  * season filter is useful. When the owner didn't choose them, infer from the
- * material, name and description. Heuristics are deliberately generous — a piece
- * usually spans two or three seasons — and are shared by the one-off backfill
+ * material, name and description. Heuristics are deliberately generous (a piece
+ * usually spans two or three seasons) and are shared by the one-off backfill
  * and (later, #107) the in-app AI import as a sensible fallback.
  */
 

@@ -7,12 +7,12 @@ import { MATERIAL_KEYS } from "@/lib/materials";
  * Reading the URL into a filter state (`VAL-BROWSE-02`, #263).
  *
  * All browse state lives in the URL, which means the URL is an input the owner
- * can type, bookmark and share — so it is parsed defensively. An unknown value
+ * can type, bookmark and share, so it is parsed defensively. An unknown value
  * is **ignored, never an error**: a shared link that has outlived a renamed
  * facet should still show a wardrobe.
  */
 
-describe("#263 — the material facet", () => {
+describe("#263: the material facet", () => {
   it("reads one fibre and a repeated parameter alike", () => {
     expect(parseBrowseParams({ material: "linen" }).materials).toEqual(["linen"]);
     expect(parseBrowseParams({ material: ["linen", "silk"] }).materials).toEqual(["linen", "silk"]);

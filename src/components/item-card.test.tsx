@@ -6,14 +6,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 /**
  * Copying a berth from a piece's card (#240).
  *
- * The berth is the string the owner retypes most — into a note, a message, a
- * search box — and it already had a copy control on the Berths tab (#217). This
+ * The berth is the string the owner retypes most (into a note, a message, a
+ * search box), and it already had a copy control on the Berths tab (#217). This
  * puts the same control where the pieces are.
  *
  * Two things are worth pinning, and neither is visible in a screenshot:
  *
  *  1. **It must not navigate.** The whole card is a stretched link, so a click
- *     that escapes the button opens the piece — while the copy still succeeds,
+ *     that escapes the button opens the piece, while the copy still succeeds,
  *     which reads as "the app randomly opens things" rather than as a bug.
  *  2. **It must be distinguishable from the copy-name control.** A grid renders
  *     dozens of both; identical accessible names would leave a screen reader
@@ -38,8 +38,8 @@ vi.mock("next/image", () => ({
 
 /**
  * `userEvent.setup()` installs a clipboard stub of its own, so ours has to be
- * defined *after* it or user-event's wins and the assertions see nothing — the
- * same trap documented in `copy-button.test.tsx`.
+ * defined *after* it or user-event's wins and the assertions see nothing. It is
+ * the same trap documented in `copy-button.test.tsx`.
  */
 const setup = () => {
   const user = userEvent.setup();
@@ -75,7 +75,7 @@ const item = (over: Partial<CardItem> = {}) =>
 const renderCard = (over: Partial<CardItem> = {}) =>
   render(<ItemCard item={item(over)} overlays={false} />);
 
-describe("#240 — copying a berth from the card", () => {
+describe("#240: copying a berth from the card", () => {
   it("offers the control when the piece has a berth", () => {
     renderCard();
     expect(screen.getByRole("button", { name: "Copy berth" })).toBeInTheDocument();
@@ -88,7 +88,7 @@ describe("#240 — copying a berth from the card", () => {
   });
 
   it("offers nothing when the piece has no berth", () => {
-    // Most of the wardrobe is in this state — an empty control on every card
+    // Most of the wardrobe is in this state: an empty control on every card
     // would be noise, and copying "" would be worse.
     renderCard({ storageLocation: null });
     expect(screen.queryByRole("button", { name: "Copy berth" })).toBeNull();
@@ -99,7 +99,7 @@ describe("#240 — copying a berth from the card", () => {
     const name = screen.getByRole("button", { name: "Copy name" });
     const berth = screen.getByRole("button", { name: "Copy berth" });
     expect(name).not.toBe(berth);
-    // And they copy different things — the guard against wiring both to `name`.
+    // And they copy different things: the guard against wiring both to `name`.
     const user = setup();
     await user.click(name);
     expect(writeText).toHaveBeenCalledWith("Cropped Jacket in Nubby Denim");
