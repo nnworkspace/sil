@@ -16,7 +16,7 @@ Trips (Phase 3, #74, merged in #86) let the owner build a packing list manually,
 
 The owner wants a genuinely **smart** planner: brief it in natural language ("next week I'm in Vienna 3 days / 2 nights for a conference, with a formal dinner and an evening get-together with a friend. Pack for me"), and have it **propose real pieces from the wardrobe** as a first draft, which the owner then edits or refines by continuing the conversation.
 
-This needs an LLM that reads the wardrobe **and** the trip context (occasions, formality, weather, duration) and returns picks that (a) are real wardrobe items, (b) suit each occasion's formality, and (c) fit the forecast. [ADR-0008](ADR-0008-ai-stack.md) already adopted **Google Gemini via the Vercel AI SDK** (`generateObject` + Zod) for AI features (the import). The open questions for the planner: which model/provider, the interaction model, the data/privacy posture, and the guardrails against hallucinated picks.
+This needs an LLM that reads the wardrobe **and** the trip context (occasions, formality, weather, duration) and returns picks that (a) are real wardrobe items, (b) suit each occasion's formality, and (c) fit the forecast. [ADR-0008](ADR-0008-ai-stack.md) already adopted **Google Gemini via the AI SDK** (`generateObject` + Zod) for AI features (the import). The open questions for the planner: which model/provider, the interaction model, the data/privacy posture, and the guardrails against hallucinated picks.
 
 ## Decision drivers
 
@@ -25,14 +25,14 @@ This needs an LLM that reads the wardrobe **and** the trip context (occasions, f
 - **Privacy**: the planner's input is **personal** (the wardrobe plus a trip brief that may name a friend), unlike the **public** product pages the import sends. ADR-0008 explicitly named "private inputs" as a re-evaluation trigger.
 - **Quality**: occasion/formality reasoning, and **only real pieces** (never invent an item the owner doesn't own).
 - **Human-in-the-loop**: nothing is committed to the packing list without the owner's explicit accept (mirror the import's HITL).
-- **Provider-swappable**: keep switching to Claude / the AI Gateway a provider swap, not a rewrite, if quota or quality demands it.
+- **Provider-swappable**: keep switching to Claude or an AI gateway a provider swap, not a rewrite, if quota or quality demands it.
 
 ## Considered options
 
 **Model / provider**
 1. **Reuse Gemini free tier** (ADR-0008): `$0`, but free-tier data-use applies and the daily request cap constrains chat loops; input is personal.
 2. **Anthropic Claude (pay-per-use)**: strongest reasoning, no training on API data; cents per plan.
-3. **Vercel AI Gateway**: unified routing/observability, `$5` credits; adds a middleman.
+3. **A hosted AI gateway**: unified routing/observability, `$5` credits; adds a middleman.
 
 **Interaction model**
 - **A. One-shot generate-then-edit**: a brief box → one structured proposal → accept / remove / swap / regenerate.
@@ -46,7 +46,7 @@ This needs an LLM that reads the wardrobe **and** the trip context (occasions, f
 - **Human-in-the-loop.** The proposal is shown for review; it becomes `trip_items` only when the owner **accepts** (whole or per piece). Regenerating or editing never auto-commits.
 - **Frugal by design (the daily cap).** One-shot keeps it to **one model call per generate/regenerate**; the wardrobe is sent as a **compact text catalog** (name, category, colour, brand, tags, but **no photos** in v1) to keep tokens and latency down; the forecast (already fetched) is passed as a few numbers.
 - **Privacy posture.** Only the text catalog + the trip brief go to the model, no images. The owner is advised in-UI that the brief is sent to the AI and that they may omit personal names. Recorded as an **accepted trade-off**: a clothing list plus a short trip brief is low-sensitivity, and text-only avoids sending photos.
-- **Provider-swappable.** The `ai` SDK keeps Gemini behind one call site; moving to Claude or the Gateway later (a re-evaluation trigger below) is a provider swap.
+- **Provider-swappable.** The `ai` SDK keeps Gemini behind one call site; moving to Claude or a gateway later (a re-evaluation trigger below) is a provider swap.
 
 ## Consequences
 
@@ -65,10 +65,10 @@ This needs an LLM that reads the wardrobe **and** the trip context (occasions, f
 
 **Re-evaluation triggers**
 
-- The daily cap or reasoning quality proves insufficient → move to **Claude / the AI Gateway**.
+- The daily cap or reasoning quality proves insufficient → move to **Claude or an AI gateway**.
 - Private sensitivity grows (e.g. sending photos, richer personal context) → paid tier / different provider.
 - Sustained chat-loop usage changes the cost calculus.
 
 ## Notes
 
-Extends [ADR-0008](ADR-0008-ai-stack.md) (AI stack) and [ADR-0006](ADR-0006-validation-library.md) (Zod). Implements `specs/trip-planner/`. Related: trips (#74); outfits (Phase 4). Model ids come from the provider / Gateway model list, not from memory.
+Extends [ADR-0008](ADR-0008-ai-stack.md) (AI stack) and [ADR-0006](ADR-0006-validation-library.md) (Zod). Implements `specs/trip-planner/`. Related: trips (#74); outfits (Phase 4). Model ids come from the provider's model list, not from memory.
