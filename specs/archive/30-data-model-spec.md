@@ -54,4 +54,4 @@ CREATE INDEX items_archived_at_idx ON items (archived_at);
 
 - **Backfill:** none. Every existing row gets `NULL`, i.e. **active**, which is correct: nothing in the catalogue has been archived yet.
 - **Reversible:** dropping the three columns and the index restores the previous schema; no data outside them is involved.
-- **Production:** the same migration runs against Neon; because it is additive and nullable it needs no downtime and does not rewrite the table.
+- **Production:** the same migration runs against the production database; because it is additive and nullable it needs no downtime and does not rewrite the table.

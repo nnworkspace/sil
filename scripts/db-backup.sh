@@ -10,7 +10,7 @@
 #   pnpm db:backup
 #
 # The dump is role-agnostic (--no-owner --no-privileges) so the same file also
-# restores cleanly into a future Neon database when the app is deployed.
+# restores cleanly into any other Postgres database.
 
 set -euo pipefail
 

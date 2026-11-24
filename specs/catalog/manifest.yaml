@@ -16,7 +16,6 @@ description: |
 decisions:
   - ADR-0001  # tech stack
   - ADR-0002  # data layer
-  - ADR-0003  # photo storage
 issue: 6
 
 artefacts:

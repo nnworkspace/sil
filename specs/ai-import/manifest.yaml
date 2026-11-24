@@ -16,7 +16,6 @@ description: |
 decisions:
   - ADR-0001   # stack
   - ADR-0002   # data layer / item model
-  - ADR-0003   # photo storage
   - ADR-0006   # validation (Zod)
   - ADR-0008   # AI stack (Gemini via the AI SDK)
   - ADR-0009   # 1.5b via saved HTML upload, not URL fetch

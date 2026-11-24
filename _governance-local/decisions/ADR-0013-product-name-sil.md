@@ -25,11 +25,11 @@ The product is **Sil**, with the tagline **"style, in loop."**
 
 **Scope (the display name only):** the page `<title>`, the header wordmark, the mobile drawer title, and the sign-in page heading (where the tagline also appears). The navigation entry labelled **"Wardrobe" stays**: with the product called Sil, "Wardrobe" is correctly the name of the *section* holding the pieces.
 
-**Deliberately not renamed:** the Vercel project and its `<your-project>.vercel.app` deployment domain, the source repository name, the Google Cloud project and its OAuth client, and the npm package name. These are **infrastructure identifiers, not branding**. Renaming them would change the deployment domain and so break the registered Google OAuth **redirect URI** (locking the owner out until re-registered), and would disturb the GitHub↔Vercel connection, all for no user-visible gain. A Google Cloud **project ID is immutable** regardless.
+**Deliberately not renamed:** the hosting project and its deployment domain, the source repository name, the Google Cloud project and its OAuth client, and the npm package name. These are **infrastructure identifiers, not branding**. Renaming them would change the deployment domain and so break the registered Google OAuth **redirect URI** (locking the owner out until re-registered), and would disturb the link between the repository and the host, all for no user-visible gain. A Google Cloud **project ID is immutable** regardless.
 
 ## Consequences
 
 - Users see "Sil" everywhere the product names itself; nothing about deployment, auth, or source control changes.
-- Should brand alignment be wanted later, the clean route is to **attach a custom domain** to the same Vercel project, never to rename the project. The Google **consent-screen app name** ("continue to …") is separately editable and cosmetic, safe to change at any time.
+- Should brand alignment be wanted later, the clean route is to **attach a custom domain** to the same hosting project, never to rename the project. The Google **consent-screen app name** ("continue to …") is separately editable and cosmetic, safe to change at any time.
 - The gap between the repo/infra name ("wardrobe") and the product name ("Sil") is accepted and recorded here, so it does not read as an inconsistency later.
 - Prose in `README.md` and the spec sets still says "the wardrobe app"; it may be updated opportunistically, and is not part of this change.

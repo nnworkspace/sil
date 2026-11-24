@@ -26,8 +26,8 @@ import { Button, buttonVariants } from "@/components/ui/button";
  *     costs a fraction of a full document reload on a phone.
  *
  * What it must **not** do is make a real bug look like weather. The `digest` is
- * shown because it is the only handle the owner has when reading Vercel's logs,
- * and the error still reaches those logs untouched: a boundary that quietly
+ * shown because it is the only handle the owner has when reading the server
+ * logs, and the error still reaches those logs untouched: a boundary that quietly
  * absorbed a genuine crash is how a broken page survives unnoticed.
  */
 export default function Error({

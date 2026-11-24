@@ -21,9 +21,8 @@ its photos, composition, tags and the berth it is stowed in), and around that:
 - **Archive**: a piece that has left the wardrobe is retired, never deleted.
 
 Built with **Next.js 16 (App Router) + React 19 + TypeScript**, **Tailwind CSS 4**
-and **shadcn/ui**, **Drizzle ORM** on **PostgreSQL**, and **Vercel Blob** for
-photos. Deployed on **Vercel**. See [ADR-0001](_governance-local/decisions/ADR-0001-tech-stack.md)
-for why.
+and **shadcn/ui**, and **Drizzle ORM** on **PostgreSQL**. See
+[ADR-0001](_governance-local/decisions/ADR-0001-tech-stack.md) for why.
 
 ![Browsing the wardrobe by category, in demo mode with invented pieces](docs/screenshots/browse.png)
 
@@ -68,10 +67,9 @@ Useful scripts:
 | `pnpm db:seed-demo [--reset]` | Seed the local `sil` database with invented demo data (needs `DEMO_MODE=1`; see [Demo mode](#demo-mode)) |
 | `pnpm changelog` | Regenerate `CHANGELOG.md` with git-cliff |
 
-The database runs locally in Docker; production uses Neon Postgres. Photos fall
-back to the local filesystem in dev and use Vercel Blob in production
-(see [ADR-0002](_governance-local/decisions/ADR-0002-data-layer.md),
-[ADR-0003](_governance-local/decisions/ADR-0003-photo-storage.md)).
+The database runs in Docker, and photos are stored on the local filesystem under
+`public/uploads/` (see [ADR-0002](_governance-local/decisions/ADR-0002-data-layer.md)
+and [docs/ARCHITECTURE.md §5](docs/ARCHITECTURE.md#5-photo-storage)).
 
 ### Backups (keep a local copy of your data)
 
@@ -83,7 +81,7 @@ pnpm db:restore backups/<timestamp>  # restore a specific snapshot (prompts firs
 pnpm db:restore                      # restore the most recent snapshot
 ```
 
-- **Backups live in `backups/<timestamp>/`** at the repo root. Each folder has `db.dump` (a role-agnostic `pg_dump`, so it also restores into Neon later), a copy of `uploads/`, and a `README.txt`.
+- **Backups live in `backups/<timestamp>/`** at the repo root. Each folder has `db.dump` (a role-agnostic `pg_dump`, so it also restores into any other Postgres), a copy of `uploads/`, and a `README.txt`.
 - The `backups/` folder is **gitignored**: it holds personal data and is never committed. Copy it wherever you keep your backups.
 - `db:restore` **replaces** the current data and asks for confirmation first.
 - Requires the DB container running (`docker compose up -d`).
@@ -171,9 +169,8 @@ This project follows a deliberately lightweight governance, adapted from a large
 | ADR | Decision |
 |:--|:--|
 | [0000](_governance-local/decisions/ADR-0000-adopt-repository-local-decision-records.md) | Adopt repository-local decision records |
-| [0001](_governance-local/decisions/ADR-0001-tech-stack.md) | Next.js + React + TypeScript on Vercel |
+| [0001](_governance-local/decisions/ADR-0001-tech-stack.md) | Next.js + React + TypeScript |
 | [0002](_governance-local/decisions/ADR-0002-data-layer.md) | PostgreSQL + Drizzle; tags as an array column |
-| [0003](_governance-local/decisions/ADR-0003-photo-storage.md) | Vercel Blob photos, local filesystem in dev |
 | [0004](_governance-local/decisions/ADR-0004-branching-and-change-flow.md) | GitHub Flow (main + PR) |
 | [0005](_governance-local/decisions/ADR-0005-commit-conventions.md) | Conventional Commits + mandatory scope & issue footer |
 | [0006](_governance-local/decisions/ADR-0006-validation-library.md) | Zod for input validation |

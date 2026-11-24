@@ -20,7 +20,7 @@ Defines how trips are exposed and wired: the routes, the trips list, the trip de
 
 ### The printable list (#259)
 
-**Why a print stylesheet rather than a generated PDF.** The hard part of this feature is the layout (photo size, what fits on a page, what a checkbox looks like), and a print stylesheet lets that be iterated in a browser in seconds. It also gets the photographs for free: they are `<img>` tags already pointing at Blob. Generating a real PDF server-side would mean fetching and embedding every photo inside one request, which for a thirty-piece trip is thirty image fetches. If one-click download later proves necessary it becomes a rendering change against a layout already agreed, rather than a design argued through a PDF library.
+**Why a print stylesheet rather than a generated PDF.** The hard part of this feature is the layout (photo size, what fits on a page, what a checkbox looks like), and a print stylesheet lets that be iterated in a browser in seconds. It also gets the photographs for free: they are `<img>` tags already pointing at the stored photos. Generating a real PDF server-side would mean fetching and embedding every photo inside one request, which for a thirty-piece trip is thirty image fetches. If one-click download later proves necessary it becomes a rendering change against a layout already agreed, rather than a design argued through a PDF library.
 
 **It has to work in two places at once.** The owner reads it on a phone while packing *and* prints it for the suitcase: two columns on a phone, five on A4.
 

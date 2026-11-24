@@ -2,7 +2,7 @@
 
 - **Spec ID:** `SPEC-LOOKS-DATA`
 - **Part of set:** `SPEC-SET-LOOKS` v0.4.0
-- **Traceability:** `SPEC-LOOKS-FUNC` (rules §4); [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md), [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md); implemented in [`src/db/schema.ts`](../../src/db/schema.ts); issues #95, #98, #100, #170
+- **Traceability:** `SPEC-LOOKS-FUNC` (rules §4); [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md); implemented in [`src/db/schema.ts`](../../src/db/schema.ts); issues #95, #98, #100, #170
 
 ## 1. Purpose and scope
 
@@ -30,13 +30,13 @@ One row per Look.
 
 ## 3a. `look_photos`
 
-The owner's own photos of the outfit: a styled shot of the set/look as worn. An exact mirror of `item_photos` (ADR-0003), minus the `official`/`own` kind (a look photo is always the owner's).
+The owner's own photos of the outfit: a styled shot of the set/look as worn. An exact mirror of `item_photos`, minus the `official`/`own` kind (a look photo is always the owner's).
 
 | Field | Column | Type | Required | Constraint / notes |
 |:--|:--|:--|:--|:--|
 | id | `id` | uuid | system | primary key, generated |
 | look | `look_id` | uuid | **yes** | FK → `looks(id)` **ON DELETE CASCADE** |
-| url | `url` | text | **yes** | public URL (Vercel Blob in prod, filesystem in dev) |
+| url | `url` | text | **yes** | public URL (`/uploads/…`) |
 | path | `path` | text | **yes** | storage pathname, kept so the object can be deleted |
 | sort | `sort` | integer | **yes** | display order, 0-based, default 0 |
 | is primary | `is_primary` | boolean | **yes** | the chosen cover; default false |
@@ -81,7 +81,7 @@ The Look-detail query loads the look with its `look_photos` (primary first, then
 - Add `looks`, `lookItems`, and `lookPhotos` tables + relations to `src/db/schema.ts` (mirroring `trips` / `tripItems` and `itemPhotos`), with `lookItems` declaring the composite primary key `(look_id, item_id)` **plus a `sort` column** and both FKs `ON DELETE CASCADE`, and `lookPhotos` its `look_id` FK `ON DELETE CASCADE`.
 - Generate the migration with `pnpm db:generate`; apply with `pnpm db:migrate`. The `sort` migration **backfills** existing members with a deterministic order (by piece name) so current Looks stay stable (#100).
 - **#170:** add `archived_at` (date), `archive_reason` (text), `archive_note` (text) to `looks` + index `looks_archived_at_idx`, mirroring the item archive columns; additive migration (nullable columns, existing looks stay active).
-- Validation of writes uses Zod (ADR-0006) and the storage abstraction (ADR-0003), mirroring the `VAL-LOOK-*` rules.
+- Validation of writes uses Zod (ADR-0006) and the storage abstraction (`src/lib/storage.ts`), mirroring the `VAL-LOOK-*` rules.
 
 ## 6. Out of scope
 

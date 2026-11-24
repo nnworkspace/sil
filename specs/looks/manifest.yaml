@@ -24,7 +24,6 @@ description: |
 
 decisions:
   - ADR-0002   # data layer / Postgres + Drizzle
-  - ADR-0003   # photo storage (Blob | filesystem)
   - ADR-0006   # validation (Zod)
 issues: [95, 98, 100, 170]
 

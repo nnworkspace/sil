@@ -2,7 +2,7 @@
 
 - **Spec ID:** `SPEC-CATALOG-FUNC`
 - **Part of set:** `SPEC-SET-CATALOG` v0.1.0
-- **Traceability:** [ADR-0001](../../_governance-local/decisions/ADR-0001-tech-stack.md), [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md), [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md); issue #6
+- **Traceability:** [ADR-0001](../../_governance-local/decisions/ADR-0001-tech-stack.md), [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md); issue #6
 
 ## 1. Purpose and scope
 

@@ -32,7 +32,7 @@ Conceptual signatures (final types live with the code):
 
 All three validate against the `VAL-ITEM-*` rules (functional spec §4) before writing, and revalidate the affected routes (`/`, the category page, the item page) so the UI reflects the change.
 
-Photo uploads travel in the Server Action body, so the Next.js Server Action body limit is raised to 30 MB (`next.config.ts`) to accommodate multi-MB phone photos. (A future optimisation is direct client-to-Blob upload, which would keep large bodies out of the action.)
+Photo uploads travel in the Server Action body, so the Next.js Server Action body limit is raised to 30 MB (`next.config.ts`) to accommodate multi-MB phone photos.
 
 ## 4. Flows
 
@@ -62,7 +62,7 @@ sequenceDiagram
 sequenceDiagram
     participant F as Add form (Client)
     participant A as createItem (Server Action)
-    participant S as Storage (Blob | FS)
+    participant S as Storage (filesystem)
     participant D as Drizzle / Postgres
     F->>A: submit(formData)
     A->>A: validate (VAL-ITEM-01..07)

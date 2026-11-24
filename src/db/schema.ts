@@ -111,7 +111,7 @@ export const itemPhotos = pgTable("item_photos", {
   itemId: uuid("item_id")
     .notNull()
     .references(() => items.id, { onDelete: "cascade" }),
-  /** Public URL (Vercel Blob in prod, local filesystem in dev). */
+  /** Public URL of the stored photo (`/uploads/…`). */
   url: text("url").notNull(),
   /** Storage pathname, kept so we can delete the object. */
   path: text("path").notNull(),
@@ -280,14 +280,14 @@ export const lookItems = pgTable(
 );
 
 /** The owner's own photos of a Look: a styled shot of the outfit as worn.
- *  Mirrors item_photos (ADR-0003); a look photo is always the owner's, so there
+ *  Mirrors item_photos; a look photo is always the owner's, so there
  *  is no official/own kind. The cover is the row with is_primary = true. */
 export const lookPhotos = pgTable("look_photos", {
   id: uuid("id").primaryKey().defaultRandom(),
   lookId: uuid("look_id")
     .notNull()
     .references(() => looks.id, { onDelete: "cascade" }),
-  /** Public URL (Vercel Blob in prod, local filesystem in dev). */
+  /** Public URL of the stored photo (`/uploads/…`). */
   url: text("url").notNull(),
   /** Storage pathname, kept so we can delete the object. */
   path: text("path").notNull(),

@@ -26,7 +26,7 @@ Typing a garment's details from a product page is tedious. This feature does the
 | Stack | [ADR-0001](../../_governance-local/decisions/ADR-0001-tech-stack.md) |
 | Data layer / item model | [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md) |
 | Validation (Zod) | [ADR-0006](../../_governance-local/decisions/ADR-0006-validation-library.md) |
-| Photo storage | [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md) |
+| Photo storage | [docs/ARCHITECTURE.md §5](../../docs/ARCHITECTURE.md#5-photo-storage) |
 | AI stack (Gemini via the AI SDK) | [ADR-0008](../../_governance-local/decisions/ADR-0008-ai-stack.md) |
 | 1.5b via saved HTML (not URL fetch) | [ADR-0009](../../_governance-local/decisions/ADR-0009-import-from-saved-html.md) |
 | Catalog **data model** (columns it fills) | [`SPEC-CATALOG-DATA`](../catalog/30-data-model-spec.md) |
@@ -58,7 +58,7 @@ graph LR
     style IMP fill:#4da6ff,stroke:#0066cc,color:#fff
 ```
 
-For 1.5b the official photos are **downloaded at save time** (by `createItem`, from the URLs the owner keeps), not at import time, so an abandoned draft leaves no orphaned blobs.
+For 1.5b the official photos are **downloaded at save time** (by `createItem`, from the URLs the owner keeps), not at import time, so an abandoned draft leaves no orphaned photo files.
 
 ## 6. How to read this set
 

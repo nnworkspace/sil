@@ -10,7 +10,7 @@ Defines the `item` data contract for the Catalog: every field, its type, whether
 
 ## 2. Storage approach
 
-All item text lives in the **database**, not in Markdown files: items are runtime user data (created and edited from the app), and Vercel's filesystem is read-only in production. The model combines relational columns for the core with a JSONB column for brand-variable data, and a child table for photos (see the SQL-plus-JSONB rationale in [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md) and [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md)). Two long free-text fields, `notes` and `description`, hold **Markdown** and are rendered with a sanitized renderer on display (§8); all other text is plain.
+All item text lives in the **database**, not in Markdown files: items are runtime user data, created and edited from the app. The model combines relational columns for the core with a JSONB column for brand-variable data, and a child table for photos (see the SQL-plus-JSONB rationale in [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md) and [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md)). Two long free-text fields, `notes` and `description`, hold **Markdown** and are rendered with a sanitized renderer on display (§8); all other text is plain.
 
 ## 3. `items` fields
 
@@ -88,7 +88,7 @@ Each item has zero or more photos (your own plus the official shot).
 |:--|:--|:--|:--|
 | id | `id` | uuid | primary key |
 | item | `item_id` | uuid | FK → `items.id`, `on delete cascade` |
-| url | `url` | text | public URL (Vercel Blob / local dev) |
+| url | `url` | text | public URL (`/uploads/…`) |
 | path | `path` | text | storage pathname, for deletion |
 | kind | `kind` | text | `official` (from the brand site) or `own` (owner wearing the piece); default `own` |
 | order | `sort` | integer | display order, 0-based; owner-arranged by drag-and-drop within each kind group (#56) |
