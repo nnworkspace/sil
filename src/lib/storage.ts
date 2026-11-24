@@ -1,20 +1,17 @@
 /**
- * Photo storage abstraction (ADR-0003).
+ * Photo storage (docs/ARCHITECTURE.md §5).
  *
- * Uses Vercel Blob when BLOB_READ_WRITE_TOKEN is set (production); otherwise
- * writes to the local filesystem under public/uploads (development, zero setup).
- * Feature code calls putPhoto / deletePhoto and never touches the provider.
+ * Writes photos to the local filesystem under public/uploads, which needs no
+ * setup. Feature code calls putPhoto / deletePhoto and never touches the files
+ * directly, so another store can replace this one without changing a feature.
  */
 
 import { randomUUID } from "node:crypto";
 import { mkdir, writeFile, unlink } from "node:fs/promises";
 import path from "node:path";
 
-import { put, del } from "@vercel/blob";
-
 import { imageExt } from "@/lib/images";
 
-const useBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const UPLOAD_SUBDIR = "uploads";
 
@@ -29,8 +26,8 @@ export type StoredPhoto = { url: string; path: string };
  * Re-encode an upload to WebP before it is stored (#153).
  *
  * A photo straight off a phone is several MB; re-encoded it is typically ~95%
- * smaller with no visible loss, which matters because production runs on
- * Vercel's free tier. Resolution is deliberately **not** reduced: only the
+ * smaller with no visible loss, which keeps both the store and every page that
+ * shows the photo light. Resolution is deliberately **not** reduced: only the
  * encoding changes, and that is where nearly all of the saving comes from.
  *
  * WebP rather than AVIF, despite the rest of the library being AVIF: measured
@@ -54,9 +51,9 @@ async function reencode(file: File): Promise<{ bytes: Buffer; ext: string }> {
   try {
     // Loaded lazily (not a top-level import) so that merely importing this
     // module, which any page pulling in a photo Server Action does, never
-    // triggers sharp's native binary load. On Vercel that load can fail
-    // (`libvips` missing in the runtime), which previously crashed every page
-    // that transitively imported storage, e.g. the look detail (#178). Now
+    // triggers sharp's native binary load. In a runtime without `libvips` that
+    // load fails, which previously crashed every page that transitively
+    // imported storage, e.g. the look detail (#178). Now
     // sharp is only touched when a photo is actually re-encoded on upload, and
     // if it still can't load the catch below stores the original untouched.
     const sharp = (await import("sharp")).default;
@@ -72,16 +69,6 @@ export async function putPhoto(file: File): Promise<StoredPhoto> {
   const { bytes, ext } = await reencode(file);
   const filename = `${randomUUID()}${ext}`;
 
-  if (useBlob) {
-    const blob = await put(`items/${filename}`, bytes, {
-      access: "public",
-      addRandomSuffix: false,
-      contentType: ext === ".webp" ? "image/webp" : file.type || undefined,
-    });
-    // Store the URL as the deletion handle (see deletePhoto).
-    return { url: blob.url, path: blob.url };
-  }
-
   const dir = path.join(PUBLIC_DIR, UPLOAD_SUBDIR);
   await mkdir(dir, { recursive: true });
   await writeFile(path.join(dir, filename), bytes);
@@ -89,17 +76,12 @@ export async function putPhoto(file: File): Promise<StoredPhoto> {
 }
 
 /**
- * Best-effort deletion. A stored path that looks like an http(s) URL is a Blob
- * object; anything else is a filesystem path relative to public/. Failures are
+ * Best-effort deletion of a stored path, relative to public/. Failures are
  * logged, not thrown (VAL-ITEM-11).
  */
 export async function deletePhoto(storedPath: string): Promise<void> {
   try {
-    if (/^https?:\/\//.test(storedPath)) {
-      await del(storedPath);
-    } else {
-      await unlink(path.join(PUBLIC_DIR, storedPath));
-    }
+    await unlink(path.join(PUBLIC_DIR, storedPath));
   } catch (err) {
     console.error(`Failed to delete photo "${storedPath}":`, err);
   }

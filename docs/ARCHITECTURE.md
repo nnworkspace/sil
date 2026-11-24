@@ -6,21 +6,21 @@ This is the living, high-level picture of how the app fits together. It is inten
 
 ## 1. System context
 
-A single owner uses the app from a browser to catalog clothes, tag them, and build trip packing lists. The app depends on a small set of managed services.
+A single owner uses the app from a browser to catalog clothes, tag them, and build trip packing lists. The app depends on a PostgreSQL database and a photo store.
 
 ```mermaid
 graph TD
-    U["Owner (browser)"] -->|HTTPS| APP["Sil<br/>(Next.js on Vercel)"]
-    APP -->|SQL over TLS| DB[("PostgreSQL<br/>Neon in prod")]
-    APP -->|HTTPS| BLOB["Vercel Blob<br/>(photo storage)"]
+    U["Owner (browser)"] -->|HTTPS| APP["Sil<br/>(Next.js)"]
+    APP -->|SQL| DB[("PostgreSQL")]
+    APP -->|"put / delete"| FS["Local filesystem<br/>(photo storage)"]
 
     style APP fill:#4da6ff,stroke:#0066cc,color:#fff
     style U fill:#d5e8d4,stroke:#82b366
     style DB fill:#f5f5f5,stroke:#666
-    style BLOB fill:#f5f5f5,stroke:#666
+    style FS fill:#f5f5f5,stroke:#666
 ```
 
-In local development the same app runs against Postgres in Docker and stores photos on the local filesystem: no cloud credentials required (see §6).
+This copy runs against Postgres in Docker and stores photos on the local filesystem, so neither needs a cloud credential (see §6).
 
 ## 2. Containers & components
 
@@ -29,30 +29,30 @@ graph LR
     subgraph Browser
         CC["Client Components<br/>(forms, filters, theme toggle)"]
     end
-    subgraph Vercel["Next.js app (Vercel Fluid Compute)"]
+    subgraph App["Next.js app (server)"]
         SC["Server Components<br/>(render + read data)"]
         SA["Server Actions<br/>(create / update / delete)"]
         ORM["Drizzle ORM"]
-        STO["Storage abstraction<br/>(Blob | filesystem)"]
+        STO["Storage abstraction<br/>(filesystem)"]
     end
     DB[("PostgreSQL")]
-    BLOB["Vercel Blob / local FS"]
+    FS["Local filesystem<br/>(public/uploads)"]
 
     CC -->|"invoke"| SA
     SC -->|"read"| ORM
     SA -->|"write"| ORM
     SA -->|"put / delete"| STO
     ORM --> DB
-    STO --> BLOB
+    STO --> FS
 
-    style Vercel fill:#eaf3ff,stroke:#0066cc
+    style App fill:#eaf3ff,stroke:#0066cc
 ```
 
 - **Server Components** are the default: they run only on the server, read data directly through Drizzle, and ship no JavaScript for the read path.
 - **Client Components** (`"use client"`) cover interactivity only: the add/edit form, the theme toggle, the delete confirmation.
 - **Server Actions** handle mutations, called directly from client components; there is no hand-written REST API.
 - **Drizzle ORM** is the single data-access layer (`src/db/`).
-- **Storage abstraction** (`src/lib/storage.ts`) hides whether a photo goes to Vercel Blob (prod) or the filesystem (dev), and **re-encodes every upload before storing it** (§5).
+- **Storage abstraction** (`src/lib/storage.ts`) keeps the photo files behind `putPhoto` / `deletePhoto`, and **re-encodes every upload before storing it** (§5).
 - **AI-assisted import** (Phase 1.5, shipped): Server Actions (`src/app/items/import-actions.ts`) extract item fields from a product-page **screenshot** or a **saved `.html` page** via Google Gemini through the AI SDK (`generateObject` + Zod), then prefill the add form for review. Nothing is written until the owner saves. Retail pages are fetched by the owner's browser, not our server (they are bot-protected); see ADR-0008 (AI stack) and ADR-0009 (saved-page over URL fetch).
 - **Trips & packing** (Phase 3, shipped): routes `/trips` and `/trips/[id]` let the owner create a trip and build a **packing list** from the wardrobe (`trip_items`, packed/not), via Server Actions like the rest of the app. The manual list is the baseline; on top of it an **AI packing planner** (`trip-planner.tsx`, ADR-0010) proposes a plan in one shot for the owner to accept, edit or discard. Nothing is packed without the owner's say. The packing plan has **two views of the same pieces** (#270): **by category** (editable slots with targets, how a suitcase is packed) and **by day**, a plain list per date plus an *Across all days* group for the shoes and the jewellery. A piece may be planned for any number of days and stays **one packed piece**, ticked once on the list: `trip_items` remains the single membership (`packed` lives there), and `trip_item_days` records the plan about it, behind a composite foreign key so un-packing a piece takes its days with it. Both the printable sheet and the Markdown export can group either way. The **packing list** groups by top-level category (a shirt dress under Dresses) and inside each group runs in the trip's own sequence, by the day a piece is first worn (#286, #288); one shared helper does both, so the screen, the printable sheet and the Markdown export cannot disagree. The trips **list** splits into *Coming* and *Past* tabs on today's date, with edit and delete on each card (#290, #292). The trip's `destination` reuses the weather lib (Open-Meteo) for the forecast shown beside the list. See [`specs/trips/`](../specs/trips/) and [`specs/trip-planner/`](../specs/trip-planner/).
 - **Batch wear logging** (#320): a wear is stored per piece, but a **day is worn as an outfit**. Two shapes, deliberately different. Where the set already exists as data there is **nothing to select**: `Wore this today` on a Look, `Log this day` on a planned trip day. A trip day opens the dialog on **that day, not today**, because catching up days later is the normal case on the road. Where it does not, a **selection mode** on the packing list and the browse grid gathers pieces ad hoc. It is entered from a button named for the **outcome**, not the mechanism. A quiet `Select` failed on first use: the owner reached for the packed checkbox instead, because a checkbox is the universal "select this", and the mode's own entry point read as nothing in particular. `Log a wear` sits beside `Add from wardrobe` as the list's other action and starts selection with the goal already stated. One dialog writes the same date, occasion and note to every piece **in one transaction**, warns before repeating a date (wearing one piece to the office and then to dinner is real), and offers a single undo for the whole batch. **Logging from a trip also ticks unpacked pieces as packed**: the packing checklist is routinely left half-filled, so `packed = false` usually means *not ticked*, and a wear on the trip is evidence the piece was in the case. That inference runs `false → true` only, only where a trip exists to infer from, and is **named in the toast** rather than done silently; the undo reverts it too. See [`src/lib/batch-wear.ts`](../src/lib/batch-wear.ts).
@@ -84,7 +84,7 @@ sequenceDiagram
 sequenceDiagram
     participant B as Client Component (form)
     participant A as Server Action
-    participant ST as Storage (Blob | FS)
+    participant ST as Storage (filesystem)
     participant D as Drizzle / Postgres
     B->>A: createItem(formData)
     A->>A: validate (Zod)
@@ -173,42 +173,41 @@ erDiagram
 
 ## 5. Photo storage
 
-Photos are large phone images. They are stored as objects and only their URL (and blob pathname, for deletion) is persisted in `item_photos`. The storage abstraction (`src/lib/storage.ts`) selects the backend: Vercel Blob when `BLOB_READ_WRITE_TOKEN` is set, otherwise the local filesystem (`public/uploads/`, git-ignored) for zero-setup dev. See [ADR-0003](../_governance-local/decisions/ADR-0003-photo-storage.md).
+Photos are large phone images. They are stored as files under `public/uploads/` (git-ignored), and only their URL and path (for deletion) are persisted in `item_photos`. Feature code reaches them only through the storage abstraction (`src/lib/storage.ts`), so the store can change without touching the features.
 
-> **The switch is a single environment variable, which makes it a trap.** A `BLOB_READ_WRITE_TOKEN` present in `.env.local` silently sends *development* uploads to the *production* store: no warning, no prompt, and the local database then holds prod URLs. Keep the production token out of `.env.local`; any local tooling that genuinely needs one should read it under a **different name**, so that the app cannot pick it up by accident.
-
-**Photos are re-encoded before they are stored.** `putPhoto` runs the upload through `sharp` first: a 7.7 MB phone photo becomes ~300 KB, a 96% saving. This buys faster page loads and lower data transfer, and keeps the library from bloating over years. It costs nothing extra, since it is one `put` either way. **Resolution is deliberately preserved**: only the encoding changes, and that is where nearly all of the saving comes from.
+**Photos are re-encoded before they are stored.** `putPhoto` runs the upload through `sharp` first: a 7.7 MB phone photo becomes ~300 KB, a 96% saving. This buys faster page loads and lower data transfer, and keeps the library from bloating over years. It costs nothing extra, since the photo is written once either way. **Resolution is deliberately preserved**: only the encoding changes, and that is where nearly all of the saving comes from.
 
 The interactive path encodes **WebP at quality 85**, while bulk/offline work uses **AVIF at quality 85**. The split is measured, not arbitrary: on a 24 MP photo `sharp`'s AVIF took **57 s** at its default effort (unusable while the owner waits, and a timeout risk), and at an effort low enough to be interactive it produced files roughly **twice the size** of WebP. Offline, where encode time is free, AVIF wins on size. The stored library is therefore intentionally mixed.
 
 Re-encoding is fail-safe: the original bytes are kept when the upload is already AVIF/WebP, when re-encoding would not actually be smaller, or if the encoder throws. A failed optimisation must never cost the owner a photo.
 
-## 6. Deployment topology
+## 6. Runtime environment
 
-| Concern | Production | Local development |
-|:--|:--|:--|
-| Host / runtime | Vercel (Fluid Compute) | `pnpm dev` (Next.js) |
-| Database | Neon Postgres (pooled URL) | Postgres in Docker (`docker-compose.yml`, port 5434) |
-| Photos | Vercel Blob | Local filesystem (`public/uploads/`) |
-| Config | Vercel env vars | `.env.local` |
+This repository covers running the app on your own machine:
+
+| Concern | Where |
+|:--|:--|
+| Runtime | `pnpm dev` (Next.js) |
+| Database | Postgres in Docker (`docker-compose.yml`, port 5434) |
+| Photos | Local filesystem (`public/uploads/`) |
+| Config | `.env.local` |
 
 Environment variables:
 
 | Variable | Purpose |
 |:--|:--|
-| `DATABASE_URL` | Postgres connection string (Neon pooled URL in prod) |
-| `BLOB_READ_WRITE_TOKEN` | Vercel Blob access; absent in dev → filesystem fallback |
+| `DATABASE_URL` | Postgres connection string (the Docker database, locally) |
 | `GOOGLE_GENERATIVE_AI_API_KEY` | Gemini, for AI-assisted import and the trip planner (ADR-0008) |
 | `AUTH_SECRET` | Signs/encrypts the Auth.js JWT session (ADR-0012) |
 | `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` | Google OAuth client credentials |
 | `OWNER_EMAIL` | Comma-separated allowlist of permitted verified emails; empty ⇒ nobody is admitted |
 | `DEMO_MODE` | `1` switches sign-in off for a local demo with invented data (§8); never set in production |
 
-The same Drizzle schema and migrations run in both environments; only the connection string and storage backend differ.
+The Drizzle schema and migrations are the same on any Postgres; only the connection string changes.
 
 **Production credentials are not kept in the working tree.** `DATABASE_URL` in `.env.local` always points at the local container. If a local tool ever genuinely needs the production connection string, hold it under a deliberately different name, so that no dev server or migration command can be pointed at production by accident.
 
-**Backups are local and explicit.** `pnpm db:backup` (`scripts/db-backup.sh`) writes a timestamped folder under `backups/` (git-ignored) holding a role-agnostic `pg_dump` of the database and a copy of `public/uploads/`; `pnpm db:restore` (`scripts/db-restore.sh`) replaces the current database and photo files from such a folder, after asking for confirmation. Because the dump carries no owner or privileges, the same file also restores into a Neon database.
+**Backups are local and explicit.** `pnpm db:backup` (`scripts/db-backup.sh`) writes a timestamped folder under `backups/` (git-ignored) holding a role-agnostic `pg_dump` of the database and a copy of `public/uploads/`; `pnpm db:restore` (`scripts/db-restore.sh`) replaces the current database and photo files from such a folder, after asking for confirmation. Because the dump carries no owner or privileges, the same file also restores into any other Postgres database.
 
 ## 7. Directory layout & conventions
 
@@ -264,7 +263,7 @@ Conventions:
 - `notes` and `description` are Markdown, rendered sanitized (`react-markdown` + `rehype-sanitize`).
 - Links styled as buttons use `buttonVariants()` (Base UI has no `asChild`).
 - Data-backed pages are marked `dynamic = "force-dynamic"` so they always reflect the current data.
-- **A database blip must not become a dead page** (#308). Production once served 500s on every page reading `items` with `relation "items" does not exist`, on a database where the table was present and readable throughout; it cleared by itself. The app cannot prevent that (Neon's pooler ignores a client-side `search_path` and Drizzle refuses to qualify to `public`, #307), so it survives it instead. Every read in `queries.ts` goes through `withRetry`, which tries **once** more for connection-class faults only and rethrows constraint, syntax and permission errors untouched; a retry that swallows a real error turns a loud bug into an intermittent one. Above that, `error.tsx` keeps the navigation and says plainly that nothing is lost, and `global-error.tsx` catches a failure in the root layout with no imports at all: anything it imported could be the reason the layout crashed.
+- **A database blip must not become a dead page** (#308). Production once served 500s on every page reading `items` with `relation "items" does not exist`, on a database where the table was present and readable throughout; it cleared by itself. The app cannot prevent that (the hosted database's connection pooler ignores a client-side `search_path`, and Drizzle refuses to qualify to `public`, #307), so it survives it instead. Every read in `queries.ts` goes through `withRetry`, which tries **once** more for connection-class faults only and rethrows constraint, syntax and permission errors untouched; a retry that swallows a real error turns a loud bug into an intermittent one. Above that, `error.tsx` keeps the navigation and says plainly that nothing is lost, and `global-error.tsx` catches a failure in the root layout with no imports at all: anything it imported could be the reason the layout crashed.
 
 ## 8. Cross-cutting concerns
 
@@ -296,7 +295,7 @@ Since shipped, and no longer future: **trips & packing** (`specs/trips/`, `specs
 
 ## 10. Related documents
 
-- Decisions: [`_governance-local/decisions/`](../_governance-local/decisions/) (ADR-0001 stack · 0002 data · 0003 storage · 0004 branching · 0005 commits · 0006 validation · 0007 design system · 0008 AI stack · 0009 saved-page import · 0010 AI trip planner · 0011 looks commit scope · 0012 authentication · 0013 product name · 0014 `test` commit type · 0015 component test tier).
+- Decisions: [`_governance-local/decisions/`](../_governance-local/decisions/) (ADR-0001 stack · 0002 data · 0004 branching · 0005 commits · 0006 validation · 0007 design system · 0008 AI stack · 0009 saved-page import · 0010 AI trip planner · 0011 looks commit scope · 0012 authentication · 0013 product name · 0014 `test` commit type · 0015 component test tier).
 - Feature specs: [`specs/`](../specs/) (catalog, ai-import, browse, berths, wear-tracking, looks, trips, trip-planner, weather, auth, archive, figures and compendium).
 - The phased plan: [`ROADMAP.md`](../ROADMAP.md).
 - How the repo is run: [`README.md`](../README.md).

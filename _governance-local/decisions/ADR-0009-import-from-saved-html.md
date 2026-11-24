@@ -42,7 +42,7 @@ Meanwhile the owner proposed an alternative: open the page in their own browser 
 
 ## Decision
 
-Implement Phase 1.5b as **"import from a saved product page"**: the owner uploads an `.html` file (saved via *Save As → Webpage, Complete*); a server-side parser extracts the **JSON-LD `Product`** data (preferred), `og:`/`<title>` fallbacks, the official image URLs, the source `product_url`, and the stripped visible text; the visible text + JSON-LD are sent to **Gemini** (`generateObject`, ADR-0008) to fill the item fields, translated to English (`VAL-IMPORT-08`). The official image URLs are previewed in the form and **downloaded and stored at save time** (via the existing photo-storage abstraction, ADR-0003) as `kind = official`.
+Implement Phase 1.5b as **"import from a saved product page"**: the owner uploads an `.html` file (saved via *Save As → Webpage, Complete*); a server-side parser extracts the **JSON-LD `Product`** data (preferred), `og:`/`<title>` fallbacks, the official image URLs, the source `product_url`, and the stripped visible text; the visible text + JSON-LD are sent to **Gemini** (`generateObject`, ADR-0008) to fill the item fields, translated to English (`VAL-IMPORT-08`). The official image URLs are previewed in the form and **downloaded and stored at save time** (via the existing photo-storage abstraction) as `kind = official`.
 
 - **No server-side fetch of the product page.** The app never requests the retailer's HTML; it only reads the uploaded file. It *does* download the referenced images (from the page the owner already loaded) at save time.
 - **JSON-LD preferred, not required.** When a page lacks JSON-LD, fall back to `og:` tags and visible text; the model still extracts what it can.
@@ -69,4 +69,4 @@ Implement Phase 1.5b as **"import from a saved product page"**: the owner upload
 
 ## Notes
 
-Refines the 1.5b mechanism of `specs/ai-import/` (issue #11); the provider decision (Gemini via the AI SDK) is unchanged (ADR-0008). Related: ADR-0002 (item model), ADR-0003 (photo storage), ADR-0006 (Zod).
+Refines the 1.5b mechanism of `specs/ai-import/` (issue #11); the provider decision (Gemini via the AI SDK) is unchanged (ADR-0008). Related: ADR-0002 (item model), ADR-0006 (Zod).

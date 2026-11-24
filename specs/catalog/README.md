@@ -27,7 +27,7 @@ The Catalog is the heart of the app: it lets the owner record each piece of clot
 |:--|:--|
 | Stack decision | [ADR-0001](../../_governance-local/decisions/ADR-0001-tech-stack.md) |
 | Data layer | [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md) |
-| Photo storage | [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md) |
+| Photo storage | [docs/ARCHITECTURE.md §5](../../docs/ARCHITECTURE.md#5-photo-storage) |
 | Architecture | [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md) |
 | This spec's issue | #6 |
 | Phase 1 build | (feature ticket, opened after this spec merges) |
@@ -46,7 +46,7 @@ The Catalog is the heart of the app: it lets the owner record each piece of clot
 ```mermaid
 graph LR
     OWNER["Owner"] -->|"adds / edits / browses"| CATALOG["Catalog<br/>(items)"]
-    CATALOG -->|"photo"| STORE["Photo storage<br/>(Blob | filesystem)"]
+    CATALOG -->|"photo"| STORE["Photo storage<br/>(filesystem)"]
     CATALOG -->|"rows"| DB[("Postgres<br/>items")]
     CATALOG -. "referenced later by" .-> TRIPS["Trips (Phase 3)"]
     CATALOG -. "filtered later by" .-> TAGS["Tag filtering (Phase 2)"]

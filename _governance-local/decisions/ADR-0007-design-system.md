@@ -19,7 +19,7 @@ The Phase 1 UI shipped with create-next-app defaults: the Geist font and rounded
 - A cohesive, elegant look-and-feel that suits a fashion/wardrobe app.
 - A classic serif for headings and the brand, a quiet sans for everything else.
 - Low setup: no font accounts, kits or licences to manage.
-- Good loading behaviour on Vercel.
+- Good loading behaviour once deployed.
 
 ## Considered options
 

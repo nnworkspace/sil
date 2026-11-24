@@ -9,20 +9,10 @@ const nextConfig: NextConfig = {
       { source: "/category/jewelry", destination: "/category/jewellery", permanent: true },
     ];
   },
-  images: {
-    // Item photos live on Vercel Blob in production (public store), served from
-    // `https://<hash>.public.blob.vercel-storage.com/…`. next/image rejects any
-    // remote host that isn't whitelisted, so allow the Blob subdomain. Locally
-    // photos are same-origin `/uploads/…` and need no pattern. (#122)
-    remotePatterns: [
-      { protocol: "https", hostname: "**.public.blob.vercel-storage.com" },
-    ],
-  },
   experimental: {
     // Photo uploads go through Server Actions; the default 1 MB body limit is
     // far too small for real phone photos. Raise it to allow several multi-MB
-    // images per submit. (A future optimisation is direct client-to-Blob upload,
-    // which would remove large bodies from the action entirely.)
+    // images per submit.
     serverActions: {
       bodySizeLimit: "30mb",
     },

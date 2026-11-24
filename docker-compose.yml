@@ -1,5 +1,5 @@
-# Local development database. Production uses Neon Postgres on Vercel. The
-# schema and migrations are identical, only DATABASE_URL differs.
+# Local development database. Any other Postgres runs the same schema and
+# migrations; only DATABASE_URL differs.
 #   Start:  docker compose up -d
 #   Stop:   docker compose down   (add -v to also wipe data)
 services:

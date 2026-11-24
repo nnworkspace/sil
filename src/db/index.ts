@@ -2,9 +2,9 @@
  * Database client (Drizzle + postgres.js).
  *
  * The postgres.js client is cached on globalThis so Next.js hot-reloads in dev
- * (and reused function instances on Vercel Fluid Compute) don't open a new pool
- * on every change. `prepare: false` is required when talking to a connection
- * pooler in transaction mode, which is how Neon's pooled connection string works.
+ * (and reused serverless function instances) don't open a new pool on every
+ * change. `prepare: false` is required when talking to a connection pooler in
+ * transaction mode, which is how most hosted Postgres poolers work.
  */
 
 import { drizzle } from "drizzle-orm/postgres-js";

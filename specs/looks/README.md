@@ -29,7 +29,7 @@ Two natures, one model:
 | Anchor | Reference |
 |:--|:--|
 | Data layer (Postgres + Drizzle) | [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md) |
-| Photo storage (Blob \| filesystem) | [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md) |
+| Photo storage | [docs/ARCHITECTURE.md §5](../../docs/ARCHITECTURE.md#5-photo-storage) |
 | Validation (Zod) | [ADR-0006](../../_governance-local/decisions/ADR-0006-validation-library.md) |
 | Catalog item model it groups | [`SPEC-CATALOG-DATA`](../catalog/30-data-model-spec.md) |
 | Wardrobe picker + cover collage it reuses | [`SPEC-SET-CATALOG`](../catalog/), [`SPEC-SET-TRIPS`](../trips/) |

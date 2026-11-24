@@ -69,7 +69,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 | Var | Purpose | Where |
 |:--|:--|:--|
-| `AUTH_SECRET` | Signs/encrypts the JWT. Generate with `openssl rand -base64 32`. | `.env.local` (dev), Vercel (prod) |
+| `AUTH_SECRET` | Signs/encrypts the JWT. Generate with `openssl rand -base64 32`. | `.env.local` (dev), the host's environment settings (prod) |
 | `AUTH_GOOGLE_ID` | Google OAuth client ID. | same |
 | `AUTH_GOOGLE_SECRET` | Google OAuth client secret. | same |
 | `OWNER_EMAIL` | Comma-separated allowlist of permitted verified emails. | same |

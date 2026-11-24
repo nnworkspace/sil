@@ -63,13 +63,13 @@ kept.
 - Minimal branch overhead: one mental model, no `dev`↔`main` back-merge discipline.
 - Every change still gets a PR (self-review, CI home, issue link) and lands as one
   clean squash commit.
-- `main` is always deployable, matching Vercel's per-branch preview + production
+- `main` is always deployable, matching the host's per-branch preview + production
   model.
 
 **Negative / accepted trade-offs**
 
 - No separate integration branch, so there is no staging surface between a change
-  and `main`; mitigated by PR review + CI + Vercel preview deployments.
+  and `main`; mitigated by PR review + CI + per-branch preview deployments.
 - Diverges from the usual team model with a `dev` integration branch; this ADR records why, so the difference is intentional, not accidental.
 
 **Re-evaluation triggers**

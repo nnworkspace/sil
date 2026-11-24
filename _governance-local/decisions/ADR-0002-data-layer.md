@@ -16,7 +16,7 @@
 ## Context and problem statement
 
 The app needs to persist items, trips, and the link between them, with photos
-referenced by URL. It runs on Vercel's serverless/Fluid Compute, so the data layer
+referenced by URL. It runs on serverless functions, so the data layer
 must behave well with pooled, short-lived connections. The owner uses Python often
 but not its web/ORM stack, and wants a data layer that is type-safe and pleasant to
 learn, showing the SQL rather than hiding it.
@@ -39,7 +39,7 @@ breathable, …) that items carry.
 
 - **ORM:** Drizzle (SQL-first, lightweight, great TS inference) vs Prisma
   (higher-level, heavier runtime/codegen).
-- **Database:** PostgreSQL (portable, serverless options like Neon) vs SQLite
+- **Database:** PostgreSQL (portable, with managed serverless options) vs SQLite
   (simplest, but awkward on serverless with no persistent filesystem).
 - **Tags:** a Postgres `text[]` array column on `items` vs a normalized
   `tags` + `item_tags` join.
@@ -47,8 +47,8 @@ breathable, …) that items carry.
 ## Decision
 
 Adopt **PostgreSQL + Drizzle ORM**, with the **`postgres` (postgres.js)** driver
-configured for a pooler (`prepare: false`). Production uses **Neon** (serverless
-Postgres on the Vercel Marketplace); local development uses **Postgres in Docker**
+configured for a pooler (`prepare: false`). Production uses a **managed serverless
+Postgres**; local development uses **Postgres in Docker**
 (`docker-compose.yml`). The schema and migrations are identical, only `DATABASE_URL`
 differs. Schema changes are versioned as Drizzle migrations under `drizzle/`.
 
@@ -78,10 +78,10 @@ per-tag metadata or counts are ever needed.
 
 - Tags need attributes, counts, renames, or user-defined vocabularies at scale
   (normalize into a `tags` table).
-- Connection/latency issues on Vercel suggest a different driver (e.g. the Neon
-  serverless driver) is warranted.
+- Connection/latency issues in production suggest a different driver (e.g. an
+  HTTP-based serverless driver) is warranted.
 
 ## Notes
 
-Related: ADR-0001 (stack), ADR-0003 (photo storage). Commit scope `db` (ADR-0005)
+Related: ADR-0001 (stack). Commit scope `db` (ADR-0005)
 covers schema and migration work.

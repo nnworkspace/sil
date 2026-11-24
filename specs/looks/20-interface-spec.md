@@ -2,7 +2,7 @@
 
 - **Spec ID:** `SPEC-LOOKS-INT`
 - **Part of set:** `SPEC-SET-LOOKS` v0.4.0
-- **Traceability:** `SPEC-LOOKS-FUNC` (rules §4); [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md); reuses the wardrobe picker & cover-collage from [`SPEC-SET-TRIPS`](../trips/) / [`SPEC-SET-CATALOG`](../catalog/) and the storage abstraction ([ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md)); issues #95, #98, #100, #170
+- **Traceability:** `SPEC-LOOKS-FUNC` (rules §4); [docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md); reuses the wardrobe picker & cover-collage from [`SPEC-SET-TRIPS`](../trips/) / [`SPEC-SET-CATALOG`](../catalog/) and the storage abstraction (`src/lib/storage.ts`); issues #95, #98, #100, #170
 
 ## 1. Purpose and scope
 

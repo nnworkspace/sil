@@ -396,7 +396,7 @@ async function main() {
     });
     let removed = 0;
     for (const { path: p } of photoPaths) {
-      // Only plain local uploads; a Blob URL is never touched from here.
+      // Only plain local uploads; any other path is never touched from here.
       if (!/^uploads\/[^/]+$/.test(p)) continue;
       try {
         await unlink(path.join(ROOT, "public", p));

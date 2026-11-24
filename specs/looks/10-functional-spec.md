@@ -2,7 +2,7 @@
 
 - **Spec ID:** `SPEC-LOOKS-FUNC`
 - **Part of set:** `SPEC-SET-LOOKS` v0.4.0
-- **Traceability:** [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md), [ADR-0003](../../_governance-local/decisions/ADR-0003-photo-storage.md), [ADR-0006](../../_governance-local/decisions/ADR-0006-validation-library.md); draws on [`SPEC-CATALOG-DATA`](../catalog/30-data-model-spec.md) and [`SPEC-ARCHIVE-FUNC`](../archive/10-functional-spec.md); issues #95, #98, #100, #170
+- **Traceability:** [ADR-0002](../../_governance-local/decisions/ADR-0002-data-layer.md), [ADR-0006](../../_governance-local/decisions/ADR-0006-validation-library.md); draws on [`SPEC-CATALOG-DATA`](../catalog/30-data-model-spec.md) and [`SPEC-ARCHIVE-FUNC`](../archive/10-functional-spec.md); issues #95, #98, #100, #170
 
 ## 1. Purpose and scope
 
@@ -40,7 +40,7 @@ The distinction is about *how the owner treats the group*, not whether the piece
 ### 2.6 Add own photos to a Look: `OP-LOOK-ADD-PHOTOS`
 - **Purpose:** attach the owner's own photo(s) of the outfit as worn, the thing that makes a Look recognisable at a glance.
 - **Trigger:** the owner uploads one or more images from the Look page.
-- **Behaviour:** validates each image (`VAL-LOOK-07`), stores it via the storage abstraction (ADR-0003), and appends a `look_photo`. The **first** photo a Look gains becomes its **cover** (`is_primary`) automatically (`VAL-LOOK-08`).
+- **Behaviour:** validates each image (`VAL-LOOK-07`), stores it via the storage abstraction (`src/lib/storage.ts`), and appends a `look_photo`. The **first** photo a Look gains becomes its **cover** (`is_primary`) automatically (`VAL-LOOK-08`).
 - **Outcome:** the photos appear on the Look; the cover replaces the piece-collage on the Looks list.
 
 ### 2.7 Remove a Look photo: `OP-LOOK-REMOVE-PHOTO`
