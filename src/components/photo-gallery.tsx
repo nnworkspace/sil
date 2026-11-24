@@ -22,7 +22,7 @@ type LightboxState = { photos: ItemPhoto[]; index: number } | null;
  * in the owner's chosen order with the cover (primary) leading its group (#56),
  * and ‹ › arrows when a group overflows. Clicking a photo opens the shared
  * full-screen viewer with zoom & pan ([`PhotoViewer`](photo-viewer.tsx)), which
- * looks now share (#195) — the gallery decides *which* photos are in scope (its
+ * looks now share (#195). The gallery decides *which* photos are in scope (its
  * own kind group), the viewer handles the rest.
  */
 export function PhotoGallery({
@@ -79,7 +79,7 @@ export function PhotoGallery({
                       </div>
                     </button>
                     {/* When and where, when they are known (#244). Rendered
-                        only if there is something to say — most photos here are
+                        only if there is something to say: most photos here are
                         retailer stills, and an empty line under every one of
                         them would be worse than no line at all. */}
                     {photoCaption(photo) ? (

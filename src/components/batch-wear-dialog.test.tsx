@@ -22,7 +22,7 @@ import { BatchWearDialog } from "@/components/batch-wear-dialog";
  * The batch wear dialog (#320).
  *
  * jsdom can see behaviour but not layout, so these cover what the dialog
- * *decides* — the date it opens on, that one submit writes every piece, and
+ * *decides*: the date it opens on, that one submit writes every piece, and
  * that a duplicate warns before it writes. The geometry is checked in a browser.
  */
 
@@ -42,7 +42,7 @@ beforeEach(() => {
   });
 });
 
-describe("#320 — which date the dialog opens on", () => {
+describe("#320: which date the dialog opens on", () => {
   it("opens on the trip day, not today", async () => {
     // The case that matters on the road: catching up days later. Defaulting to
     // today would silently record the wrong date.
@@ -60,7 +60,7 @@ describe("#320 — which date the dialog opens on", () => {
   });
 });
 
-describe("#320 — one submit, every piece", () => {
+describe("#320: one submit, every piece", () => {
   it("sends all selected ids in a single call", async () => {
     const user = userEvent.setup();
     render(<BatchWearDialog open onOpenChange={() => {}} pieces={PIECES} />);
@@ -99,7 +99,7 @@ describe("#320 — one submit, every piece", () => {
     await user.click(await screen.findByRole("button", { name: "Log 2 wears" }));
     await waitFor(() => expect(toastSuccess).toHaveBeenCalled());
 
-    // The toast carries the ticks, so undoing reverts them too — an undo that
+    // The toast carries the ticks, so undoing reverts them too. An undo that
     // left pieces marked packed would be lying about what it undid.
     const [message, opts] = toastSuccess.mock.calls[0] as [string, { action: { onClick: () => void } }];
     expect(message).toBe("Logged 2 wears · 1 marked packed");
@@ -108,7 +108,7 @@ describe("#320 — one submit, every piece", () => {
   });
 });
 
-describe("#320 — duplicates warn before they write", () => {
+describe("#320: duplicates warn before they write", () => {
   it("does not write on the first press, and says which piece", async () => {
     wornOnDate.mockResolvedValue(["dress"]);
     const user = userEvent.setup();
@@ -120,7 +120,7 @@ describe("#320 — duplicates warn before they write", () => {
     expect(batchLogWear).not.toHaveBeenCalled();
   });
 
-  it("writes on the second press — wearing something twice in a day is real", async () => {
+  it("writes on the second press, because wearing something twice in a day is real", async () => {
     wornOnDate.mockResolvedValue(["dress"]);
     const user = userEvent.setup();
     render(<BatchWearDialog open onOpenChange={() => {}} pieces={PIECES} />);

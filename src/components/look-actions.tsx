@@ -37,7 +37,7 @@ const localToday = () => {
 /**
  * A look's lifecycle actions (#170), mirroring the item ones. Archive (soft,
  * reversible) retires the look but keeps it and its pieces; Delete (hard) removes
- * the look and its item links only — the pieces themselves always stay in the
+ * the look and its item links only. The pieces themselves always stay in the
  * wardrobe. An archived look shows Restore instead of Archive.
  */
 export function LookActions({
@@ -47,7 +47,7 @@ export function LookActions({
 }: {
   id: string;
   name: string;
-  /** Whether the look is archived — drives Archive vs Restore. */
+  /** Whether the look is archived, which drives Archive vs Restore. */
   archived: boolean;
 }) {
   const [archiveOpen, setArchiveOpen] = React.useState(false);
@@ -113,7 +113,7 @@ export function LookActions({
           <DialogHeader>
             <DialogTitle>Archive this look?</DialogTitle>
             <DialogDescription>
-              It leaves your active looks but is kept — its pieces, photos and
+              It leaves your active looks but is kept: its pieces, photos and
               notes all stay. The pieces themselves are untouched.
             </DialogDescription>
           </DialogHeader>
@@ -180,7 +180,7 @@ export function LookActions({
         </DialogContent>
       </Dialog>
 
-      {/* Delete (hard) — pieces always survive (#170) */}
+      {/* Delete (hard): pieces always survive (#170) */}
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent>
           <DialogHeader>
@@ -193,7 +193,7 @@ export function LookActions({
 
           <div className="rounded-md border bg-muted/40 p-3 text-sm text-muted-foreground">
             The pieces in this look <strong className="text-foreground">stay in
-            your wardrobe</strong> — only the look and its links to them are
+            your wardrobe</strong>: only the look and its links to them are
             removed. To keep the look as a record instead,{" "}
             <strong className="text-foreground">archive</strong> it.
           </div>

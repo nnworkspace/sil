@@ -7,7 +7,7 @@ import { isTransient, withRetry } from "@/lib/transient";
  *
  * The tests that matter here are the negative ones. A retry that swallows a
  * real error turns a loud bug into an intermittent one, and intermittent bugs
- * are the expensive kind — so most of this file is about what must *not* be
+ * are the expensive kind, so most of this file is about what must *not* be
  * tried again.
  */
 
@@ -16,7 +16,7 @@ const pgError = (code: string) => Object.assign(new Error(`pg ${code}`), { code 
 const wrapped = (code: string) =>
   Object.assign(new Error("Failed query: select …"), { cause: pgError(code) });
 
-describe("#308 — what counts as transient", () => {
+describe("#308: what counts as transient", () => {
   it("recognises the failure that actually happened", () => {
     // `relation "items" does not exist`, on a database where the table was
     // present and readable throughout.
@@ -59,7 +59,7 @@ describe("#308 — what counts as transient", () => {
   });
 });
 
-describe("#308 — withRetry", () => {
+describe("#308: withRetry", () => {
   it("does not call twice when the first attempt works", async () => {
     const read = vi.fn().mockResolvedValue("ok");
     await expect(withRetry(read)).resolves.toBe("ok");

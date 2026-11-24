@@ -131,10 +131,10 @@
   /* Checkbox tick: a genuine dark grey (the --primary token is near-black), with
      a lighter grey in dark mode for contrast. Replaces the browser default blue. */
   input[type="checkbox"] {
-    accent-color: #404040; /* neutral-700 — dark grey */
+    accent-color: #404040; /* neutral-700: dark grey */
   }
   .dark input[type="checkbox"] {
-    accent-color: #a3a3a3; /* neutral-400 — light grey on dark bg */
+    accent-color: #a3a3a3; /* neutral-400: light grey on dark bg */
   }
 }
 /**
@@ -146,8 +146,8 @@
  */
 @media print {
   /* Browsers strip backgrounds and reduce images to save ink. On a packing list
-     the photographs *are* the content — the owner asked to recognise a piece at
-     a glance — so this is not decoration and must survive. */
+     the photographs *are* the content (the owner asked to recognise a piece at
+     a glance), so this is not decoration and must survive. */
   * {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;

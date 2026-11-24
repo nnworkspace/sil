@@ -11,7 +11,7 @@ const CATEGORY_SLUGS = new Set<string>(CATEGORIES.map((c) => c.slug));
 
 export type TripPlanSlot = { category: string; target: number };
 
-/** A packing plan — de-duplicated by category, each target 0–99 (VAL-TRIP-10/11). */
+/** A packing plan: de-duplicated by category, each target 0–99 (VAL-TRIP-10/11). */
 export const tripPlanSchema = z
   .array(
     z.object({
@@ -38,7 +38,7 @@ export function rootCategory(slug: string): string {
 }
 
 /** Default target for a top-level category given trip length + type; 0 = omit.
- *  Tunable — a sensible starting point only; the owner edits every target. */
+ *  Tunable: a sensible starting point only. The owner edits every target. */
 const DEFAULT_TARGET: Record<string, (days: number, type: string) => number> = {
   tops: (d, t) => clamp(t === "business" ? d : Math.ceil(d * 0.75), 1, 7),
   knitwear: (d) => (d >= 4 ? 2 : 1),

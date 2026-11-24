@@ -1,5 +1,5 @@
 /**
- * The image types the app accepts everywhere — uploads, the storage layer,
+ * The image types the app accepts everywhere: uploads, the storage layer,
  * downloaded official photos, and screenshot import. Kept in one place so the
  * whitelist can't drift between the file input `accept`, server validation,
  * and the stored-file extension.

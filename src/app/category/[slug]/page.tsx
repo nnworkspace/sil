@@ -35,7 +35,7 @@ export default async function CategoryPage({
   // Sub-category filter row (#78). A page belongs to a "family" when it either
   // has children (a parent like Tops/Jewellery) or has a parent (a leaf like
   // T-Shirts). We show the same dezent chip row on every page of the family:
-  // "All <parent>" plus each sibling, with the current one marked — so you can
+  // "All <parent>" plus each sibling, with the current one marked, so you can
   // click between them. Leaf-less top-level categories show nothing.
   const familyRoot = childrenOf(slug).length > 0 ? slug : parentOf(slug);
   const rootCategory = familyRoot
@@ -62,7 +62,7 @@ export default async function CategoryPage({
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-      {/* Search sits in the header, before "Add a piece" (#240) — it was the
+      {/* Search sits in the header, before "Add a piece" (#240). It was the
           most-used control on the page and it was hidden inside a collapsed
           panel. `flex-wrap` is what makes the phone case work: the search bar
           drops to its own full-width row once it is opened. */}

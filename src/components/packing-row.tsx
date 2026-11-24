@@ -15,7 +15,7 @@ type Props = {
   photoUrl: string | null;
   packed: boolean;
   /** Which days this piece is planned for, as short labels (#270). One line
-   *  here however many days it appears under in the planner — the list is what
+   *  here however many days it appears under in the planner: the list is what
    *  goes in the suitcase, and a repeat wear is still one thing to pack. */
   days?: string[];
   /** Selection mode (#320): while on, the row's whole area toggles selection
@@ -27,7 +27,7 @@ type Props = {
 
 /** One packing-list row: a packed toggle, the piece (thumbnail + name), and a
  *  remove control. Both controls are progressive-enhancement forms posting to
- *  Server Actions — the toggle submits the negated `packed` value. */
+ *  Server Actions; the toggle submits the negated `packed` value. */
 export function PackingRow({
   tripId,
   itemId,

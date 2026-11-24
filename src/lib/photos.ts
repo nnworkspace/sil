@@ -2,7 +2,7 @@
  * Pure helpers for browsing a set of photos (#195).
  *
  * Kept out of the viewer component so the navigation rule is testable at the
- * L1 tier — no DOM, no Next runtime (#183). The viewer's zoom and pan are
+ * L1 tier: no DOM, no Next runtime (#183). The viewer's zoom and pan are
  * gesture-bound and stay manually verified.
  */
 
@@ -10,7 +10,7 @@
  * Move `index` by `delta` within a list of `length`, wrapping at both ends.
  *
  * JavaScript's `%` keeps the sign of the dividend, so the naive form yields a
- * negative index when stepping back from the first photo — which would blank
+ * negative index when stepping back from the first photo, which would blank
  * the viewer. The double modulo normalises into `[0, length)`.
  */
 export function stepIndex(index: number, delta: number, length: number): number {
@@ -29,13 +29,13 @@ export type Dated = {
 /**
  * The one-line caption for a photo: when, where, or both (#244).
  *
- * Returns `null` when neither is recorded, which is the overwhelming majority
- * — retailer stills have no meaningful date or place. The caller renders
+ * Returns `null` when neither is recorded, which is the overwhelming majority:
+ * retailer stills have no meaningful date or place. The caller renders
  * nothing at all rather than an empty line, for the same reason an item page
  * must not gain an empty section.
  *
  * The date is shown exactly as stored, `2015-10-31` (#249). Every other date in
- * the app is ISO — "Purchased", "Return by", the wear log — so a long English
+ * the app is ISO ("Purchased", "Return by", the wear log), so a long English
  * date was the one inconsistency, and it dressed up values that are often
  * approximate anyway (see the owner's "18" proxy for a remembered month).
  *

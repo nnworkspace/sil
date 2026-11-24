@@ -1,24 +1,24 @@
 # Sil
 
-> **Silhouettes, Styled in Loop** — a curated collection: every piece catalogued, styled, and stowed.
+> **Silhouettes, Styled in Loop**. A curated collection: every piece catalogued, styled, and stowed.
 
-A personal wardrobe web app. At its centre is a **catalogue** — every piece with
-its photos, composition, tags and the berth it is stowed in — and around that:
+A personal wardrobe web app. At its centre is a **catalogue** (every piece with
+its photos, composition, tags and the berth it is stowed in), and around that:
 
 - **Browse** the wardrobe like a fashion store, filtered by occasion, feel,
   season, care, five style facets, **colour family** and **material**.
-- **Looks** — curated sets and styled combinations, and what a piece goes with.
-- **Trips** — packing lists built from the wardrobe, planned **by category** or
+- **Looks**: curated sets and styled combinations, and what a piece goes with.
+- **Trips**: packing lists built from the wardrobe, planned **by category** or
   **by day**, with a forecast for the destination, a printable sheet and an AI
   planner that proposes rather than decides.
 - **Wear tracking**, as individual events rather than a counter, so a wear can
   be corrected.
-- **Figures** — a read-only dashboard: composition, spending, wear and value,
+- **Figures**: a read-only dashboard of composition, spending, wear and value,
   and the gaps in the data.
-- **Compendium** — the knowledge the wardrobe runs on: a glossary of the fibres,
+- **Compendium**: the knowledge the wardrobe runs on. A glossary of the fibres,
   constructions, finishes and cuts it is actually made of, each explained in
   Chinese and linked to the pieces that use it, plus the berth notation.
-- **Archive** — a piece that has left the wardrobe is retired, never deleted.
+- **Archive**: a piece that has left the wardrobe is retired, never deleted.
 
 Built with **Next.js 16 (App Router) + React 19 + TypeScript**, **Tailwind CSS 4**
 and **shadcn/ui**, **Drizzle ORM** on **PostgreSQL**, and **Vercel Blob** for
@@ -83,8 +83,8 @@ pnpm db:restore backups/<timestamp>  # restore a specific snapshot (prompts firs
 pnpm db:restore                      # restore the most recent snapshot
 ```
 
-- **Backups live in `backups/<timestamp>/`** at the repo root — each folder has `db.dump` (a role-agnostic `pg_dump`, so it also restores into Neon later), a copy of `uploads/`, and a `README.txt`.
-- The `backups/` folder is **gitignored** — it holds personal data and is never committed. Copy it wherever you keep your backups.
+- **Backups live in `backups/<timestamp>/`** at the repo root. Each folder has `db.dump` (a role-agnostic `pg_dump`, so it also restores into Neon later), a copy of `uploads/`, and a `README.txt`.
+- The `backups/` folder is **gitignored**: it holds personal data and is never committed. Copy it wherever you keep your backups.
 - `db:restore` **replaces** the current data and asks for confirmation first.
 - Requires the DB container running (`docker compose up -d`).
 
@@ -127,21 +127,21 @@ pnpm test         # run once
 pnpm test:watch   # re-run on change
 ```
 
-Vitest, no database, in **two tiers under one command** — split by file extension, so a test lands in the right environment by virtue of what it is ([ADR-0015](_governance-local/decisions/ADR-0015-component-test-tier.md)):
+Vitest, no database, in **two tiers under one command**, split by file extension, so a test lands in the right environment by virtue of what it is ([ADR-0015](_governance-local/decisions/ADR-0015-component-test-tier.md)):
 
 | Tier | Files | Environment | Covers |
 |:--|:--|:--|:--|
-| **unit** | `*.test.ts` | `node` | the pure rules — category roll-up and normalisation, season inference, colour families, the `VAL-ITEM-*` schemas, browse sorting and keyword matching, figure metrics, the berth grammar and ordering, the Compendium matcher, style-facet derivation |
-| **components** | `*.test.tsx` | `jsdom` | behaviour that is not a function — above all that **destructive actions ask first** |
+| **unit** | `*.test.ts` | `node` | the pure rules: category roll-up and normalisation, season inference, colour families, the `VAL-ITEM-*` schemas, browse sorting and keyword matching, figure metrics, the berth grammar and ordering, the Compendium matcher, style-facet derivation |
+| **components** | `*.test.tsx` | `jsdom` | behaviour that is not a function, above all that **destructive actions ask first** |
 
 The component tier asserts through the accessibility tree (roles and accessible names), so a test breaks when behaviour breaks rather than when a class changes. It deliberately does **not** test layout or gestures: jsdom has no layout engine, so zoom, pan and hit-testing stay manually verified. The whole suite runs in a couple of seconds, so it is cheap to run on every change.
 
 Two conventions keep it honest and keep it from rotting:
 
 - **Tests describe shapes, never inventory.** Filing another hundred pieces must require no test change. Fixtures live in `src/test/`: `makeItem({…overrides})` builds a valid piece so a test states only the field it is about, and `fixtures/catalogue.ts` holds ~15 pieces that each encode an *edge case* (a piece filed in two families, a cross-filed knit, an archived one, one with no price). It grows when a new shape appears, not when a garment is added. Adding a column means updating one default.
-- **Tests are named after what they defend** — the spec rule (`describe("VAL-ITEM-02 — …")`) or the issue for a regression (`it("#180: scoping to knitwear …")`), so a failure names the behaviour that broke, and a rule with no test is visible.
+- **Tests are named after what they defend**: the spec rule (`describe("VAL-ITEM-02: …")`) or the issue for a regression (`it("#180: scoping to knitwear …")`), so a failure names the behaviour that broke, and a rule with no test is visible.
 
-Data-quality checks against the real catalogue ("15 pieces missing a price") are deliberately **not** tests — they fail for reasons that are not defects. Those belong in a separate audit script.
+Data-quality checks against the real catalogue ("15 pieces missing a price") are deliberately **not** tests: they fail for reasons that are not defects. Those belong in a separate audit script.
 
 ## How this repository is run
 
@@ -156,7 +156,7 @@ This project follows a deliberately lightweight governance, adapted from a large
 - **Specs before code.** The system-level [architecture](docs/ARCHITECTURE.md)
   and per-feature specs (`specs/`, added as features are specified) are written
   before a feature is built.
-- **Branching:** GitHub Flow — `main` is always deployable; every change goes on a
+- **Branching:** GitHub Flow. `main` is always deployable; every change goes on a
   short-lived branch, through a squash-merged PR; releases are tags
   ([ADR-0004](_governance-local/decisions/ADR-0004-branching-and-change-flow.md)).
 - **Commits:** Conventional Commits enforced by commitlint, with a mandatory scope
@@ -177,15 +177,15 @@ This project follows a deliberately lightweight governance, adapted from a large
 | [0004](_governance-local/decisions/ADR-0004-branching-and-change-flow.md) | GitHub Flow (main + PR) |
 | [0005](_governance-local/decisions/ADR-0005-commit-conventions.md) | Conventional Commits + mandatory scope & issue footer |
 | [0006](_governance-local/decisions/ADR-0006-validation-library.md) | Zod for input validation |
-| [0007](_governance-local/decisions/ADR-0007-design-system.md) | Design system — Assistant + EB Garamond, sharp edges |
+| [0007](_governance-local/decisions/ADR-0007-design-system.md) | Design system: Assistant + EB Garamond, sharp edges |
 | [0008](_governance-local/decisions/ADR-0008-ai-stack.md) | Google Gemini (AI Studio free tier) via the AI SDK for AI features |
 | [0009](_governance-local/decisions/ADR-0009-import-from-saved-html.md) | Import from a saved product page (HTML upload), not server-side URL fetch |
-| [0010](_governance-local/decisions/ADR-0010-ai-trip-planner.md) | AI trip packing planner — reuse Gemini, one-shot and human-in-the-loop first |
+| [0010](_governance-local/decisions/ADR-0010-ai-trip-planner.md) | AI trip packing planner: reuse Gemini, one-shot and human-in-the-loop first |
 | [0011](_governance-local/decisions/ADR-0011-add-looks-commit-scope.md) | Add a `looks` commit scope |
 | [0012](_governance-local/decisions/ADR-0012-authentication.md) | Single-owner authentication with Auth.js (Google OAuth) |
 | [0013](_governance-local/decisions/ADR-0013-product-name-sil.md) | The product is called "Sil" |
 | [0014](_governance-local/decisions/ADR-0014-add-test-commit-type.md) | Add a `test` commit type |
-| [0015](_governance-local/decisions/ADR-0015-component-test-tier.md) | A component test tier — jsdom + Testing Library, split by file extension |
+| [0015](_governance-local/decisions/ADR-0015-component-test-tier.md) | A component test tier: jsdom + Testing Library, split by file extension |
 
 ## Licence
 

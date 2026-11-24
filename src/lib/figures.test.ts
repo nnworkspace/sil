@@ -34,14 +34,14 @@ import {
 
 const item = (o: Partial<FigureItem> = {}) => makeItem(o) as FigureItem;
 
-describe("VAL-FIG-01 — active by default", () => {
+describe("VAL-FIG-01: active by default", () => {
   it("drops archived pieces", () => {
     expect(active(CATALOGUE as FigureItem[])).not.toContain(ARCHIVED_SOLD);
     expect(active(CATALOGUE as FigureItem[]).length).toBe(ACTIVE.length);
   });
 });
 
-describe("VAL-FIG-10 — wear total combines both sources", () => {
+describe("VAL-FIG-10: wear total combines both sources", () => {
   it("adds recalled wears and logged events", () => {
     expect(wearTotal(item({ priorWears: 8, wearEvents: [{ wornAt: "2026-01-01" }] }))).toBe(9);
   });
@@ -51,7 +51,7 @@ describe("VAL-FIG-10 — wear total combines both sources", () => {
   });
 });
 
-describe("VAL-FIG-07 — undefined cost-per-wear stays undefined", () => {
+describe("VAL-FIG-07: undefined cost-per-wear stays undefined", () => {
   it("is null for an unworn piece rather than its full price", () => {
     // The trap: the browse sort divides by max(1, wears), which would report a
     // €400 unworn coat as "€400 per wear". A leaderboard must not assert that.
@@ -67,7 +67,7 @@ describe("VAL-FIG-07 — undefined cost-per-wear stays undefined", () => {
   });
 });
 
-describe("VAL-FIG-03 — figures carry the base they were computed over", () => {
+describe("VAL-FIG-03: figures carry the base they were computed over", () => {
   it("reports how many pieces were excluded for having no price", () => {
     const items = [
       item({ pricePaidCents: 1000 }),
@@ -86,7 +86,7 @@ describe("VAL-FIG-03 — figures carry the base they were computed over", () => 
       item({ pricePaidCents: 3000 }),
       item({ pricePaidCents: null }),
     ];
-    // 4000/2, not 4000/3 — the unpriced piece is absent, not zero.
+    // 4000/2, not 4000/3: the unpriced piece is absent, not zero.
     expect(overview(items, 2026).averagePriceCents.value).toBe(2000);
   });
 
@@ -105,7 +105,7 @@ describe("VAL-FIG-03 — figures carry the base they were computed over", () => 
   });
 });
 
-describe("VAL-FIG-02 / 05 — category counts roll up and overlap", () => {
+describe("VAL-FIG-02 / 05: category counts roll up and overlap", () => {
   it("rolls a sub-category into its parent", () => {
     // Two pieces filed directly under `dresses` plus one `shirt-dresses`: the
     // parent must report all three, the leaf only its own.
@@ -128,7 +128,7 @@ describe("VAL-FIG-02 / 05 — category counts roll up and overlap", () => {
   });
 });
 
-describe("VAL-FIG-04 — nothing to show is a state, not a zero", () => {
+describe("VAL-FIG-04: nothing to show is a state, not a zero", () => {
   it("returns an empty timeline rather than a fabricated year", () => {
     const empty = acquisitionByYear([]);
     expect(empty.value).toEqual([]);
@@ -179,7 +179,7 @@ describe("brand spend", () => {
   });
 });
 
-describe("VAL-FIG-11 — the primary view sums to the wardrobe", () => {
+describe("VAL-FIG-11: the primary view sums to the wardrobe", () => {
   it("counts every piece exactly once", () => {
     const rows = collectionByPrimary(ACTIVE as FigureItem[]);
     const summed = rows.reduce((n, r) => n + r.count, 0);
@@ -199,7 +199,7 @@ describe("VAL-FIG-11 — the primary view sums to the wardrobe", () => {
   });
 });
 
-describe("#191 — never worn is not the same as never recorded", () => {
+describe("#191: never worn is not the same as never recorded", () => {
   it("distinguishes them even though both have a wear total of zero", () => {
     expect(wearTotal(NO_WEARS as FigureItem)).toBe(0);
     expect(wearTotal(NEVER_WORN as FigureItem)).toBe(0);
@@ -225,7 +225,7 @@ describe("#191 — never worn is not the same as never recorded", () => {
   });
 });
 
-describe("VAL-FIG-12 — wear summary separates the two zeroes", () => {
+describe("VAL-FIG-12: wear summary separates the two zeroes", () => {
   it("counts never-worn as a finding and unrecorded as a gap", () => {
     const s = wearSummary([
       NEVER_WORN as FigureItem, // recorded: never worn
@@ -239,7 +239,7 @@ describe("VAL-FIG-12 — wear summary separates the two zeroes", () => {
   });
 });
 
-describe("VAL-FIG-03 / 07 — wear leaderboards state their base", () => {
+describe("VAL-FIG-03 / 07: wear leaderboards state their base", () => {
   it("ranks most-worn over recorded pieces only", () => {
     const items = [
       item({ name: "Often", priorWears: 30 }),
@@ -279,7 +279,7 @@ describe("gaps", () => {
     const by = Object.fromEntries(g.map((x) => [x.kind, x.count]));
     expect(by.price).toBe(1);
     expect(by.material).toBe(1);
-    expect(by.berth).toBeUndefined(); // both have one — no row at all
+    expect(by.berth).toBeUndefined(); // both have one: no row at all
     expect(by.photo).toBeUndefined();
   });
 
@@ -295,12 +295,12 @@ describe("gaps", () => {
   });
 });
 
-describe("VAL-FIG-05 — overlapping dimensions do not sum", () => {
+describe("VAL-FIG-05: overlapping dimensions do not sum", () => {
   it("counts a blend in every material family it names", () => {
     const items = [item({ material: "70% wool, 30% silk" })];
     const m = materialFamilies(items);
     expect(m.value.map((r) => r.key).sort()).toEqual(["silk", "wool"]);
-    // One piece, two rows — which is why these must never be totalled.
+    // One piece, two rows, which is why these must never be totalled.
     expect(m.value.reduce((n, r) => n + r.count, 0)).toBe(2);
     expect(m.base).toBe(1);
   });

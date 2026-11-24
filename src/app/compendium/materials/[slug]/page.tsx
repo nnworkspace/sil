@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 /**
  * One glossary entry (SPEC-COMPENDIUM-INT §4.2, #213).
  *
- * Blocks are omitted when empty rather than rendered hollow — except the piece
+ * Blocks are omitted when empty rather than rendered hollow, except the piece
  * list, which always says something (VAL-COMP-10). An entry that matches nothing
  * is not a broken entry; it is an entry whose subject this wardrobe does not
  * currently contain, and saying so is the point.
@@ -40,7 +40,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
 
   return (
     <div className="max-w-prose">
-      {/* Back to the group this entry belongs to, not to the overview (#265) —
+      {/* Back to the group this entry belongs to, not to the overview (#265):
           the page you came from, and the page whose siblings you might want. */}
       <Link
         href={group ? groupHref(group.slug) : "/compendium/materials"}
@@ -107,7 +107,7 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
           pieces={matched}
           emptyNote={
             entry.match
-              ? "Nothing in the catalogue matches this yet — which is worth knowing in itself."
+              ? "Nothing in the catalogue matches this yet, which is worth knowing in itself."
               : "This one is explained rather than counted: it leaves no reliable trace in the text, so no piece list is claimed."
           }
         />

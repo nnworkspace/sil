@@ -80,7 +80,7 @@ function parseInput(fd: FormData): ItemInput | ActionResult {
     favorite: fd.get("favorite") === "on" || fd.get("favorite") === "true",
     showFullCover:
       fd.get("showFullCover") === "on" || fd.get("showFullCover") === "true",
-    // An empty field means "not recorded" (null), not zero (#191) — only the
+    // An empty field means "not recorded" (null), not zero (#191): only the
     // owner can say a piece has genuinely never been worn.
     priorWears: (() => {
       const raw = text(fd, "priorWears");
@@ -129,7 +129,7 @@ function officialPhotoUrls(fd: FormData): string[] {
   }
 }
 
-/** Parse the owner's drag-ordered photo sequence — an array of photo ids (#56). */
+/** Parse the owner's drag-ordered photo sequence: an array of photo ids (#56). */
 function photoOrder(fd: FormData): string[] {
   const raw = fd.get("photoOrder");
   if (typeof raw !== "string" || raw.trim() === "") return [];
@@ -347,7 +347,7 @@ export async function updateItem(
   redirect(`/items/${id}`);
 }
 
-/** Flip a piece's favourite flag — the grid's quick-favourite heart (#117). */
+/** Flip a piece's favourite flag: the grid's quick-favourite heart (#117). */
 export async function toggleFavorite(formData: FormData): Promise<void> {
   const id = text(formData, "id");
   if (!id) return;

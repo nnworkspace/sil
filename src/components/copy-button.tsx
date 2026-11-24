@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
 /**
  * Copy a short string to the clipboard (#217).
  *
- * Used on cards whose whole surface navigates — a piece's card, a berth card —
+ * Used on cards whose whole surface navigates (a piece's card, a berth card),
  * which is the whole reason this is a component rather than three onClick
  * handlers.
  *
  * **A click here must not reach the card.** Both call sites use a *stretched
  * link* (`absolute inset-0`) with this button raised above it on `z-10`, so the
  * link never receives the click and `preventDefault` is, today, belt to the
- * braces — a mutation test proved as much by removing it with every test still
+ * braces: a mutation test proved as much by removing it with every test still
  * green. It stays because the alternative layout (nesting this inside an `<a>`)
  * is the obvious thing to reach for and would break silently: the copy would
  * still succeed while the page navigated away, which reads as "the app randomly
@@ -26,8 +26,8 @@ import { cn } from "@/lib/utils";
  * may use several times in a row, and a stack of toasts is worse than none.
  *
  * `navigator.clipboard` needs a secure context. That holds on localhost and on
- * the deployed domain, but the failure would otherwise be silent — the icon
- * would sit there having done nothing — so a failure says so.
+ * the deployed domain, but the failure would otherwise be silent (the icon
+ * would sit there having done nothing), so a failure says so.
  */
 export function CopyButton({
   value,
@@ -72,7 +72,7 @@ export function CopyButton({
       // The label follows the state, so the confirmation is not purely visual:
       // a screen reader hears "Copied" rather than being told nothing happened.
       aria-label={
-        state === "copied" ? "Copied" : state === "failed" ? `${label} — couldn't copy` : label
+        state === "copied" ? "Copied" : state === "failed" ? `${label}: couldn't copy` : label
       }
       title={state === "copied" ? "Copied" : state === "failed" ? "Couldn't copy" : label}
       className={cn(

@@ -29,8 +29,8 @@ export type TripGroup<T> = { key: "coming" | "past"; label: string; trips: T[] }
 
 /** The date a trip is judged by: when it ends, or when it starts if it has no
  *  end, or nothing at all. Plain `YYYY-MM-DD` strings compare correctly as
- *  text, which is why no Date is constructed — see `trip-days.ts` for why a
- *  calendar day must never become an instant. */
+ *  text, which is why no Date is constructed (see `trip-days.ts` for why a
+ *  calendar day must never become an instant). */
 const lastDay = (t: TimedTrip) => t.endDate ?? t.startDate;
 const firstDay = (t: TimedTrip) => t.startDate ?? t.endDate;
 
@@ -48,7 +48,7 @@ export function groupTripsByTime<T extends TimedTrip>(
   }
 
   // Undated trips have no place in a sequence, so they go last rather than
-  // first — leading with them would hide the order the rest are in.
+  // first: leading with them would hide the order the rest are in.
   coming.sort((a, b) => {
     const x = firstDay(a);
     const y = firstDay(b);

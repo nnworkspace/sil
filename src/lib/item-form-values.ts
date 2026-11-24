@@ -1,7 +1,7 @@
 /**
  * Map a stored item onto the add/edit form's (string-based) values. Shared by
  * the edit page and the "duplicate" pre-fill (`/items/new?from=…`). Photos and
- * wear history are intentionally not included — they are per-item.
+ * wear history are intentionally not included: they are per-item.
  */
 
 import type { Item } from "@/db/schema";

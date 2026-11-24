@@ -1,4 +1,4 @@
-# Figures — Interface Specification
+# Figures: Interface Specification
 
 - **Spec ID:** `SPEC-FIGURES-INT`
 - **Part of set:** `SPEC-SET-FIGURES` v0.1.0
@@ -14,7 +14,7 @@
 
 A Server Component marked `dynamic = "force-dynamic"`, like every data-backed page, so the figures always reflect current data. Nav entry **Figures**, beside **Berths**.
 
-Filters live in the **URL**, not component state: a filtered view is linkable, survives a refresh, and the back button behaves. No Server Actions — the page mutates nothing (`VAL-FIG-09`).
+Filters live in the **URL**, not component state: a filtered view is linkable, survives a refresh, and the back button behaves. No Server Actions: the page mutates nothing (`VAL-FIG-09`).
 
 ## 2. Layout
 
@@ -37,21 +37,21 @@ Filters live in the **URL**, not component state: a filtered view is linkable, s
 └───────────────┴────────────────────────────────────────────┘
 ```
 
-- **Sidebar** (`lg:` and up): sticky, doing two jobs — section navigation with scroll-spy highlighting, and the global filters. Below `lg` it collapses to a horizontal chip row above the content; the filters move into a compact row beneath it.
+- **Sidebar** (`lg:` and up): sticky, doing two jobs (section navigation with scroll-spy highlighting, and the global filters). Below `lg` it collapses to a horizontal chip row above the content; the filters move into a compact row beneath it.
 - **Main column**: one `<section>` per module, each with an `id` the sidebar links to, in the phase order of [`SPEC-FIGURES-FUNC`](10-functional-spec.md) §2.
-- Follows the existing page shell (`max-w`, serif headings, sharp edges) — Figures introduces no new visual language.
+- Follows the existing page shell (`max-w`, serif headings, sharp edges); Figures introduces no new visual language.
 
 ## 3. Charts
 
-**Inline SVG and CSS only — no charting dependency.** The chart types needed are few and simple, and a library would add weight and a visual dialect the app does not otherwise speak.
+**Inline SVG and CSS only, no charting dependency.** The chart types needed are few and simple, and a library would add weight and a visual dialect the app does not otherwise speak.
 
 | Module | Mark | Why |
 |:--|:--|:--|
 | Collection | Horizontal bars | Category names are long; horizontal keeps them readable and sortable by length |
 | Spending & acquisition | Vertical bars + a second series | A timeline reads left-to-right; the second series carries spend against count |
 | Wear & value | Ranked lists with an inline bar | Leaderboards are read as lists; the bar is for proportion, not precision |
-| Colour | A swatch beside each named family, with a bar for count | The swatch **is** the datum — literal encoding, not an assigned palette. The name always sits beside it, so identity never rests on colour alone, and a hairline ring keeps a near-white family visible |
-| Fabric, care, season | Plain bars in **one** hue | **Not** a segmented or stacked bar: a piece carries several care tags, spans several seasons, and a blend names several fibres — so the parts genuinely do not sum, and a part-to-whole mark would assert a whole that does not exist (`VAL-FIG-05`). One hue, because these categories are nominal: colouring each bar darker-where-bigger would double-encode length as hue |
+| Colour | A swatch beside each named family, with a bar for count | The swatch **is** the datum: literal encoding, not an assigned palette. The name always sits beside it, so identity never rests on colour alone, and a hairline ring keeps a near-white family visible |
+| Fabric, care, season | Plain bars in **one** hue | **Not** a segmented or stacked bar: a piece carries several care tags, spans several seasons, and a blend names several fibres, so the parts genuinely do not sum, and a part-to-whole mark would assert a whole that does not exist (`VAL-FIG-05`). One hue, because these categories are nominal: colouring each bar darker-where-bigger would double-encode length as hue |
 
 Every chart is preceded by its headline number in text, so the figure is legible without interpreting the graphic, and remains legible to a screen reader. Bars carry `title`/`aria-label` with the exact value.
 
@@ -76,7 +76,7 @@ Every outbound link lands in an existing view; Figures adds no new destinations 
 
 | State | Renders |
 |:--|:--|
-| Empty wardrobe | A single sentence inviting the first piece — no zeroed tiles, no empty axes (`VAL-FIG-04`) |
+| Empty wardrobe | A single sentence inviting the first piece; no zeroed tiles, no empty axes (`VAL-FIG-04`) |
 | A module with no data under the current filter | That module's own short sentence, the rest of the page unaffected |
 | Partial data | The figure, plus its base ("across the 38 pieces with wear data") (`VAL-FIG-03`) |
 | Overlapping dimensions | A one-line note that the parts exceed the whole (`VAL-FIG-05`) |
@@ -90,4 +90,4 @@ Every outbound link lands in an existing view; Figures adds no new destinations 
 
 ## 7. Testing surface
 
-This feature introduces the **query-layer test tier** (#183 L2): metric functions in `lib/figures.ts` are pure over an array of pieces, so they are tested with the existing fixture catalogue and no database. Tests are named after the rule they defend — `VAL-FIG-03`, `VAL-FIG-07` — per ADR-0014.
+This feature introduces the **query-layer test tier** (#183 L2): metric functions in `lib/figures.ts` are pure over an array of pieces, so they are tested with the existing fixture catalogue and no database. Tests are named after the rule they defend (`VAL-FIG-03`, `VAL-FIG-07`), per ADR-0014.

@@ -39,8 +39,8 @@ function savedLocation(storageKey: string, fallback: Location): Location {
 
 /**
  * Header weather chip (specs/weather). Two flavours:
- *  - `home`   — defaults to the home city; a "use my location" (geolocation) toggle.
- *  - `travel` — a travel destination (default Vienna) changeable by typing a city.
+ *  - `home`: defaults to the home city; a "use my location" (geolocation) toggle.
+ *  - `travel`: a travel destination (default Vienna) changeable by typing a city.
  * Client-side (Open-Meteo is keyless + CORS), cached ~1h; renders nothing until it has data.
  */
 export function WeatherWidget({ kind }: { kind: "home" | "travel" }) {
@@ -177,7 +177,7 @@ export function WeatherWidget({ kind }: { kind: "home" | "travel" }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        aria-label={`${kind === "home" ? "Home" : "Travel"} weather — ${loc.name}: ${label}, ${today.hi} degrees`}
+        aria-label={`${kind === "home" ? "Home" : "Travel"} weather (${loc.name}): ${label}, ${today.hi} degrees`}
         aria-expanded={open}
         className="flex items-center gap-1 rounded-md px-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >

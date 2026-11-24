@@ -5,7 +5,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { cn } from "@/lib/utils";
 
 /**
- * Renders user Markdown (notes, description) sanitized — raw HTML/scripts never
+ * Renders user Markdown (notes, description) sanitized: raw HTML/scripts never
  * execute (VAL-ITEM-10). Basic element styling is applied inline since we don't
  * pull in the Tailwind typography plugin.
  */

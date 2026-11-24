@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { inferSeasons } from "@/lib/seasons";
 import { LINEN_VEST, WOOL_COAT } from "@/test/fixtures/catalogue";
 
-describe("#108 — season inference", () => {
+describe("#108: season inference", () => {
   it("sends cold fabrics to autumn and winter", () => {
     expect(inferSeasons(WOOL_COAT)).toEqual(expect.arrayContaining(["autumn", "winter"]));
   });
@@ -27,7 +27,7 @@ describe("#108 — season inference", () => {
     );
   });
 
-  it("is generous — a piece usually spans more than one season", () => {
+  it("is generous: a piece usually spans more than one season", () => {
     expect(inferSeasons({ material: "100% wool" }).length).toBeGreaterThan(1);
   });
 

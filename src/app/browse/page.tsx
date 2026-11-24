@@ -22,7 +22,7 @@ export default async function BrowsePage({
     tags.length > 0 || colors.length > 0 || materials.length > 0 || q.length > 0 || favorite;
 
   // Arriving from a Gaps row on Figures (#181). Say so plainly, and offer the
-  // way back — otherwise a filtered wardrobe looks like a missing one.
+  // way back; otherwise a filtered wardrobe looks like a missing one.
   const MISSING_LABEL: Record<string, string> = {
     wears: "no wear history recorded",
     price: "no price",
@@ -34,7 +34,7 @@ export default async function BrowsePage({
 
   return (
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6">
-      {/* Same header treatment as a category page (#240) — `/browse` renders the
+      {/* Same header treatment as a category page (#240): `/browse` renders the
           same filter panel, so moving the field out of it had to land here too
           or Browse would simply have lost its search. */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">

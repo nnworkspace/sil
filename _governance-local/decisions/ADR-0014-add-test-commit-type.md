@@ -29,9 +29,9 @@ Extend the ADR-0005 `type-enum` with **`test`**. The enum becomes:
 
 **The selection rule is mechanical, and deliberately narrow:**
 
-> Use `test` when the commit changes **only** test files, fixtures, or test configuration. If it also touches production code — including a fix that ships with its regression test — the type describes the production change (`fix`, `feat`, …), and the test rides along.
+> Use `test` when the commit changes **only** test files, fixtures, or test configuration. If it also touches production code, including a fix that ships with its regression test, the type describes the production change (`fix`, `feat`, …), and the test rides along.
 
-Everything else ADR-0005 specifies is unchanged: the scope stays mandatory and comes from the same `scope-enum`, so tests carry the scope of the area they exercise — `test(catalog)`, `test(trips)`, `test(infra)` — and the issue-reference footer remains mandatory.
+Everything else ADR-0005 specifies is unchanged: the scope stays mandatory and comes from the same `scope-enum`, so tests carry the scope of the area they exercise (`test(catalog)`, `test(trips)`, `test(infra)`), and the issue-reference footer remains mandatory.
 
 Applied in `commitlint.config.mjs`. `tech` remains the umbrella for build/CI/perf/deps work.
 

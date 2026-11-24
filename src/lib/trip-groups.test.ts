@@ -22,7 +22,7 @@ const group = (trips: ReturnType<typeof trip>[], key: "coming" | "past") =>
     .find((g) => g.key === key)
     ?.trips.map((t) => t.name) ?? [];
 
-describe("#290 — which side of today", () => {
+describe("#290: which side of today", () => {
   it("files a finished trip under Past", () => {
     expect(group([trip("Copenhagen", "2026-07-01", "2026-07-05")], "past")).toEqual(["Copenhagen"]);
   });
@@ -61,7 +61,7 @@ describe("#290 — which side of today", () => {
   });
 });
 
-describe("#290 — nearest to today, first", () => {
+describe("#290: nearest to today, first", () => {
   it("sorts Coming soonest first", () => {
     const trips = [
       trip("Far", "2026-12-01", "2026-12-05"),
@@ -87,7 +87,7 @@ describe("#290 — nearest to today, first", () => {
   });
 });
 
-describe("#290 — the groups themselves", () => {
+describe("#290: the groups themselves", () => {
   it("drops a group with nothing in it rather than printing a bare heading", () => {
     const groups = groupTripsByTime([trip("Kyoto", "2026-08-10", "2026-08-22")], TODAY);
     expect(groups.map((g) => g.key)).toEqual(["coming"]);

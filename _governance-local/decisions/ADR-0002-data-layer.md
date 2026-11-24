@@ -26,14 +26,14 @@ breathable, …) that items carry.
 
 ## Decision drivers
 
-- **Type safety end-to-end** — inferred row types flowing into the app, so the
+- **Type safety end-to-end**: inferred row types flowing into the app, so the
   compiler catches schema drift (a long-term maintainability lever).
-- **Serverless-friendly** — works with a connection pooler; no assumption of a
+- **Serverless-friendly**: works with a connection pooler; no assumption of a
   long-lived process.
-- **Portable dev/prod** — the same schema and migrations run locally and in
+- **Portable dev/prod**: the same schema and migrations run locally and in
   production with only a connection string change.
-- **Learnability** — SQL-forward, low magic.
-- **Simplicity proportionate to a personal app** — avoid premature normalization.
+- **Learnability**: SQL-forward, low magic.
+- **Simplicity proportionate to a personal app**: avoid premature normalization.
 
 ## Considered options
 
@@ -49,7 +49,7 @@ breathable, …) that items carry.
 Adopt **PostgreSQL + Drizzle ORM**, with the **`postgres` (postgres.js)** driver
 configured for a pooler (`prepare: false`). Production uses **Neon** (serverless
 Postgres on the Vercel Marketplace); local development uses **Postgres in Docker**
-(`docker-compose.yml`) — identical schema and migrations, only `DATABASE_URL`
+(`docker-compose.yml`). The schema and migrations are identical, only `DATABASE_URL`
 differs. Schema changes are versioned as Drizzle migrations under `drizzle/`.
 
 Tags are stored as a **Postgres `text[]` column** on `items`, not a normalized join

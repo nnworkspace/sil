@@ -17,10 +17,10 @@ import { cn } from "@/lib/utils";
  *
  * The children are always shown rather than expanded on arrival. There are four
  * of them, each one word long, and a disclosure would hide the very thing the
- * split was meant to make visible — you cannot pick a group you cannot see.
+ * split was meant to make visible: you cannot pick a group you cannot see.
  *
  * On phones the whole tree collapses above the content as a disclosure rather
- * than eating the screen — the content is never pushed out of reach by
+ * than eating the screen, so the content is never pushed out of reach by
  * navigation.
  */
 export function SectionTree() {

@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
  * optional line of metadata, and optional actions (#305).
  *
  * It exists because the same layout problem had been solved **four times, in
- * four different ways** — `looks/[id]`, `items/[id]` and the printable sheet
+ * four different ways**: `looks/[id]`, `items/[id]` and the printable sheet
  * each grew their own patch on the day a long name was first filed, and the
  * trip page never got one. Then "Autumn Design Week Workshops and Studio Visits in Copenhagen" arrived and wrapped to seven lines
  * with its badge floating in the middle of them.
@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
  *   2. **`min-w-0` on the text column.** Without it a flex item refuses to
  *      shrink below its content, and a long title pushes the actions off the
  *      screen instead of wrapping.
- *   3. **`break-words`**, so a long unbroken string — a product code, a URL —
+ *   3. **`break-words`**, so a long unbroken string (a product code, a URL)
  *      cannot overflow the viewport.
  *   4. **The badge aligns to the first line, not the middle.** `items-baseline`
  *      rather than `items-center`: centring a small badge against a seven-line
@@ -41,7 +41,7 @@ export function PageHeader({
   title: React.ReactNode;
   /** Sits beside the title, on its first line. */
   badge?: React.ReactNode;
-  /** A line beneath — destination, dates, counts. */
+  /** A line beneath: destination, dates, counts. */
   meta?: React.ReactNode;
   /** Buttons and links; they wrap to their own line before the title suffers. */
   actions?: React.ReactNode;
@@ -63,8 +63,8 @@ export function PageHeader({
         ) : null}
       </div>
       {actions ? (
-        // **Not `shrink-0`.** It was, and the item page — which has six buttons
-        // — then overflowed a phone by 228px: a `shrink-0` wrapper cannot fall
+        // **Not `shrink-0`.** It was, and the item page (which has six buttons)
+        // then overflowed a phone by 228px: a `shrink-0` wrapper cannot fall
         // below its content width, so its own `flex-wrap` never gets the chance
         // to act. Letting it shrink is what lets the buttons stack.
         <div className="flex min-w-0 flex-wrap items-center gap-2">

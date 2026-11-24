@@ -31,9 +31,9 @@ export type HtmlImportResult =
 const MAX_BYTES = 10 * 1024 * 1024;
 
 const AI_BUSY_MESSAGE =
-  "The AI service is busy right now — please wait a moment and try again.";
+  "The AI service is busy right now. Please wait a moment and try again.";
 
-/** A transient AI failure (rate limit / overload / timeout) — worth retrying —
+/** A transient AI failure (rate limit / overload / timeout), worth retrying,
  * vs. a genuine "can't read the input" failure. */
 function isTransientAIError(err: unknown): boolean {
   const e = RetryError.isInstance(err) ? err.lastError : err;
@@ -140,7 +140,7 @@ export async function extractFromHtml(
       // copy in the visible text has them run together. Passed to the model
       // rather than used directly, so it is still translated (VAL-IMPORT-08).
       page.facts?.description
-        ? `PRODUCT DETAILS (Markdown — keep the bullet list):\n${page.facts.description}`
+        ? `PRODUCT DETAILS (Markdown, keep the bullet list):\n${page.facts.description}`
         : null,
       `PAGE TEXT:\n${page.text}`,
     ]

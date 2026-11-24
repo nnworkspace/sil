@@ -18,7 +18,7 @@ const useBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 const PUBLIC_DIR = path.join(process.cwd(), "public");
 const UPLOAD_SUBDIR = "uploads";
 
-/** Quality floor for re-encoded photos — the owner's stated minimum (#153). */
+/** Quality floor for re-encoded photos: the owner's stated minimum (#153). */
 const WEBP_QUALITY = 85;
 /** Formats already efficient enough to store untouched. */
 const ALREADY_EFFICIENT = new Set([".avif", ".webp"]);
@@ -30,7 +30,7 @@ export type StoredPhoto = { url: string; path: string };
  *
  * A photo straight off a phone is several MB; re-encoded it is typically ~95%
  * smaller with no visible loss, which matters because production runs on
- * Vercel's free tier. Resolution is deliberately **not** reduced — only the
+ * Vercel's free tier. Resolution is deliberately **not** reduced: only the
  * encoding changes, and that is where nearly all of the saving comes from.
  *
  * WebP rather than AVIF, despite the rest of the library being AVIF: measured
@@ -42,7 +42,7 @@ export type StoredPhoto = { url: string; path: string };
  *
  * Returns the original bytes unchanged when the input is already AVIF/WebP, or
  * when re-encoding would not actually be smaller (so a file is never made
- * worse), and falls back to the original if the encoder throws — a failed
+ * worse), and falls back to the original if the encoder throws. A failed
  * optimisation must never cost the owner their photo.
  */
 async function reencode(file: File): Promise<{ bytes: Buffer; ext: string }> {
@@ -53,7 +53,7 @@ async function reencode(file: File): Promise<{ bytes: Buffer; ext: string }> {
 
   try {
     // Loaded lazily (not a top-level import) so that merely importing this
-    // module — which any page pulling in a photo Server Action does — never
+    // module, which any page pulling in a photo Server Action does, never
     // triggers sharp's native binary load. On Vercel that load can fail
     // (`libvips` missing in the runtime), which previously crashed every page
     // that transitively imported storage, e.g. the look detail (#178). Now

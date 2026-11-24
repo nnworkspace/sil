@@ -12,7 +12,7 @@
 
 ## Context and problem statement
 
-[ADR-0005](ADR-0005-commit-conventions.md) fixes the commit `type(scope): subject` convention with a mandatory `scope-enum`, and names — as a re-evaluation trigger — "the `scope-enum` no longer fits the app's areas (extend it via a new ADR)." The **Looks** feature (`SPEC-SET-LOOKS`, issue #95) is a new top-level area (like `catalog` and `trips`) with no fitting scope; its commits would otherwise be mislabelled under `catalog`.
+[ADR-0005](ADR-0005-commit-conventions.md) fixes the commit `type(scope): subject` convention with a mandatory `scope-enum`, and names, as a re-evaluation trigger, "the `scope-enum` no longer fits the app's areas (extend it via a new ADR)." The **Looks** feature (`SPEC-SET-LOOKS`, issue #95) is a new top-level area (like `catalog` and `trips`) with no fitting scope; its commits would otherwise be mislabelled under `catalog`.
 
 ## Decision
 

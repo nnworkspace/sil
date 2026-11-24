@@ -38,7 +38,7 @@ beforeEach(() => {
 
 /**
  * Real timers throughout. `userEvent` and fake timers need careful pairing, and
- * the debounce here is 300 ms — cheap enough to simply wait out with `waitFor`,
+ * the debounce here is 300 ms, cheap enough to simply wait out with `waitFor`,
  * which also tests the real code path rather than a simulated one.
  */
 const box = () => screen.getByRole("searchbox", { name: "Search the wardrobe" });
@@ -47,7 +47,7 @@ const type = async (text: string) => {
   await userEvent.setup().type(box(), text);
 };
 
-describe("#240 — live mode, on a page that has a list", () => {
+describe("#240: live mode, on a page that has a list", () => {
   it("narrows through the URL after typing settles", async () => {
     render(<WardrobeSearch q="" />);
     await type("linen");
@@ -99,7 +99,7 @@ describe("#240 — live mode, on a page that has a list", () => {
   });
 });
 
-describe("#240 — submit mode, on the home page", () => {
+describe("#240: submit mode, on the home page", () => {
   it("does not navigate while typing", async () => {
     render(<WardrobeSearch mode="submit" />);
     await type("linen");
@@ -130,7 +130,7 @@ describe("#240 — submit mode, on the home page", () => {
   });
 });
 
-describe("#240 — the phone affordance", () => {
+describe("#240: the phone affordance", () => {
   it("offers the icon as a labelled control when there is no query", () => {
     render(<WardrobeSearch q="" />);
     // Both the trigger and the field carry the same accessible name; the

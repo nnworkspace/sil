@@ -29,7 +29,7 @@ async function downloadOne(url: string): Promise<File | null> {
 
     return new File([bytes], `official${IMAGE_EXT_BY_TYPE[type] ?? ""}`, { type });
   } catch {
-    return null; // network / timeout / abort — skip this image
+    return null; // network / timeout / abort: skip this image
   }
 }
 

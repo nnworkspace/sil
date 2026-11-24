@@ -1,8 +1,8 @@
-# Catalog — Specification Set
+# Catalog: Specification Set
 
 > **Set ID:** `SPEC-SET-CATALOG` · **Version:** `0.1.0` · **Status:** DRAFT · **Owner:** nnworkspace
 
-This is the first per-feature spec set. It follows a layered, ID'd, Mermaid-based specification style, scaled to a solo web app: no OpenAPI (the app has no external API — it uses Server Actions), no upstream traceability tags, and no frontmatter. Traceability points to the repository's ADRs and GitHub issues instead.
+This is the first per-feature spec set. It follows a layered, ID'd, Mermaid-based specification style, scaled to a solo web app: no OpenAPI (the app has no external API but uses Server Actions), no upstream traceability tags, and no frontmatter. Traceability points to the repository's ADRs and GitHub issues instead.
 
 ## 1. Purpose
 
@@ -39,7 +39,7 @@ The Catalog is the heart of the app: it lets the owner record each piece of clot
 | `SPEC-CATALOG-FUNC` | [10-functional-spec.md](10-functional-spec.md) | Item lifecycle, operations, validation rules |
 | `SPEC-CATALOG-INT` | [20-interface-spec.md](20-interface-spec.md) | Routes, Server Actions, UI flows (Mermaid) |
 | `SPEC-CATALOG-DATA` | [30-data-model-spec.md](30-data-model-spec.md) | Item fields, types, constraints, schema mapping |
-| — | [manifest.yaml](manifest.yaml) | Machine-readable inventory |
+| | [manifest.yaml](manifest.yaml) | Machine-readable inventory |
 
 ## 5. Feature context
 
@@ -59,6 +59,6 @@ graph LR
 ## 6. How to read this set
 
 1. **This README** for scope and context.
-2. **[10-functional-spec.md](10-functional-spec.md)** — what the Catalog does: the item lifecycle, the operations, and the `VAL-ITEM-*` rules.
-3. **[20-interface-spec.md](20-interface-spec.md)** — how it's exposed: routes, Server Actions, and the UI flows.
-4. **[30-data-model-spec.md](30-data-model-spec.md)** — the exact item fields and how they map to the Drizzle schema.
+2. **[10-functional-spec.md](10-functional-spec.md)**: what the Catalog does (the item lifecycle, the operations, and the `VAL-ITEM-*` rules).
+3. **[20-interface-spec.md](20-interface-spec.md)**: how it's exposed (routes, Server Actions, and the UI flows).
+4. **[30-data-model-spec.md](30-data-model-spec.md)**: the exact item fields and how they map to the Drizzle schema.

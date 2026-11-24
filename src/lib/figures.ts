@@ -1,14 +1,14 @@
 /**
  * Derived metrics for the Figures dashboard (SPEC-FIGURES-DATA, #181).
  *
- * Every function here is **pure over an array of pieces** — no database, no
+ * Every function here is **pure over an array of pieces**: no database, no
  * Drizzle types. That is deliberate: the metric definitions are the part worth
  * testing, and keeping them free of I/O means they are tested against the
  * fixture catalogue with no test database (#183).
  *
  * The rule that shapes all of it: coverage is uneven (wear data reaches barely
  * a third of the wardrobe), so a metric computed over a subset carries the size
- * of that subset with it — see `Derived<T>` and VAL-FIG-03. A caller cannot
+ * of that subset with it (see `Derived<T>` and VAL-FIG-03). A caller cannot
  * render one of these numbers without also having the denominator to hand.
  */
 
@@ -41,7 +41,7 @@ export type FigureItem = Categorised & {
 };
 
 /** A figure plus the base it was computed over (VAL-FIG-03). `excluded` is the
- *  number of pieces that had to be left out for want of data — a caller shows
+ *  number of pieces that had to be left out for want of data. A caller shows
  *  it rather than letting a partial figure pose as a complete one. */
 export type Derived<T> = {
   value: T;
@@ -52,7 +52,7 @@ export type Derived<T> = {
 };
 
 /** Total wears: the owner's recalled count plus logged events, always both
- *  (VAL-FIG-10, #69). An unrecorded prior count contributes nothing — but see
+ *  (VAL-FIG-10, #69). An unrecorded prior count contributes nothing, but see
  *  `wearRecorded`, because "contributes nothing" is not the same as "is zero". */
 export function wearTotal(item: Pick<FigureItem, "priorWears" | "wearEvents">): number {
   return (item.priorWears ?? 0) + item.wearEvents.length;
@@ -62,10 +62,10 @@ export function wearTotal(item: Pick<FigureItem, "priorWears" | "wearEvents">): 
  * Whether anything is *known* about how often a piece has been worn (#191).
  *
  * The distinction the schema now carries: `prior_wears = NULL` with no logged
- * events means nobody has said — a gap to fill. `prior_wears = 0` means the
- * owner said "never worn" — a finding, and often an interesting one. Both give
- * `wearTotal === 0`, so any figure about wear must ask this before treating a
- * zero as a measurement.
+ * events means nobody has said, which is a gap to fill. `prior_wears = 0` means
+ * the owner said "never worn", which is a finding, and often an interesting one.
+ * Both give `wearTotal === 0`, so any figure about wear must ask this before
+ * treating a zero as a measurement.
  */
 export function wearRecorded(item: Pick<FigureItem, "priorWears" | "wearEvents">): boolean {
   return item.priorWears != null || item.wearEvents.length > 0;
@@ -85,7 +85,7 @@ export function costPerWear(item: FigureItem): number | null {
   return item.pricePaidCents / wears;
 }
 
-/** The active wardrobe — the default base for every figure (VAL-FIG-01). */
+/** The active wardrobe: the default base for every figure (VAL-FIG-01). */
 export function active(items: FigureItem[]): FigureItem[] {
   return items.filter((i) => i.archivedAt == null);
 }
@@ -141,7 +141,7 @@ export type CategoryCount = { slug: string; label: string; count: number; isChil
  *
  * Counts come from `categoryMatcher`, so a parent includes its descendants and
  * a cross-filed piece counts under each of its categories. That last part is
- * why these counts **do not sum** to the wardrobe size — the caller says so
+ * why these counts **do not sum** to the wardrobe size; the caller says so
  * (VAL-FIG-05) rather than quietly presenting a total that doesn't add up.
  */
 export function collection(items: FigureItem[]): CategoryCount[] {
@@ -191,7 +191,7 @@ export function acquisitionByYear(items: FigureItem[]): Derived<YearRow[]> {
 export type BrandRow = { brand: string; pieces: number; spendCents: number };
 
 /** Spend by brand, biggest first. Pieces with no brand are excluded and
- *  counted — an unbranded piece is not a brand called "Unknown". */
+ *  counted: an unbranded piece is not a brand called "Unknown". */
 export function spendByBrand(items: FigureItem[], limit = 8): Derived<BrandRow[]> {
   const branded = items.filter((i) => i.brand != null && i.brand.trim() !== "");
   const rows = new Map<string, BrandRow>();
@@ -209,7 +209,7 @@ export function spendByBrand(items: FigureItem[], limit = 8): Derived<BrandRow[]
   return { value, base: branded.length, excluded: items.length - branded.length };
 }
 
-/** The purchase years present in the data, newest first — for the year filter. */
+/** The purchase years present in the data, newest first, for the year filter. */
 export function purchaseYears(items: FigureItem[]): number[] {
   const years = new Set<number>();
   for (const item of items) {
@@ -257,7 +257,7 @@ export function collectionByPrimary(items: FigureItem[]): CategoryCount[] {
 export type WearSummary = {
   /** Pieces whose wear history is known at all (VAL-FIG-12). */
   recorded: number;
-  /** Pieces nobody has said anything about — the Gaps module's biggest row. */
+  /** Pieces nobody has said anything about: the Gaps module's biggest row. */
   notRecorded: number;
   /** Recorded, and genuinely never worn. A finding, not a gap (#191). */
   neverWorn: number;
@@ -306,7 +306,7 @@ export function mostWorn(items: FigureItem[], limit = 8): Derived<WearRow[]> {
 /**
  * Cost-per-wear leaderboards, both directions.
  *
- * The base is pieces where cost-per-wear is *defined* — priced and worn at
+ * The base is pieces where cost-per-wear is *defined*: priced and worn at
  * least once (VAL-FIG-07). An unworn piece is not "infinitely expensive per
  * wear"; it has no cost per wear, and belongs in the never-worn count instead.
  */
@@ -362,7 +362,7 @@ export type FamilyRow = { key: string; label: string; count: number; swatch?: st
 
 /**
  * Colour distribution by family, using the same keyword matching as the browse
- * colour filter (#105) — so a family here and the same family in browse always
+ * colour filter (#105), so a family here and the same family in browse always
  * agree. A colour matching no family is counted as unclassified rather than
  * forced into "other".
  */
@@ -400,7 +400,7 @@ const MATERIAL_FAMILIES: { key: string; label: string; keywords: string[] }[] = 
  * Material families parsed best-effort from the free-text composition.
  *
  * A blend counts in **every** family it names, so these **do not sum** to the
- * wardrobe (`VAL-FIG-05`) — a wool-silk piece is honestly both. Pieces with no
+ * wardrobe (`VAL-FIG-05`): a wool-silk piece is honestly both. Pieces with no
  * material recorded are excluded and counted, never filed under "other", which
  * would turn missing data into a finding.
  */
@@ -422,7 +422,7 @@ export function materialFamilies(items: FigureItem[]): Derived<FamilyRow[]> {
 
 // --- Care & season ----------------------------------------------------------
 
-/** Counts for a fixed tag vocabulary, in the vocabulary's own order — care runs
+/** Counts for a fixed tag vocabulary, in the vocabulary's own order: care runs
  *  easy → demanding, seasons run spring → winter, and neither is re-sorted by
  *  size, because the order carries meaning. A piece may hold several tags from
  *  the group, so these do not sum (`VAL-FIG-05`). */

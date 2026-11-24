@@ -10,11 +10,11 @@ import { COMPENDIUM_SECTIONS, compendiumHref } from "@/lib/compendium/sections";
  * All of this is a contract rather than a preference: item pages link to entry
  * URLs, so those cannot move (VAL-COMP-07), and the group pages are served by a
  * dynamic `[group]` segment that sits alongside the static section routes. A
- * slug collision between the two would not fail loudly — the static route would
- * simply win and the group page would become unreachable — so it is checked.
+ * slug collision between the two would not fail loudly (the static route would
+ * simply win and the group page would become unreachable), so it is checked.
  */
 
-describe("#265 — the group routes", () => {
+describe("#265: the group routes", () => {
   it("keeps every entry where item pages already link to it", () => {
     // The whole reason the groups are siblings of `materials` rather than
     // children: this URL predates the split and is linked from the catalogue.
@@ -38,7 +38,7 @@ describe("#265 — the group routes", () => {
 
   it("has a page for every group an entry claims", () => {
     // An entry filed under a group with no page would vanish from the
-    // Compendium entirely — reachable only by typing its URL.
+    // Compendium entirely, reachable only by typing its URL.
     const groups = new Set(ENTRY_GROUPS.map((g) => g.group));
     for (const e of COMPENDIUM_ENTRIES) expect(groups.has(e.group), e.slug).toBe(true);
   });
@@ -64,7 +64,7 @@ describe("#265 — the group routes", () => {
   });
 });
 
-describe("#265 — the tree agrees with the glossary", () => {
+describe("#265: the tree agrees with the glossary", () => {
   it("lists exactly the four groups under Materials", () => {
     // The tree is a client component and keeps its own list so the glossary's
     // prose stays out of the browser bundle. This is what stops the two lists

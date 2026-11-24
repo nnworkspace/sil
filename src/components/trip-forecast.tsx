@@ -16,7 +16,7 @@ const weekday = (iso: string) =>
 
 /** Compact, display-only destination forecast (SPEC-TRIPS-INT §3.2). Reuses the
  *  weather lib (Open-Meteo, keyless). Renders nothing while loading or if the
- *  lookup fails — never blocks the page (v1). */
+ *  lookup fails. Never blocks the page (v1). */
 export function TripForecast({ destination }: { destination: string }) {
   const [days, setDays] = React.useState<ForecastDay[] | null>(null);
   const [place, setPlace] = React.useState<string | null>(null);

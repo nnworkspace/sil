@@ -1,4 +1,4 @@
-# Specification Set Manifest — Wear Tracking
+# Specification Set Manifest: Wear Tracking
 
 set_id: SPEC-SET-WEAR
 version: "0.1.0"
@@ -8,7 +8,7 @@ owner: nnworkspace
 
 description: |
   Catalog enhancement: log each wear of a piece (date + optional occasion) and
-  show worn-count, last-worn, and cost-per-wear. Two logging paths — a quick
+  show worn-count, last-worn, and cost-per-wear. Two logging paths: a quick
   action on the item detail page and editable rows in the edit form. Adds one
   table (wear_events) and supersedes the reserved wear_count / last_worn_at
   columns with derived-on-read stats.

@@ -1,4 +1,4 @@
-# ADR-0007: Design system — Assistant body, EB Garamond headings, sharp edges
+# ADR-0007: Design system (Assistant body, EB Garamond headings, sharp edges)
 
 | Field | Value |
 |:---|:---|

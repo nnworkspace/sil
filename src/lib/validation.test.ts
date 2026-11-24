@@ -14,7 +14,7 @@ const input = (overrides: Record<string, unknown> = {}) => ({
 const parse = (overrides: Record<string, unknown> = {}) =>
   itemInputSchema.safeParse(input(overrides));
 
-describe("VAL-ITEM-01 — name", () => {
+describe("VAL-ITEM-01: name", () => {
   it("requires a non-empty name", () => {
     expect(parse({ name: "" }).success).toBe(false);
     expect(parse({ name: "   " }).success).toBe(false);
@@ -27,7 +27,7 @@ describe("VAL-ITEM-01 — name", () => {
   });
 });
 
-describe("VAL-ITEM-02 — categories", () => {
+describe("VAL-ITEM-02: categories", () => {
   it("rejects an unknown primary category", () => {
     expect(parse({ category: "hats" }).success).toBe(false);
   });
@@ -49,7 +49,7 @@ describe("VAL-ITEM-02 — categories", () => {
   });
 });
 
-describe("VAL-ITEM-04 — prices", () => {
+describe("VAL-ITEM-04: prices", () => {
   it("rejects a negative price", () => {
     expect(parse({ pricePaidCents: -1 }).success).toBe(false);
   });
@@ -60,7 +60,7 @@ describe("VAL-ITEM-04 — prices", () => {
   });
 });
 
-describe("VAL-ITEM-05 — tags", () => {
+describe("VAL-ITEM-05: tags", () => {
   it("rejects a tag outside the vocabulary", () => {
     expect(parse({ tags: ["not-a-tag"] }).success).toBe(false);
   });
@@ -71,13 +71,13 @@ describe("VAL-ITEM-05 — tags", () => {
   });
 });
 
-describe("VAL-ITEM-06 / 07 — dates", () => {
+describe("VAL-ITEM-06 / 07: dates", () => {
   it("rejects a purchase date in the future", () => {
     const nextYear = `${new Date().getFullYear() + 1}-01-01`;
     expect(parse({ purchasedAt: nextYear }).success).toBe(false);
   });
 
-  it("allows a return-by date in the future — it is a deadline", () => {
+  it("allows a return-by date in the future: it is a deadline", () => {
     const nextYear = `${new Date().getFullYear() + 1}-01-01`;
     expect(parse({ returnBy: nextYear }).success).toBe(true);
   });
@@ -89,7 +89,7 @@ describe("VAL-ITEM-06 / 07 — dates", () => {
   });
 });
 
-describe("VAL-ITEM-12 — berth (#172)", () => {
+describe("VAL-ITEM-12: berth (#172)", () => {
   it("is optional", () => {
     expect(parse().success).toBe(true);
   });
@@ -101,7 +101,7 @@ describe("VAL-ITEM-12 — berth (#172)", () => {
   });
 });
 
-describe("VAL-ITEM-09 — details", () => {
+describe("VAL-ITEM-09: details", () => {
   it("caps the list at 30 entries", () => {
     const many = Array.from({ length: 31 }, () => ({ label: "L", value: "V" }));
     expect(parse({ details: many }).success).toBe(false);

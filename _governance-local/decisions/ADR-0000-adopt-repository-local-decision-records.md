@@ -16,7 +16,7 @@
 ## Context and problem statement
 
 The wardrobe app is a personal project, but it is built to last and to be worked
-on across many sessions — by its owner and by AI assistants who arrive with no
+on across many sessions, by its owner and by AI assistants who arrive with no
 memory of earlier reasoning. Decisions made early (framework, data layer, storage,
 branching) are costly to reverse, and their rationale otherwise lives only in
 chat logs and Git diffs, neither of which a future reader navigates.
@@ -53,9 +53,9 @@ The scaling-down from the source regime is deliberate and recorded here so it is
 not mistaken for an oversight: **ADR tier only** (no group- or programme-level records; there is no group
 or programme); **no artefact-classification frontmatter** (it serves audited
 content repositories, not a personal codebase); **acceptance is the owner merging
-the PR** rather than a separate review body. Everything else — the record anatomy,
+the PR** rather than a separate review body. Everything else (the record anatomy,
 the freeze-at-acceptance rule, supersession instead of editing, monotonic
-numbering from `ADR-0000` — is kept, because it is cheap and it is what makes the
+numbering from `ADR-0000`) is kept, because it is cheap and it is what makes the
 records trustworthy.
 
 ## Consequences

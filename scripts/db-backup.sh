@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# Local backup of the wardrobe dev data — both halves of it:
+# Local backup of the wardrobe dev data, both halves of it:
 #   1. the Postgres database (schema + every row) via pg_dump
 #   2. the photo files under public/uploads
 #
-# Writes a timestamped folder under backups/ (gitignored — your data stays
+# Writes a timestamped folder under backups/ (gitignored, so your data stays
 # local and out of git). Run any time:
 #
 #   pnpm db:backup
@@ -36,7 +36,7 @@ echo "→ Copying photos …"
 if [ -d "$ROOT/public/uploads" ] && [ -n "$(ls -A "$ROOT/public/uploads" 2>/dev/null)" ]; then
   cp -R "$ROOT/public/uploads" "$DEST/uploads"
 else
-  echo "  (no photos in public/uploads yet — skipping)"
+  echo "  (no photos in public/uploads yet, skipping)"
 fi
 
 ITEMS="$(docker exec "$DB_CONTAINER" psql -U "$DB_USER" -d "$DB_NAME" -tAc 'select count(*) from items' 2>/dev/null || echo '?')"
@@ -44,7 +44,7 @@ ITEMS="$(docker exec "$DB_CONTAINER" psql -U "$DB_USER" -d "$DB_NAME" -tAc 'sele
   echo "Wardrobe local backup"
   echo "created : $STAMP"
   echo "items   : $ITEMS"
-  echo "db.dump : pg_dump custom format — restore with 'pnpm db:restore backups/$STAMP'"
+  echo "db.dump : pg_dump custom format (restore with 'pnpm db:restore backups/$STAMP')"
   echo "uploads : copy of public/uploads at backup time"
 } > "$DEST/README.txt"
 

@@ -29,7 +29,7 @@ export type ItemDetail = { label: string; value: string };
 export const items = pgTable("items", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
-  /** One of the CATEGORIES slugs (see src/lib/categories.ts) — the piece's main
+  /** One of the CATEGORIES slugs (see src/lib/categories.ts): the piece's main
    *  section, used for the home layout and its canonical grouping. */
   category: text("category").notNull(),
   /** Additional category slugs the piece also belongs to, so it appears under
@@ -55,21 +55,21 @@ export const items = pgTable("items", {
   returnBy: date("return_by"),
   returnPolicy: text("return_policy"),
 
-  /** Where the piece is physically kept — its "Berth" in the UI (#172). Free text, ≤ 31, so the owner can locate a piece quickly and browse by berth. */
+  /** Where the piece is physically kept: its "Berth" in the UI (#172). Free text, ≤ 31, so the owner can locate a piece quickly and browse by berth. */
   storageLocation: text("storage_location"),
 
   // Curation
   favorite: boolean("favorite").notNull().default(false),
   /** Show the cover photo whole (object-contain) in card thumbnails rather than
-   *  cropping to fill (object-cover) — a per-piece display preference (#58). */
+   *  cropping to fill (object-cover), a per-piece display preference (#58). */
   showFullCover: boolean("show_full_cover").notNull().default(false),
   /** Free-text tags grouped by kind in the UI (occasion / feel / season). */
   tags: text("tags").array().notNull().default([]),
-  /** Owner's own notes — Markdown, rendered sanitized on display. */
+  /** Owner's own notes (Markdown, rendered sanitized on display). */
   notes: text("notes"),
 
   // Descriptive (verbatim from the product page; AI-fillable)
-  /** Official product description — Markdown, rendered sanitized. */
+  /** Official product description (Markdown, rendered sanitized). */
   description: text("description"),
   material: text("material"),
   care: text("care"),
@@ -78,11 +78,11 @@ export const items = pgTable("items", {
 
   // Wear tracking lives in the wear_events table (specs/wear-tracking);
   // worn-count / last-worn / cost-per-wear are derived from it.
-  /** Estimated wears before tracking began — added to the logged wears for the
+  /** Estimated wears before tracking began, added to the logged wears for the
    *  worn count and cost-per-wear, so long-owned pieces read sensibly (#69). */
   /** Wears before tracking began (#69). **Nullable on purpose** (#191): NULL
    *  means "not recorded", 0 means "recorded, and genuinely never worn". The
-   *  two are different facts — one is a gap to fill, the other a finding. */
+   *  two are different facts: one is a gap to fill, the other a finding. */
   priorWears: integer("prior_wears"),
 
   // Archive (specs/archive, #142). A piece that has left the wardrobe is
@@ -125,7 +125,7 @@ export const itemPhotos = pgTable("item_photos", {
    *
    * Both nullable, and staying that way: most photos here are retailer stills
    * with no meaningful date or place, and an empty value must read as "not
-   * recorded" rather than invite a guess. Nothing is inferred from EXIF — such
+   * recorded" rather than invite a guess. Nothing is inferred from EXIF: such
    * dates are usually supplied by the owner from memory, and a
    * guessed date presented as fact is exactly what `VAL-COMP-11` warns against
    * elsewhere.
@@ -139,7 +139,7 @@ export const itemPhotos = pgTable("item_photos", {
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
-/** One logged wear of an item — a date and an optional occasion (specs/wear-tracking). */
+/** One logged wear of an item: a date and an optional occasion (specs/wear-tracking). */
 export const wearEvents = pgTable(
   "wear_events",
   {
@@ -170,7 +170,7 @@ export const trips = pgTable("trips", {
   notes: text("notes"),
   /** The owner's natural-language planning prompt for the AI planner (#87). */
   brief: text("brief"),
-  /** Packing-plan slots — editable per-category targets (#90). `null` = no plan
+  /** Packing-plan slots: editable per-category targets (#90). `null` = no plan
    *  yet, `[]` = an emptied plan. */
   plan: jsonb("plan").$type<{ category: string; target: number }[]>(),
   createdAt: timestamp("created_at", { withTimezone: true })
@@ -192,7 +192,7 @@ export const tripItems = pgTable(
       .notNull()
       .references(() => items.id, { onDelete: "cascade" }),
     packed: boolean("packed").notNull().default(false),
-    /** Planned for the whole trip rather than a particular day (#270) — the
+    /** Planned for the whole trip rather than a particular day (#270): the
      *  shoes, the blazer, the earrings. Kept here and not in `trip_item_days`
      *  because it is a property of packing the piece, not of any one date. */
     everyDay: boolean("every_day").notNull().default(false),
@@ -206,7 +206,7 @@ export const tripItems = pgTable(
  * Which days a packed piece is planned for (#270).
  *
  * One row per piece per day, so the same trousers can be planned for Monday
- * *and* Wednesday while remaining **one pair packed and ticked once** —
+ * *and* Wednesday while remaining **one pair packed and ticked once**:
  * `trip_items` stays the single membership, and `packed` stays there.
  *
  * The foreign key is to `trip_items`, not to `trips` and `items` separately:
@@ -232,7 +232,7 @@ export const tripItemDays = pgTable(
   ],
 );
 
-/** A curated group of pieces that go together — a "set" (an intrinsic co-ord)
+/** A curated group of pieces that go together: a "set" (an intrinsic co-ord)
  *  or a "look" (a styled combination). Members via `look_items` (#95). */
 export const looks = pgTable(
   "looks",
@@ -246,7 +246,7 @@ export const looks = pgTable(
     // Archive (specs/archive, #170). A look that is retired is archived, not
     // deleted: its members and photos are kept, it simply stops counting as an
     // active look. `archived_at IS NULL` ⇒ active. Archiving/deleting a look
-    // never touches the pieces in it — only the look and its item links.
+    // never touches the pieces in it, only the look and its item links.
     /** The date the look was retired; NULL ⇒ still active. */
     archivedAt: date("archived_at"),
     /** Why it was retired: no-longer-wear | piece-archived | outdated | other. */
@@ -279,7 +279,7 @@ export const lookItems = pgTable(
   (table) => [primaryKey({ columns: [table.lookId, table.itemId] })],
 );
 
-/** The owner's own photos of a Look — a styled shot of the outfit as worn.
+/** The owner's own photos of a Look: a styled shot of the outfit as worn.
  *  Mirrors item_photos (ADR-0003); a look photo is always the owner's, so there
  *  is no official/own kind. The cover is the row with is_primary = true. */
 export const lookPhotos = pgTable("look_photos", {
@@ -300,7 +300,7 @@ export const lookPhotos = pgTable("look_photos", {
    *
    * Both nullable, and staying that way: most photos here are retailer stills
    * with no meaningful date or place, and an empty value must read as "not
-   * recorded" rather than invite a guess. Nothing is inferred from EXIF — such
+   * recorded" rather than invite a guess. Nothing is inferred from EXIF: such
    * dates are usually supplied by the owner from memory, and a
    * guessed date presented as fact is exactly what `VAL-COMP-11` warns against
    * elsewhere.

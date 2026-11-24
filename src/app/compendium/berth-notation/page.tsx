@@ -15,13 +15,13 @@ export const metadata = {
 const EXAMPLE = "R1-W7R2-S4-L";
 
 /**
- * Berth notation (SPEC-COMPENDIUM-FUNC §2.1, #213) — the first Compendium
+ * Berth notation (SPEC-COMPENDIUM-FUNC §2.1, #213) is the first Compendium
  * section, and the one with the strongest claim to exist: the convention is the
  * owner's own invention and was written down nowhere.
  *
  * The page is descriptive, not prescriptive (VAL-COMP-12). The list of codes in
  * use is derived from the catalogue on every render, and a code that does not
- * fit the grammar is still listed — flagged, not hidden. If a real code fails to
+ * fit the grammar is still listed: flagged, not hidden. If a real code fails to
  * parse, the grammar is what is wrong.
  */
 export default async function BerthNotationPage() {
@@ -39,7 +39,7 @@ export default async function BerthNotationPage() {
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         A <strong className="font-medium text-foreground">berth</strong> is where a piece
         physically lives. It is recorded as a short code, and the code narrows from the
-        building inwards — which is also the order you walk it.
+        building inwards, which is also the order you walk it.
       </p>
 
       <section className="mt-8">
@@ -72,7 +72,7 @@ export default async function BerthNotationPage() {
           <strong className="font-medium text-foreground">R means two different things.</strong>{" "}
           It is the <em>room</em> in the first segment and the <em>rack</em> in the second, so a
           code is read by position, never by letter. <code className="font-mono">W7R2</code> is
-          wardrobe 7, rack 2 — not a second room.
+          wardrobe 7, rack 2, not a second room.
         </p>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
           The position is optional. <code className="font-mono">R1-W2R4-H1</code> is a whole
@@ -93,7 +93,7 @@ export default async function BerthNotationPage() {
             letter records the <em>layer</em>: <code className="font-mono">R1-W7R2-S6</code> is in
             the trouser stack, <code className="font-mono">R1-W7R2-S6-L</code> is resting on top of
             it. A shelf appearing under both a plain and a sided code is therefore not
-            half-recorded — it is two layers, and collapsing them would lose that.
+            half-recorded: it is two layers, and collapsing them would lose that.
           </p>
           <p>
             <strong className="text-foreground">A shelf can be organised by purpose.</strong> Most
@@ -155,7 +155,7 @@ export default async function BerthNotationPage() {
         {unparsed.length > 0 ? (
           <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
             {unparsed.length} {unparsed.length === 1 ? "code does" : "codes do"} not fit the
-            grammar above. They are listed anyway — the catalogue is what is true, so a code
+            grammar above. They are listed anyway: the catalogue is what is true, so a code
             that does not parse means the grammar needs extending, not that the code is wrong.
           </p>
         ) : null}

@@ -5,7 +5,7 @@ import { formatBerthSummary, summariseBerth } from "@/lib/berths";
 /**
  * What a berth holds (#219).
  *
- * Pure by design, so these tests describe **shapes, not inventory** — filing
+ * Pure by design, so these tests describe **shapes, not inventory**: filing
  * another hundred garments must cost no test maintenance. The one place real
  * berths appear is the ordering case, because that is where a plausible
  * implementation goes quietly wrong.
@@ -44,7 +44,7 @@ describe("summariseBerth", () => {
 
   it("passes an unknown slug through instead of dropping the piece", () => {
     // A category retired from CATEGORIES but still on a row must not silently
-    // vanish from the count — that would make a berth look emptier than it is.
+    // vanish from the count; that would make a berth look emptier than it is.
     expect(summariseBerth(["ghost-category"]).parts).toEqual(["ghost-category"]);
   });
 
@@ -68,7 +68,7 @@ describe("formatBerthSummary", () => {
     // The rule that makes the line worth reading. A shirt is also in `tops`
     // (#71, #206); if secondaries were counted, nearly every berth would say
     // "tops, shirts" and the summary would stop distinguishing anything.
-    // Here the input is primaries alone — the caller must not pass secondaries.
+    // Here the input is primaries alone: the caller must not pass secondaries.
     expect(formatBerthSummary(["shirts", "shirts", "jumpers"])).toBe("shirts, jumpers");
   });
 });

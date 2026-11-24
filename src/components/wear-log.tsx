@@ -62,7 +62,7 @@ function WearRow({
   today: string;
 }) {
   const [editing, setEditing] = React.useState(false);
-  /** Deleting a wear asks first — it is destructive and irreversible (#197). */
+  /** Deleting a wear asks first: it is destructive and irreversible (#197). */
   const [confirming, setConfirming] = React.useState(false);
 
   if (editing) {
@@ -191,7 +191,7 @@ export function WearLog({
   currency: string | null;
   /** Estimated wears before tracking began (#69), added to the logged count.
    *  `null` means **not recorded**, which reads differently from a recorded
-   *  zero — see below (#191). */
+   *  zero. See below (#191). */
   priorWears?: number | null;
 }) {
   const [logState, logAction] = useActionState(logWear, null);
@@ -201,7 +201,7 @@ export function WearLog({
   const baseline = priorWears ?? 0;
   const count = logged + baseline; // total worn = baseline + logged (#69)
   // "Nobody has said" vs "said: never" (#191). Both show a total of 0, so the
-  // copy has to carry the difference — one is a gap to fill, the other a fact
+  // copy has to carry the difference: one is a gap to fill, the other a fact
   // about the piece.
   const recorded = priorWears != null || logged > 0;
   const lastWorn = logged > 0 ? wears[0].wornAt : null; // a baseline has no date
@@ -219,7 +219,7 @@ export function WearLog({
           <p className="text-sm text-muted-foreground">Never worn.</p>
         ) : (
           <p className="text-sm text-muted-foreground">
-            No wear history recorded — log a wear, or set the prior count when editing.
+            No wear history recorded. Log a wear, or set the prior count when editing.
           </p>
         )
       ) : (

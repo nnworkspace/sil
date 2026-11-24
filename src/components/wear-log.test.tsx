@@ -8,8 +8,8 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  *
  * The ✕ used to submit a form straight to `removeWear`, which runs a hard
  * delete. Two things made that sharp: it sat 12px from the edit pencil with
- * both icons 14px — so the realistic mis-tap was *"I meant to correct this
- * wear"* — and a lost wear silently moves the wear total, cost-per-wear, the
+ * both icons 14px (so the realistic mis-tap was *"I meant to correct this
+ * wear"*), and a lost wear silently moves the wear total, cost-per-wear, the
  * most-worn leaderboard and the never-worn count.
  *
  * Asserted through the accessibility tree, per ADR-0015.
@@ -41,8 +41,8 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("VAL-WEAR-09 — a wear is never deleted on a single click", () => {
-  it("does NOT delete when the ✕ is clicked — it asks", async () => {
+describe("VAL-WEAR-09: a wear is never deleted on a single click", () => {
+  it("does NOT delete when the ✕ is clicked: it asks", async () => {
     const user = userEvent.setup();
     renderLog();
 
@@ -82,7 +82,7 @@ describe("VAL-WEAR-09 — a wear is never deleted on a single click", () => {
 
     await user.click(screen.getAllByRole("button", { name: "Remove this wear" })[1]);
 
-    // The second wear carries a note but no occasion — both must show.
+    // The second wear carries a note but no occasion; both must show.
     const dialog = await screen.findByRole("dialog");
     expect(dialog).toHaveTextContent("rainy day");
     expect(dialog).toHaveTextContent(/cannot be undone/i);

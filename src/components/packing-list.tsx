@@ -52,7 +52,7 @@ export function PackingList({
   return (
     <div>
       {/* Named by outcome, not by mechanism (#320). "Select" described the mode
-          and was therefore unfindable — the owner reached for the packed
+          and was therefore unfindable: the owner reached for the packed
           checkbox instead, because a checkbox is the universal "select this".
           Pressing this *starts* selection with the goal already stated. */}
       <div className="mb-3 flex flex-wrap items-center gap-2">

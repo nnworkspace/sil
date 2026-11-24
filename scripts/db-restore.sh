@@ -41,7 +41,7 @@ esac
 
 echo "→ Restoring database …"
 docker exec -i "$DB_CONTAINER" pg_restore -U "$DB_USER" -d "$DB_NAME" --clean --if-exists --no-owner \
-  < "$SRC/db.dump" || echo "  (pg_restore reported warnings — this is normal for --clean; continuing)"
+  < "$SRC/db.dump" || echo "  (pg_restore reported warnings, which is normal for --clean; continuing)"
 
 echo "→ Restoring photos …"
 rm -rf "$ROOT/public/uploads"

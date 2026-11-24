@@ -1,4 +1,4 @@
-# Authentication — Functional Specification
+# Authentication: Functional Specification
 
 - **Spec ID:** `SPEC-AUTH-FUNC`
 - **Part of set:** `SPEC-SET-AUTH` v0.1.0
@@ -8,8 +8,8 @@ Defines *what* the gate does: the operations the owner can perform, the rule tha
 
 ## 1. Actors
 
-- **Owner** — the single permitted person, identified by a Google account whose verified email is listed in `OWNER_EMAIL`. (More than one email may be listed; each is an owner.)
-- **Visitor** — anyone else. A visitor may reach `/signin` and attempt a Google sign-in, but is never admitted to the app.
+- **Owner**: the single permitted person, identified by a Google account whose verified email is listed in `OWNER_EMAIL`. (More than one email may be listed; each is an owner.)
+- **Visitor**: anyone else. A visitor may reach `/signin` and attempt a Google sign-in, but is never admitted to the app.
 
 ## 2. Operations
 
@@ -24,7 +24,7 @@ Defines *what* the gate does: the operations the owner can perform, the rule tha
 | ID | Rule |
 |:--|:--|
 | `VAL-AUTH-ALLOWLIST` | A Google account is admitted **only if** its email is present (case-insensitive) in `OWNER_EMAIL` **and** the account's `email_verified` is true. Both conditions are required. |
-| `VAL-AUTH-FAILCLOSED` | If `OWNER_EMAIL` is empty or unset, **no one** is admitted. The allowlist fails closed — a misconfiguration locks the owner out rather than opening the app. |
+| `VAL-AUTH-FAILCLOSED` | If `OWNER_EMAIL` is empty or unset, **no one** is admitted. The allowlist fails closed: a misconfiguration locks the owner out rather than opening the app. |
 | `VAL-AUTH-CASEFOLD` | Emails are compared lowercased and trimmed on both sides, so `Owner@Gmail.com` and `owner@gmail.com` match. |
 | `VAL-AUTH-VERIFIED` | An unverified Google email is rejected even if listed, so a listed address can't be impersonated by an account that never proved ownership of it. |
 | `VAL-AUTH-PUBLIC` | Only the sign-in page, the Auth.js API routes, uploaded photos, and framework internals are public (see the proxy matcher in the interface spec). Everything else requires a session. |

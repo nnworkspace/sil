@@ -15,7 +15,7 @@ import {
 
 const piece = (itemId: string, name = itemId) => ({ itemId, name });
 
-describe("#320 — what a batch writes", () => {
+describe("#320: what a batch writes", () => {
   it("writes one wear per selected piece", () => {
     const plan = planBatch([piece("dress"), piece("shoes"), piece("necklace")], []);
     expect(plan.itemIds).toEqual(["dress", "shoes", "necklace"]);
@@ -23,7 +23,7 @@ describe("#320 — what a batch writes", () => {
   });
 
   it("deduplicates within the selection", () => {
-    // A piece can reach one batch twice — it may belong to two Looks, or be
+    // A piece can reach one batch twice: it may belong to two Looks, or be
     // both selected in the grid and part of the chosen day. Writing it twice
     // would record a wear that did not happen.
     const plan = planBatch([piece("culottes"), piece("shirt"), piece("culottes")], []);
@@ -40,7 +40,7 @@ describe("#320 — what a batch writes", () => {
   });
 
   it("reports a piece already worn that day, but still writes it", () => {
-    // Wearing one piece on two occasions in a day is real — the office, then
+    // Wearing one piece on two occasions in a day is real: the office, then
     // dinner. So this is a question for the owner, not a rule.
     const plan = planBatch([piece("denim", "V-Neck Denim Dress"), piece("shoes")], ["denim"]);
     expect(plan.duplicates).toEqual([{ itemId: "denim", name: "V-Neck Denim Dress" }]);
@@ -54,7 +54,7 @@ describe("#320 — what a batch writes", () => {
   });
 });
 
-describe("#320 — ticking packed from a trip-side batch", () => {
+describe("#320: ticking packed from a trip-side batch", () => {
   it("ticks a piece that is on the trip and not yet packed", () => {
     // The owner does not reliably tick while packing, so `false` here means
     // "not ticked" far more often than "not packed".
@@ -65,7 +65,7 @@ describe("#320 — ticking packed from a trip-side batch", () => {
     expect(packedToTick(["a", "b"], new Map([["a", true], ["b", false]]))).toEqual(["b"]);
   });
 
-  it("never unticks — the inference only runs one way", () => {
+  it("never unticks: the inference only runs one way", () => {
     // Un-packing stays a deliberate act. Nothing here can produce a false.
     const out = packedToTick(["a"], new Map([["a", true]]));
     expect(out).toEqual([]);
@@ -82,7 +82,7 @@ describe("#320 — ticking packed from a trip-side batch", () => {
   });
 });
 
-describe("#320 — the batch names both of its effects", () => {
+describe("#320: the batch names both of its effects", () => {
   it("names the packed ticks alongside the wears", () => {
     // The whole reason ticking `packed` from a wear log is acceptable: a hidden
     // second write is how a control stops being trusted, a stated one is not.
@@ -99,7 +99,7 @@ describe("#320 — the batch names both of its effects", () => {
   });
 });
 
-describe("#320 — which date the dialog opens on", () => {
+describe("#320: which date the dialog opens on", () => {
   it("uses the trip day, not today", () => {
     // The case that matters on the road: catching up on the 25th for what was
     // worn on the 14th. Defaulting to today would record the wrong date.

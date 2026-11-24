@@ -15,7 +15,7 @@ type Piece = Item & { photos: ItemPhoto[] };
  *
  * A thin client shell around the existing server-rendered cards: off, this is
  * the grid exactly as it was, and `ItemCard` is untouched. On, each card is
- * covered by a selection layer instead of gaining a checkbox of its own —
+ * covered by a selection layer instead of gaining a checkbox of its own,
  * which keeps the change out of a component used by four other pages
  * (`/browse`, `/berths`, `/category/[slug]`, `/archive`).
  *

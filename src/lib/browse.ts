@@ -30,14 +30,14 @@ export type BrowseParams = {
   /** Fibres selected from the Compendium's vocabulary (#263). */
   materials: string[];
   sort: string;
-  /** "Favourites only" (#135) — `?favorite=1`. */
+  /** "Favourites only" (#135): `?favorite=1`. */
   favorite: boolean;
-  /** A data gap to list — `?missing=price` (#181). */
+  /** A data gap to list: `?missing=price` (#181). */
   missing: MissingKind | null;
 };
 
 /**
- * Every filter off — the whole active wardrobe, in default order.
+ * Every filter off: the whole active wardrobe, in default order.
  *
  * Four callers want this (the trip planner, the plan actions, the look and trip
  * pages) and each used to spell out all six fields. Adding the material facet

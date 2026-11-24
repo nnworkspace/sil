@@ -8,7 +8,7 @@ import { compareBerths } from "@/lib/berths";
  *
  * The owner boxed two silk pieces and filed `R1-W2R3-D1-L-BB`. It did not
  * parse, the Compendium said so, and `VAL-COMP-12` decides what happens next:
- * the catalogue is authoritative, so the grammar is what needed fixing — the
+ * the catalogue is authoritative, so the grammar is what needed fixing, the
  * same conclusion `LF` forced in #213.
  *
  * The distinction these tests protect is that a container is **not a position**.
@@ -16,7 +16,7 @@ import { compareBerths } from "@/lib/berths";
  * in*. They compose rather than compete.
  */
 
-describe("#277 — parsing a container", () => {
+describe("#277: parsing a container", () => {
   it("reads a box on a side", () => {
     expect(parseBerth("R1-W2R3-D1-L-BB")).toEqual({
       room: 1,
@@ -56,7 +56,7 @@ describe("#277 — parsing a container", () => {
   });
 
   it("rejects a container it does not know", () => {
-    // The vocabulary is a closed table on purpose. A typo must fail loudly —
+    // The vocabulary is a closed table on purpose. A typo must fail loudly:
     // the Compendium lists an unparsed code and says it does not follow the
     // notation, which is how `BB` itself came to light.
     expect(parseBerth("R1-W2R3-D1-L-XX")).toBeNull();
@@ -70,7 +70,7 @@ describe("#277 — parsing a container", () => {
   });
 });
 
-describe("#277 — describing a container", () => {
+describe("#277: describing a container", () => {
   it("puts it last, after the position", () => {
     expect(describeBerth("R1-W2R3-D1-L-BB")).toBe(
       "room 1 · wardrobe 2, rack 3 · drawer 1 · left · bottom box",
@@ -89,7 +89,7 @@ describe("#277 — describing a container", () => {
   });
 });
 
-describe("#277 — sorting a container", () => {
+describe("#277: sorting a container", () => {
   it("no longer dumps the code at the very bottom", () => {
     // What the owner actually saw: the box sorted after every other berth,
     // rooms away from the drawer it is in.
@@ -108,7 +108,7 @@ describe("#277 — sorting a container", () => {
   it("keeps its place beside its neighbours", () => {
     // `L` sorts before `LB` for the same reason a bare place sorts before a
     // position: broader location first. So the box on the left comes before
-    // left-back, and all three stay in drawer 1 where they belong — which is
+    // left-back, and all three stay in drawer 1 where they belong, which is
     // the whole point, since the code used to land after everything.
     const codes = ["R1-W7R2-H1", "R1-W2R3-D1-L-BB", "R1-W2R3-D1-LB", "R1-W2R3-D1-LF"];
     expect([...codes].sort(compareBerths)).toEqual([

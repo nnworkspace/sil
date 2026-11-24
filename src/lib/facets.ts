@@ -3,14 +3,14 @@ import { containsToken } from "@/lib/compendium/match";
 /**
  * Deriving the style facets from what a piece already says about itself (#229).
  *
- * Every value here comes from text the owner or the maker already wrote — a
+ * Every value here comes from text the owner or the maker already wrote: a
  * description, a note, or the piece's own name. **Nothing is inferred from a
  * photograph**, because a photograph has been wrong about this catalogue
  * repeatedly: a rolled sleeve read as ¾, COS's own copy calling a ¾ sleeve
  * "short", one technical knit read as softer than its identically harsh sibling.
  *
  * The matcher is the Compendium's `containsToken`, reused rather than rewritten,
- * so this inherits both-sided token boundaries **and** the negation guard —
+ * so this inherits both-sided token boundaries **and** the negation guard:
  * "not a jersey t-shirt", "no rib welt", "collarless" all behave correctly.
  *
  * Where the text does not say, **nothing is returned**. A missing tag is honest;
@@ -48,15 +48,15 @@ type Rule = {
  * **Notes are deliberately excluded.** `description` describes the garment;
  * `notes` are the owner's thoughts about *wearing* it, and those talk about
  * other clothes. Reading notes produced a run of false positives that were all
- * the same shape — the piece tagged with a neighbour's facet:
+ * the same shape (the piece tagged with a neighbour's facet):
  *
  *   "to wear under the cropped blazers"            → tee tagged cropped
  *   "wide beige culottes … cropped ones at that"   → top tagged cropped
  *   "COS styles it over slim black cropped trousers" → top tagged cropped
  *   "reads almost like a full A-line midi skirt"    → culottes tagged a-line
  *
- * There is no syntactic marker for that — it is not a denial, it is a sentence
- * about something else — so the fix is the field, not a smarter pattern.
+ * There is no syntactic marker for that (it is not a denial, it is a sentence
+ * about something else), so the fix is the field, not a smarter pattern.
  */
 const ALL: FacetField[] = ["name", "description"];
 
@@ -124,7 +124,7 @@ const NECK: Rule[] = [
   // A scoop is a deep round neck; both are round openings, so both map here.
   // Deliberately absent: funnel, mock and turtle necks. The vocabulary has no
   // term for a stand-up round neck, and calling one "round" would flatten a
-  // real distinction — they are left untagged instead (see #229).
+  // real distinction; they are left untagged instead (see #229).
   {
     value: "round",
     patterns: ["round neck", "round-neck", "crew neck", "crew-neck", "crewneck", "scoop neck", "scoop-neck", "scooped neck"],
@@ -143,7 +143,7 @@ const FIT: Rule[] = [
     patterns: ["slim fit", "slim-fit", "close fit", "close-fitting", "body-skimming"],
   },
   {
-    // Bare "fitted" is unusable in prose — this catalogue writes "fitted yoke",
+    // Bare "fitted" is unusable in prose: this catalogue writes "fitted yoke",
     // "fitted bodice", "worn open over a fitted top". In a *name* it reliably
     // describes the garment itself, so the rule reads names only.
     value: "slim",
@@ -170,7 +170,7 @@ const CROP_LENGTH: Rule[] = [
 ];
 
 /** Garments with no sleeves at all. Deriving a sleeve for these is how
- *  "High-Waist Wide-Leg Corduroy Trousers (3/4)" acquired a ¾ *sleeve* — the
+ *  "High-Waist Wide-Leg Corduroy Trousers (3/4)" acquired a ¾ *sleeve*: the
  *  "(3/4)" is the leg length, and the German copy says 7/8-Länge. */
 const SLEEVELESS_CATEGORIES = new Set([
   "trousers", "jeans", "culottes", "shorts", "skirts", "bags", "shoes",
@@ -190,8 +190,8 @@ const SILHOUETTE: Rule[] = [
   { value: "tunic", patterns: ["tunic"] },
   { value: "swing", patterns: ["swing"] },
   // Deliberately absent: `column`. In this catalogue the word is prose about
-  // how cloth falls — "a straight column rather than flapping", "an elongating
-  // column" — and almost never the silhouette. Plenty of hits, at most one real.
+  // how cloth falls ("a straight column rather than flapping", "an elongating
+  // column") and almost never the silhouette. Plenty of hits, at most one real.
 ];
 
 function textFor(piece: FacetSource, fields: FacetField[]): string {
@@ -199,12 +199,12 @@ function textFor(piece: FacetSource, fields: FacetField[]): string {
 }
 
 /** Longest gap allowed between the two halves of a proximity pair. Covers
- *  "kimono-style ", "roll-up ", ", wide " — and little else. */
+ *  "kimono-style ", "roll-up ", ", wide ", and little else. */
 const NEAR_GAP = 24;
 
 /**
  * `a` followed by `b` within `NEAR_GAP` characters, without crossing a sentence
- * end or a line break — so "long sleeves. Short hem" never reads as one phrase,
+ * end or a line break, so "long sleeves. Short hem" never reads as one phrase,
  * and neither do two adjacent bullet points.
  */
 function nearby(text: string, a: string, b: string): boolean {
@@ -260,7 +260,7 @@ function firstMatch(rules: Rule[], piece: FacetSource): string | undefined {
 
 /**
  * The facets a piece's own text supports. Absent keys mean "the text does not
- * say" — never "no". Callers add only what is returned and leave the rest alone.
+ * say", never "no". Callers add only what is returned and leave the rest alone.
  */
 export function deriveFacets(piece: FacetSource): Partial<Record<FacetKind, string>> {
   const out: Partial<Record<FacetKind, string>> = {};

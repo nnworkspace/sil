@@ -12,16 +12,16 @@ import { FacetDropdown, SortDropdown } from "@/components/facet-dropdown";
 
 /**
  * Browse / category filter panel (SPEC-BROWSE-INT §4, #105). A collapsible
- * "Filter & sort" panel — collapsed by default, auto-open when any filter is
- * active — holding one compact multi-select **dropdown per facet** (occasion /
+ * "Filter & sort" panel (collapsed by default, auto-open when any filter is
+ * active) holding one compact multi-select **dropdown per facet** (occasion /
  * feel / season / care / colour / material). All state lives in the URL, so a filtered
  * view is shareable and survives refresh. On a category page the category path
  * is preserved; only tag/colour/q are cleared by "Clear all".
  *
  * **The keyword box is no longer here** (#240). It moved to the page header,
  * beside "Add a piece", because a collapsed panel hid the control used most.
- * The query is still one of this panel's filters — it counts towards the
- * "n active" badge and "Clear all" still clears it — it is simply rendered
+ * The query is still one of this panel's filters: it counts towards the
+ * "n active" badge and "Clear all" still clears it. It is simply rendered
  * somewhere else. See `wardrobe-search.tsx`.
  */
 export function BrowseFilters({
@@ -139,7 +139,7 @@ export function BrowseFilters({
               onToggle={(v) => toggleValue("color", v)}
             />
             {/* Material (#263). The options are the Compendium's fibre entries,
-                so the filter and the glossary cannot drift apart — the same
+                so the filter and the glossary cannot drift apart. It is the same
                 discipline `colorMatchSpec` enforces for colour. */}
             <FacetDropdown
               label="Material"
@@ -147,7 +147,7 @@ export function BrowseFilters({
               selected={materials}
               onToggle={(v) => toggleValue("material", v)}
             />
-            {/* Favourites-only toggle (#135) — combines with every other facet. */}
+            {/* Favourites-only toggle (#135): combines with every other facet. */}
             <button
               type="button"
               onClick={toggleFavorite}

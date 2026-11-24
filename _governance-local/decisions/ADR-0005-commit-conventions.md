@@ -18,23 +18,23 @@
 The owner wants a disciplined, legible commit history: commits that read
 consistently, group cleanly into a changelog, and trace to a recorded reason. The
 project is built across many sessions (human and AI), so a machine-checkable
-convention is worth more here than usual — it keeps every session's commits
+convention is worth more here than usual: it keeps every session's commits
 uniform without relying on memory.
 
 ## Decision drivers
 
-- **Legible, groupable history** — a convention that git-cliff can turn into a
+- **Legible, groupable history**: a convention that git-cliff can turn into a
   changelog.
-- **Traceability** — every commit should link to an issue, so history explains not
+- **Traceability**: every commit should link to an issue, so history explains not
   just *what* changed but *why* (mirrors established team practice).
 - **Machine-enforced**, so the convention holds across sessions without vigilance.
-- **Low friction for trivial changes** — the mandatory link must not force a fresh
+- **Low friction for trivial changes**: the mandatory link must not force a fresh
   issue for every typo.
 
 ## Considered options
 
-1. **Conventional Commits, unenforced** — a guideline only; drifts without a gate.
-2. **Conventional Commits, enforced by commitlint** — a `commit-msg` hook rejects
+1. **Conventional Commits, unenforced**: a guideline only; drifts without a gate.
+2. **Conventional Commits, enforced by commitlint**: a `commit-msg` hook rejects
    non-conforming messages.
 3. Enforce, and additionally require **scope** and an **issue-reference footer**
    (a common team baseline).
@@ -70,7 +70,7 @@ Release notes are generated from this history with **git-cliff** (`pnpm changelo
 
 **Negative / accepted trade-offs**
 
-- Every commit needs a scope and an issue reference — a small, deliberate friction.
+- Every commit needs a scope and an issue reference: a small, deliberate friction.
 - The local hook does not run on commits made through the GitHub web UI; if web
   editing ever becomes common, a CI-side commitlint check would be needed.
 

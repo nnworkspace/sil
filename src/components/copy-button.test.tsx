@@ -8,7 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
  *
  * The guarantee worth a test is the one nobody would write down: **copying must
  * not navigate.** These buttons live on cards whose whole surface navigates, so
- * a click that escapes the button sends the owner to the piece's page — and the
+ * a click that escapes the button sends the owner to the piece's page, and the
  * copy still succeeds, which makes the bug read as "the app randomly opens
  * things" rather than as a broken button. That is exactly the sort of fault a
  * manual pass explains away.
@@ -27,7 +27,7 @@ beforeEach(() => {
   writeText.mockResolvedValue(undefined);
 });
 
-// A test that installs fake timers and then fails leaves them installed — the
+// A test that installs fake timers and then fails leaves them installed: the
 // runner abandons the body, so a `finally` inside it never runs, and every
 // later test in the file times out for a reason that has nothing to do with it.
 // Restoring here means one failure stays one failure.
@@ -37,7 +37,7 @@ afterEach(() => {
 
 /**
  * `navigator.clipboard` is getter-only in jsdom, and `userEvent.setup()`
- * installs a clipboard stub of its own — so the mock has to be defined, and
+ * installs a clipboard stub of its own, so the mock has to be defined, and
  * defined *after* setup, or user-event's stub wins and the assertions see
  * nothing.
  */
@@ -70,7 +70,7 @@ function CardLike({ value, label }: { value: string; label: string }) {
   );
 }
 
-describe("#217 — copying", () => {
+describe("#217: copying", () => {
   it("puts the value on the clipboard", async () => {
     const user = setup();
     render(<CopyButton value="R1-W6R2-S4-L" label="Copy berth code" />);

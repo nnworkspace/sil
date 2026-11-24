@@ -26,7 +26,7 @@ export type MatchRule = {
   tokens: string[];
   /** A hit on any of these vetoes the match, however the tokens fared. */
   exclude?: string[];
-  /** Where to look. Defaults to `material` alone — the precise field. */
+  /** Where to look. Defaults to `material` alone, the precise field. */
   fields?: MatchField[];
 };
 
@@ -44,7 +44,7 @@ function normalise(text: string): string {
   return text.toLowerCase().replace(/\s+/g, " ");
 }
 
-/** A letter for boundary purposes — digits, %, punctuation and spaces all end a
+/** A letter for boundary purposes: digits, %, punctuation and spaces all end a
  *  token, which is what makes `5% elastane,` parse the same as ` elastane `. */
 const isLetter = (ch: string | undefined) => ch !== undefined && /\p{L}/u.test(ch);
 
@@ -53,7 +53,7 @@ const isLetter = (ch: string | undefined) => ch !== undefined && /\p{L}/u.test(c
  *
  * Found the moment the feature met real prose: a cashmere jumper was listed
  * under **Rib** because its description says the hem is *"left to roll instead
- * of being finished with a rib welt"* — the one thing the garment does not
+ * of being finished with a rib welt"*, the one thing the garment does not
  * have. More than a dozen pieces in a typical catalogue mention a material in the negative.
  *
  * Deliberately narrow. It looks only just behind the match and stops at
@@ -61,7 +61,7 @@ const isLetter = (ch: string | undefined) => ch !== undefined && /\p{L}/u.test(c
  * It cannot understand prose, and is not meant to; it removes the one shape
  * that occurs often enough to be visibly wrong.
  *
- * `unlike` joined the list in #243, from *"unlike the boxy Studio Kaze satin bolero"* — the same shape as "instead of", and the same mistake: the
+ * `unlike` joined the list in #243, from *"unlike the boxy Studio Kaze satin bolero"*, the same shape as "instead of", and the same mistake: the
  * sentence is about a garment this one is not.
  */
 const NEGATOR = /\b(?:no|not|without|instead of|rather than|unlike|never)\b[^.;:!?]{0,24}$/;
@@ -73,14 +73,14 @@ const NEGATOR = /\b(?:no|not|without|instead of|rather than|unlike|never)\b[^.;:
  * **Denim** is what forced this, and it is the only entry with the problem in
  * an acute form, because it is the one fabric name here that is also a colour
  * and a wardrobe category. Nobody writes "it goes with poplin". Everybody
- * writes "it sits with charcoal, ivory and denim" — a sentence about which
+ * writes "it sits with charcoal, ivory and denim", a sentence about which
  * *other* garments this one lives beside. Several pieces were filed under Denim
  * on the strength of such a sentence, including a pair of pumps ("dressed down
  * with denim") and a linen tank dress.
  *
  * `under`, `over` and `beneath` are the broad entries and they are here on
  * purpose: layering is *always* about another garment. They caught another
- * case in a different entry — a denim jacket filed under **Jersey** because its
+ * case in a different entry: a denim jacket filed under **Jersey** because its
  * note says "over a jersey vest". The cost is that "a mesh under a denim shell",
  * describing one piece's own construction, would be suppressed wrongly. No such
  * sentence exists in this catalogue; if one is ever written, this is the comment
@@ -89,7 +89,7 @@ const NEGATOR = /\b(?:no|not|without|instead of|rather than|unlike|never)\b[^.;:
  * **`styled with` is deliberately absent.** It was in the first draft and the
  * catalogue sweep threw it straight out: a wrap dress is "styled with a
  * surplice neckline and **A-line** skirt", where the phrase means *features*,
- * not *wear it with* — and the guard was suppressing a true A-line. Every
+ * not *wear it with*, and the guard was suppressing a true A-line. Every
  * phrase left below can only mean pairing. `style it with`, imperative, is a
  * different sentence and stays.
  *
@@ -104,7 +104,7 @@ const COMPANION =
  *
  * "An indigo **denim look**" and "a classic, **denim-inspired** look" both say,
  * in as many words, that the cloth is not the thing named. One is a viscose
- * shirt dress, the other linen — and both were listed under Denim.
+ * shirt dress, the other linen, and both were listed under Denim.
  */
 const LOOKALIKE = /^[-\s]?(?:look|inspired|effect|style|wash)\b/;
 
@@ -134,7 +134,7 @@ export function containsToken(text: string, token: string): boolean {
   }
 }
 
-/** Whether the match at `at` is denied by the words just before it — either a
+/** Whether the match at `at` is denied by the words just before it: either a
  *  denial that this piece has the thing, or a mention of something worn with
  *  it. Both are sentences about a garment that is not this one. */
 function isDenied(haystack: string, at: number): boolean {
@@ -143,7 +143,7 @@ function isDenied(haystack: string, at: number): boolean {
 }
 
 /**
- * Markdown links that point at **another piece** — `[label](/items/<id>)`.
+ * Markdown links that point at **another piece**: `[label](/items/<id>)`.
  *
  * A cross-reference is a pointer, not a description (#243). Notes here link
  * pieces to each other freely, and the label necessarily names the *other*
@@ -151,8 +151,8 @@ function isDenied(haystack: string, at: number): boolean {
  * "[Linden & Co metallic jacquard jacket]" was being filed under **Jacquard** on
  * the strength of a sentence about a different coat.
  *
- * Only `/items/` links are removed. A `/compendium/` link is the opposite case
- * — "the whole back is [lace](…)" is a claim about *this* piece — so those are
+ * Only `/items/` links are removed. A `/compendium/` link is the opposite case:
+ * "the whole back is [lace](…)" is a claim about *this* piece, so those are
  * left in the text deliberately.
  */
 const ITEM_LINK = /\[[^\]]*\]\(\/items\/[^)]*\)/g;
@@ -163,9 +163,9 @@ const ITEM_LINK = /\[[^\]]*\]\(\/items\/[^)]*\)/g;
  * A URL is never prose, and a Compendium URL contains the very word the entry
  * is looking for: `[what makes something one](/compendium/materials/bolero)`
  * filed a wrap top under **Bolero** through the link *target*, in a sentence
- * whose whole point was that the piece is not one. The label stays — that is
+ * whose whole point was that the piece is not one. The label stays: that is
  * the part a reader sees, and "the whole back is [lace](…)" really does
- * describe the piece — but the address is dropped.
+ * describe the piece. But the address is dropped.
  */
 const LINK_TO_LABEL = /\[([^\]]*)\]\([^)]*\)/g;
 
@@ -177,8 +177,8 @@ function haystackFor(piece: Matchable, fields: MatchField[]): string {
 }
 
 /**
- * Whether an entry describes a piece. An entry with no rule matches nothing —
- * that is a design position, not an oversight (VAL-COMP-10): better an entry
+ * Whether an entry describes a piece. An entry with no rule matches nothing.
+ * That is a design position, not an oversight (VAL-COMP-10): better an entry
  * with no examples than an example list that is wrong.
  */
 export function matchesPiece(rule: MatchRule | undefined, piece: Matchable): boolean {

@@ -1,12 +1,12 @@
-# Authentication — Specification Set
+# Authentication: Specification Set
 
 > **Set ID:** `SPEC-SET-AUTH` · **Version:** `0.1.0` · **Status:** DRAFT · **Owner:** nnworkspace
 
-The wardrobe app had **no authentication** — fine on `localhost`, but the app is about to be deployed, and a public URL would expose the entire wardrobe, including the owner's own photos, to anyone who found it. This set defines a **single-owner gate**: a real OAuth login via **Auth.js (NextAuth v5)** with **Google**, admitting only the owner and redirecting everyone else to a sign-in page.
+The wardrobe app had **no authentication**, which was fine on `localhost`, but the app is about to be deployed, and a public URL would expose the entire wardrobe, including the owner's own photos, to anyone who found it. This set defines a **single-owner gate**: a real OAuth login via **Auth.js (NextAuth v5)** with **Google**, admitting only the owner and redirecting everyone else to a sign-in page.
 
 ## 1. Purpose
 
-Make the deployed app private to its owner with the least machinery. There is exactly one user, so there is no sign-up, no roles, and no user table — just "is the person in front of the app the owner, proven by a Google login?" Identity comes from Google (verified email); the app keeps a tiny **allowlist** (`OWNER_EMAIL`) and admits a session only if the signed-in email is on it. Everything else in the app is unchanged; this is a gate wrapped around what already exists.
+Make the deployed app private to its owner with the least machinery. There is exactly one user, so there is no sign-up, no roles, and no user table: just "is the person in front of the app the owner, proven by a Google login?" Identity comes from Google (verified email); the app keeps a tiny **allowlist** (`OWNER_EMAIL`) and admits a session only if the signed-in email is on it. Everything else in the app is unchanged; this is a gate wrapped around what already exists.
 
 ## 2. Scope
 
@@ -19,7 +19,7 @@ Make the deployed app private to its owner with the least machinery. There is ex
 | A bare public `/signin` page; a sign-out control in the header | Account settings / profile management |
 | Config via env: `AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `OWNER_EMAIL` | Storing any user data we don't already have |
 
-Adding a second permitted person later is a new entry in `OWNER_EMAIL` (and a Google test user) — **not** a schema change.
+Adding a second permitted person later is a new entry in `OWNER_EMAIL` (and a Google test user), **not** a schema change.
 
 ## 3. Traceability
 
@@ -36,9 +36,9 @@ Adding a second permitted person later is a new entry in `OWNER_EMAIL` (and a Go
 |:--|:--|:--|
 | `SPEC-AUTH-FUNC` | [10-functional-spec.md](10-functional-spec.md) | Sign-in / sign-out operations, allowlist rule, gate semantics |
 | `SPEC-AUTH-INT` | [20-interface-spec.md](20-interface-spec.md) | Routes, proxy matcher, Auth.js config, UI, flows, env |
-| — | [manifest.yaml](manifest.yaml) | Inventory |
+| | [manifest.yaml](manifest.yaml) | Inventory |
 
-No `30-data-model` of its own — the feature persists **nothing**. Sessions are JWTs in a cookie; identity lives at Google; the allowlist is an env var. No columns or tables are added.
+No `30-data-model` of its own: the feature persists **nothing**. Sessions are JWTs in a cookie; identity lives at Google; the allowlist is an env var. No columns or tables are added.
 
 ## 5. Feature context
 
@@ -59,5 +59,5 @@ graph LR
 ## 6. How to read this set
 
 1. **This README** for scope and the trust model.
-2. **[10-functional-spec.md](10-functional-spec.md)** — the operations and the allowlist / gate rules (`VAL-AUTH-*`).
-3. **[20-interface-spec.md](20-interface-spec.md)** — the routes, the proxy matcher, the Auth.js config, and the env contract.
+2. **[10-functional-spec.md](10-functional-spec.md)**: the operations and the allowlist / gate rules (`VAL-AUTH-*`).
+3. **[20-interface-spec.md](20-interface-spec.md)**: the routes, the proxy matcher, the Auth.js config, and the env contract.

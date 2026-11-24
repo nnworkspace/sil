@@ -9,8 +9,8 @@ import { parseBerth, type PlaceKind, type Unit } from "@/lib/compendium/berth";
  * notice. This function is pure so that rule is cheap to keep and cheap to test.
  *
  * It reads **primary categories only**, and that is deliberate. A piece also
- * carries secondary categories (#71, #206) — a shirt is filed under `tops` as
- * well — so summarising over both would make almost every berth read "tops,
+ * carries secondary categories (#71, #206): a shirt is filed under `tops` as
+ * well, so summarising over both would make almost every berth read "tops,
  * shirts". The parent adds no information once the child is named. Anyone
  * "fixing" this to use `categoryMatcher` would be making the line useless.
  */
@@ -27,7 +27,7 @@ export type BerthSummary = {
 /**
  * Summarise a berth from the primary categories of the pieces in it.
  *
- * Ordered by how many pieces each category holds, then alphabetically — the tie
+ * Ordered by how many pieces each category holds, then alphabetically. The tie
  * break matters: without it the two halves of an even split would swap places
  * between renders for no reason a reader could see.
  */
@@ -52,7 +52,7 @@ export function summariseBerth(
   };
 }
 
-/** The summary as one string, or `null` when there is nothing to say — so a
+/** The summary as one string, or `null` when there is nothing to say, so a
  *  caller renders no line at all rather than an empty one or a bare "+0". */
 export function formatBerthSummary(categories: readonly string[], max = 2): string | null {
   const { parts, extra } = summariseBerth(categories, max);
@@ -62,7 +62,7 @@ export function formatBerthSummary(categories: readonly string[], max = 2): stri
 
 /**
  * Order berths the way the notation reads: room, then wardrobe, then rack, then
- * place, then position (#227) — so the list is a walk through the room rather
+ * place, then position (#227), so the list is a walk through the room rather
  * than a leaderboard.
  *
  * **Numeric, not lexical, and that is the whole point.** Every wardrobe, rack
@@ -73,7 +73,7 @@ export function formatBerthSummary(categories: readonly string[], max = 2): stri
  *     correct:   R1-W7R2-S2    R1-W7R2-S3   R1-W7R2-S10
  *
  * The first double-digit shelf makes the lexical version wrong, and nothing
- * would fail — the list would simply be in the wrong order, quietly.
+ * would fail: the list would simply be in the wrong order, quietly.
  *
  * A code that does not parse sorts last but is never dropped: `VAL-COMP-12`
  * says such a code is still a berth, and the catalogue is what is true.
@@ -82,7 +82,7 @@ export function formatBerthSummary(categories: readonly string[], max = 2): stri
 /** Kind order as the grammar table documents it: shelf, drawer, hanging rail. */
 const PLACE_ORDER: Record<PlaceKind, number> = { shelf: 0, drawer: 1, rail: 2 };
 
-/** Wardrobes before cabinets — the order the grammar table lists them in. */
+/** Wardrobes before cabinets: the order the grammar table lists them in. */
 const UNIT_ORDER: Record<Unit["kind"], number> = { wardrobe: 0, cabinet: 1 };
 
 /** Furniture with no subdivision sorts as though it were rack 0, so an
@@ -109,7 +109,7 @@ export function compareBerths(a: string, b: string): number {
     // No position means the whole shelf, which comes before any part of it.
     (pa.position ? 1 : 0) - (pb.position ? 1 : 0) ||
     (pa.position ?? "").localeCompare(pb.position ?? "") ||
-    // A box inside the place sorts after the loose contents of it (#277) —
+    // A box inside the place sorts after the loose contents of it (#277):
     // walking a drawer, you meet what is lying in it before what is boxed in it.
     (pa.container ? 1 : 0) - (pb.container ? 1 : 0) ||
     (pa.container ?? "").localeCompare(pb.container ?? "") ||

@@ -5,12 +5,12 @@ import { MAX_TRIP_DAYS, isTripDay, tripDays } from "@/lib/trip-days";
 /**
  * A trip's days (#270).
  *
- * The interesting cases are all boundaries — a one-day trip, a month end, and
+ * The interesting cases are all boundaries: a one-day trip, a month end, and
  * the timezone trap that makes a calendar day arithmetic problem look like a
  * clock problem.
  */
 
-describe("#270 — the days of a trip", () => {
+describe("#270: the days of a trip", () => {
   it("includes both ends", () => {
     const days = tripDays("2026-08-03", "2026-08-05");
     expect(days.map((d) => d.iso)).toEqual(["2026-08-03", "2026-08-04", "2026-08-05"]);
@@ -57,7 +57,7 @@ describe("#270 — the days of a trip", () => {
   });
 });
 
-describe("#270 — when there are no days to show", () => {
+describe("#270: when there are no days to show", () => {
   it("returns nothing when either date is missing", () => {
     // Every trip in the catalogue before this feature. The view must say why
     // rather than render an empty frame.
@@ -88,7 +88,7 @@ describe("#270 — when there are no days to show", () => {
   });
 });
 
-describe("#270 — an assignment can outlive the dates that made it", () => {
+describe("#270: an assignment can outlive the dates that made it", () => {
   it("knows which stored days still belong to the trip", () => {
     // Shorten a trip and a piece filed under the dropped day would otherwise
     // be invisible without being gone. The view groups those separately.

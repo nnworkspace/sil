@@ -41,7 +41,7 @@ export default async function TripDetailPage({
 }) {
   const { id } = await params;
   // Which plan view (#270). In the URL so it survives the Server-Action
-  // round-trip that follows every add — otherwise placing a piece on Tuesday
+  // round-trip that follows every add; otherwise placing a piece on Tuesday
   // would bounce the page back to the category view.
   const planParam = (await searchParams).plan;
   const planMode = planParam === "day" ? "day" : "category";
@@ -66,7 +66,7 @@ export default async function TripDetailPage({
   }));
   const addedIds = trip.tripItems.map((ti) => ti.itemId);
 
-  // How many pieces fill each plan slot — rolled up over the slot's sub-categories.
+  // How many pieces fill each plan slot, rolled up over the slot's sub-categories.
   const filled: Record<string, number> = {};
   for (const slot of trip.plan ?? []) {
     const inSlot = categoryMatcher(slot.category);
@@ -81,7 +81,7 @@ export default async function TripDetailPage({
 
   const days = tripDays(trip.startDate, trip.endDate);
 
-  // The packing list, through the **shared** helper (#286) — the printable
+  // The packing list, through the **shared** helper (#286): the printable
   // sheet and the Markdown export use it too, and this page had quietly kept a
   // second copy of the same twelve lines, which is exactly what extracting it
   // in #259 was meant to prevent.
@@ -149,7 +149,7 @@ export default async function TripDetailPage({
       />
 
       <div className="grid gap-6 lg:grid-cols-[20rem_minmax(0,1fr)]">
-        {/* Left panel — the packing list (what I'm taking), always in view. */}
+        {/* Left panel: the packing list (what I'm taking), always in view. */}
         <aside className="min-w-0 space-y-3 lg:sticky lg:top-6 lg:self-start lg:max-h-[calc(100vh-3rem)] lg:overflow-y-auto">
           <div className="flex items-center justify-between gap-2">
             <h2 className="font-medium">Packing list</h2>
@@ -177,7 +177,7 @@ export default async function TripDetailPage({
                 addedIds={addedIds}
               />
               <div className="rounded-lg border border-dashed py-10 text-center text-sm text-muted-foreground">
-                Nothing here yet — add pieces from your wardrobe.
+                Nothing here yet. Add pieces from your wardrobe.
               </div>
             </>
           ) : (
@@ -204,7 +204,7 @@ export default async function TripDetailPage({
                   <Download className="size-3.5" />
                   Export as Markdown
                 </a>
-                {/* The printable sheet (#259) — photos in a grid, to tick off
+                {/* The printable sheet (#259): photos in a grid, to tick off
                     in pen and put in the case. */}
                 <Link
                   href={`/trips/${trip.id}/print`}
@@ -218,7 +218,7 @@ export default async function TripDetailPage({
           )}
         </aside>
 
-        {/* Right — planning tools. */}
+        {/* Right: planning tools. */}
         <div className="min-w-0 space-y-6">
           {trip.destination ? (
             <TripForecast destination={trip.destination} />

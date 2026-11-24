@@ -1,4 +1,4 @@
-# Wear Tracking — Interface Specification
+# Wear Tracking: Interface Specification
 
 - **Spec ID:** `SPEC-WEAR-INT`
 - **Part of set:** `SPEC-SET-WEAR` v0.1.0
@@ -14,9 +14,9 @@ Defines how wear tracking is exposed and wired: the wear summary + history + qui
 
 A **"Worn"** block, below the item's details:
 
-- **Summary line** — "Worn **N** times · Last worn **{date}** · **{cost}/wear**". The cost segment appears only when price paid is set and N > 0 (`VAL-WEAR-05`); when N = 0, the block reads "Not worn yet."
-- **History** — the wears, most recent first. Each row is **read-only** (`worn_at` · occasion · note) with an **Edit** (pencil) and a **remove** (✕) control. Clicking **Edit** turns the row's date, occasion selector, and note into editable fields with **Save** / **Cancel**; Save calls `updateWear` (`OP-EDIT-WEAR`), remove calls `removeWear` (`OP-REMOVE-WEAR`).
-- **Quick "Log a wear"** — a compact inline form, left to right: a **date** input (`defaultValue` = today, `max` = today), an **occasion tag** selector (the occasion vocabulary + a "none" option, `VAL-WEAR-06`), a free-text **note** input (`VAL-WEAR-03`), and a **Log** button (`OP-LOG-WEAR`).
+- **Summary line**: "Worn **N** times · Last worn **{date}** · **{cost}/wear**". The cost segment appears only when price paid is set and N > 0 (`VAL-WEAR-05`); when N = 0, the block reads "Not worn yet."
+- **History**: the wears, most recent first. Each row is **read-only** (`worn_at` · occasion · note) with an **Edit** (pencil) and a **remove** (✕) control. Clicking **Edit** turns the row's date, occasion selector, and note into editable fields with **Save** / **Cancel**; Save calls `updateWear` (`OP-EDIT-WEAR`), remove calls `removeWear` (`OP-REMOVE-WEAR`).
+- **Quick "Log a wear"**: a compact inline form with, left to right, a **date** input (`defaultValue` = today, `max` = today), an **occasion tag** selector (the occasion vocabulary + a "none" option, `VAL-WEAR-06`), a free-text **note** input (`VAL-WEAR-03`), and a **Log** button (`OP-LOG-WEAR`).
 
 ### 2.2 Edit form
 
@@ -35,11 +35,11 @@ All validate with Zod (ADR-0006) against the `VAL-WEAR-*` rules before writing, 
 
 ## 4. Occasion tag & note
 
-The **occasion** is a native `<select>` populated from the **occasion** `TAG_GROUP` (`casual / office / occasion / sport / loungewear`) plus a "none" option — a structured tag, validated server-side (`VAL-WEAR-06`). The specific detail (e.g. "quarterly review meeting") goes in the separate free-text **`note`** field. No new vocabulary is introduced.
+The **occasion** is a native `<select>` populated from the **occasion** `TAG_GROUP` (`casual / office / occasion / sport / loungewear`) plus a "none" option. It is a structured tag, validated server-side (`VAL-WEAR-06`). The specific detail (e.g. "quarterly review meeting") goes in the separate free-text **`note`** field. No new vocabulary is introduced.
 
 ## 5. Flows
 
-### 5.1 Quick log — `STEP-WEAR-LOG-*`
+### 5.1 Quick log: `STEP-WEAR-LOG-*`
 
 ```mermaid
 sequenceDiagram
@@ -55,7 +55,7 @@ sequenceDiagram
 
 - `STEP-WEAR-LOG-01` open item → `02` pick date/occasion → `03` validate → `04` insert → `05` page shows updated count / last-worn / cost-per-wear.
 
-### 5.2 Edit-form reconcile — `STEP-WEAR-EDIT-*`
+### 5.2 Edit-form reconcile: `STEP-WEAR-EDIT-*`
 
 ```mermaid
 sequenceDiagram
@@ -76,4 +76,4 @@ sequenceDiagram
 - **No wears:** "Not worn yet" + the quick-log control.
 - **Has wears:** summary line (with cost-per-wear when priced) + history + quick-log.
 - **Error:** a validation message on the offending field; the page/form stays usable.
-- Wear tracking is additive — an item works exactly as before without ever logging a wear.
+- Wear tracking is additive: an item works exactly as before without ever logging a wear.

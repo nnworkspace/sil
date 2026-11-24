@@ -28,7 +28,7 @@ const names = (rows: Row[]) => rows.map((r) => r.name);
 const group = (rows: Row[], key: string, t = trip) =>
   plan(rows, t).groups.find((g) => g.key === key)!;
 
-describe("#270 — the groups", () => {
+describe("#270: the groups", () => {
   it("gives every day of the trip a group, including the empty ones", () => {
     // An empty Thursday is the most useful thing this view can tell you.
     const { groups } = plan([row("Linen dress", ["2026-08-03"])]);
@@ -69,7 +69,7 @@ describe("#270 — the groups", () => {
   });
 });
 
-describe("#270 — a shortened trip", () => {
+describe("#270: a shortened trip", () => {
   const rows = [row("Silk dress", ["2026-08-09"]), row("Linen dress", ["2026-08-03"])];
 
   it("keeps a piece filed under a dropped day visible", () => {
@@ -89,7 +89,7 @@ describe("#270 — a shortened trip", () => {
   });
 });
 
-describe("#270 — a trip with no days", () => {
+describe("#270: a trip with no days", () => {
   it("says why, rather than leaving the view to guess", () => {
     expect(dayPlan({ startDate: null, endDate: null }, [], byName).noDaysReason).toBe("no-dates");
     expect(
@@ -104,13 +104,13 @@ describe("#270 — a trip with no days", () => {
   it("does not claim a day assignment is orphaned when there are no days at all", () => {
     // Every trip before this feature has assignments of neither kind, but a
     // trip whose dates were *removed* would otherwise show every piece under
-    // "a day this trip no longer has" — technically true, useless to read.
+    // "a day this trip no longer has": technically true, useless to read.
     const p = dayPlan({ startDate: null, endDate: null }, [row("Silk dress", ["2026-08-09"])], byName);
     expect(p.groups.some((g) => g.kind === "orphan")).toBe(false);
   });
 });
 
-describe("#270 — the labels the packing list shows", () => {
+describe("#270: the labels the packing list shows", () => {
   const days = tripDays("2026-08-03", "2026-08-05");
 
   it("names each day a piece is planned for, in trip order", () => {
@@ -124,7 +124,7 @@ describe("#270 — the labels the packing list shows", () => {
   });
 
   it("says nothing for a piece that is not scheduled", () => {
-    // The label is omitted entirely rather than rendered empty — a packing
+    // The label is omitted entirely rather than rendered empty: a packing
     // list from a trip with no day plan must look exactly as it did before.
     expect(dayLabelsFor(days, row("x"))).toEqual([]);
     expect(dayLabelsFor([], row("x", ["2026-08-03"]))).toEqual([]);

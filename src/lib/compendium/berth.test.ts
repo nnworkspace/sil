@@ -74,7 +74,7 @@ describe("parseBerth", () => {
   it("#219: accepts any side-and-depth pair, not just the ones already filed", () => {
     // The grammar first listed the six positions then in use, and rejected
     // `LF` when the owner filed it. VAL-COMP-12 is explicit that the catalogue
-    // is authoritative — so the rule composes a side with a depth rather than
+    // is authoritative, so the rule composes a side with a depth rather than
     // enumerating examples, and the next new pairing needs no code change.
     for (const p of ["LF", "LB", "RF", "RB", "MF", "MB"]) {
       expect(parseBerth(`R1-W2R3-D1-${p}`)?.position, p).toBe(p);
@@ -146,7 +146,7 @@ describe("describeBerth", () => {
  * A piece was berthed in a cabinet, and the grammar could not
  * say so: a wardrobe carries a rack inside it, and a cabinet has none.
  */
-describe("#251 — cabinets, and room zero", () => {
+describe("#251: cabinets, and room zero", () => {
   it("parses a cabinet, which has no rack", () => {
     expect(parseBerth("R0-C1-D4")).toEqual({
       room: 0,
@@ -192,7 +192,7 @@ describe("#251 — cabinets, and room zero", () => {
   });
 
   it("accepts room zero, which is how a hallway is written", () => {
-    // R0 needed no change — `R(\\d+)` already matched it — but it is pinned
+    // R0 needed no change (`R(\\d+)` already matched it), but it is pinned
     // here because a hallway berth depends on it and nothing else uses a zero.
     expect(parseBerth("R0-C1-D4")?.room).toBe(0);
   });
@@ -202,7 +202,7 @@ describe("#251 — cabinets, and room zero", () => {
  * What a berth is for (#254). The index derives what is *on* a shelf; only the
  * owner can say what it is *for*.
  */
-describe("#254 — berth notes", () => {
+describe("#254: berth notes", () => {
   it("returns the note for a berth that has one", () => {
     expect(berthNote("R1-W7R2-S6")).toMatch(/loungewear/i);
   });

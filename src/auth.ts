@@ -1,5 +1,5 @@
 /**
- * Authentication (Auth.js / NextAuth v5) — single-owner gate (#119, ADR-0012).
+ * Authentication (Auth.js / NextAuth v5): single-owner gate (#119, ADR-0012).
  *
  * Google OAuth, JWT sessions (no session table). Only the owner may sign in:
  * the `signIn` callback rejects any Google account whose verified email is not
@@ -26,7 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/signin" },
   callbacks: {
-    // Only the owner(s) may sign in — fail closed if the allowlist is unset.
+    // Only the owner(s) may sign in; fail closed if the allowlist is unset.
     signIn({ profile }) {
       const email = profile?.email?.toLowerCase();
       return Boolean(email && profile?.email_verified && OWNERS.includes(email));

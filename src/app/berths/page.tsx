@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 
 /**
  * Browse by berth (#172): where pieces are physically kept. The index lists each
- * berth with a count; picking one shows the pieces stored there — so the everyday
+ * berth with a count; picking one shows the pieces stored there, so the everyday
  * "I want this, where is it?" (and its inverse, "what's in the attic?") are both
  * one click away.
  */
@@ -66,7 +66,7 @@ export default async function BerthsPage({
         <h1 className="font-serif text-3xl font-normal tracking-tight">Berths</h1>
       </div>
       <p className="mb-6 text-sm text-muted-foreground">
-        Where your pieces are kept — pick a berth to see what&apos;s stored there.
+        Where your pieces are kept. Pick a berth to see what&apos;s stored there.
       </p>
 
       {berths.length === 0 ? (
@@ -74,8 +74,8 @@ export default async function BerthsPage({
           <Shirt className="mx-auto mb-3 size-8 text-muted-foreground" />
           <p className="text-muted-foreground">No berths yet.</p>
           <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-            Add a <strong>Berth</strong> to a piece (edit it) to record where it&apos;s kept — then
-            it shows up here.
+            Add a <strong>Berth</strong> to a piece (edit it) to record where it&apos;s kept, and
+            then it shows up here.
           </p>
         </div>
       ) : (
@@ -99,7 +99,7 @@ export default async function BerthsPage({
                     />
                   </span>
                 </div>
-                {/* What is actually in there (#219) — worked out from the pieces
+                {/* What is actually in there (#219): worked out from the pieces
                     on every render, so moving one updates this by itself. A
                     second line rather than beside the code: the summaries vary
                     in length and truncating one hides the very category that

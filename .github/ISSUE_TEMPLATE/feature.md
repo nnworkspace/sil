@@ -18,7 +18,7 @@ labels: ["type::feature", "status::triage"]
 
 ## Acceptance
 
-<!-- How we know it's done — observable behaviour, ideally end-to-end. -->
+<!-- How we know it's done: observable behaviour, ideally end-to-end. -->
 
 - [ ]
 

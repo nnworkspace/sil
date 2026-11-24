@@ -37,8 +37,8 @@ export function NewItemView({
       setSeed((s) => s + 1);
       toast.success(
         urls?.length
-          ? `Imported — ${urls.length} official photo${urls.length > 1 ? "s" : ""} found. Review below, then save.`
-          : "Imported — review the details below, then save.",
+          ? `Imported: ${urls.length} official photo${urls.length > 1 ? "s" : ""} found. Review below, then save.`
+          : "Imported. Review the details below, then save.",
       );
     },
     [],

@@ -35,7 +35,7 @@ const piece = (id: string, name: string, url?: string) => ({
   photos: url ? [{ url }] : [],
 });
 
-describe("VAL-COMP-10 — an entry with no pieces", () => {
+describe("VAL-COMP-10: an entry with no pieces", () => {
   it("says so rather than rendering an empty region", () => {
     render(<PieceStrip pieces={[]} emptyNote="Nothing in the catalogue matches this yet." />);
 
@@ -46,7 +46,7 @@ describe("VAL-COMP-10 — an entry with no pieces", () => {
 
   it("passes through the note it was given, so an entry can explain its own silence", () => {
     // A `knitted-to-shape` entry is silent for a different reason than a fibre
-    // this wardrobe simply does not own — and the page says which.
+    // this wardrobe simply does not own, and the page says which.
     render(<PieceStrip pieces={[]} emptyNote="This one is explained rather than counted." />);
 
     expect(screen.getByText(/explained rather than counted/i)).toBeInTheDocument();

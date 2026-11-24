@@ -16,7 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-/** "Add to Look" on an item page — pick a Look/Set to add this piece to.
+/** "Add to Look" on an item page: pick a Look/Set to add this piece to.
  *  Idempotent (`VAL-LOOK-05`): re-adding is a no-op, confirmed with a toast. */
 export function AddToLook({
   itemId,

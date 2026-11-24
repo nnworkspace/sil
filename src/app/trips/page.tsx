@@ -30,7 +30,7 @@ export default async function TripsPage({
   const groups = groupTripsByTime(trips, todayISO());
 
   // Which tab (#292). In the URL, like the category page's `?sub=`, so the view
-  // is shareable and survives a refresh — and so this page stays a server
+  // is shareable and survives a refresh, and so this page stays a server
   // component with no client JavaScript.
   const when = (await searchParams).when === "past" ? "past" : "coming";
   const count = (key: "coming" | "past") =>

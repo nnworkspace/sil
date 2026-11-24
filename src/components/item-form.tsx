@@ -70,7 +70,7 @@ function FieldError({ errors }: { errors?: string[] }) {
 /**
  * Human labels for the error summary, so it can name a field the form has no
  * inline slot for. Anything missing here falls back to the schema key, which is
- * ugly but still tells the owner where to look — the rule is that a rejected
+ * ugly but still tells the owner where to look: the rule is that a rejected
  * save is never silent, not that every key has been prettified.
  */
 const FIELD_LABELS: Record<string, string> = {
@@ -107,7 +107,7 @@ const FIELD_LABELS: Record<string, string> = {
  * Everything the action rejected, in one place (#238).
  *
  * The form previously rendered an inline message for ten fields and nothing at
- * all for the rest, so a validation error on — say — `care` discarded the whole
+ * all for the rest, so a validation error on, say, `care` discarded the whole
  * edit while the page re-rendered looking untouched. The owner's berth change
  * was thrown away with no message.
  *
@@ -138,7 +138,7 @@ function ErrorSummary({ errors }: { errors: Record<string, string[]> }) {
       <p className="text-sm font-medium text-destructive">
         {entries.length === 1
           ? "This change was not saved."
-          : `This change was not saved — ${entries.length} fields need attention.`}
+          : `This change was not saved: ${entries.length} fields need attention.`}
       </p>
       <ul className="mt-2 space-y-1 text-sm text-destructive">
         {entries.map(([field, msgs]) => (
@@ -186,7 +186,7 @@ export function ItemForm({
   const today = new Date().toISOString().slice(0, 10);
   const occasionTags =
     TAG_GROUPS.find((g) => g.kind === "occasion")?.tags ?? [];
-  // Official photos found by a saved-page import — previewed here and downloaded
+  // Official photos found by a saved-page import, previewed here and downloaded
   // by createItem at save time (VAL-IMPORT-06). The owner can drop any before saving.
   const [officialUrls, setOfficialUrls] = React.useState<string[]>(
     officialPhotoUrls ?? [],
@@ -198,7 +198,7 @@ export function ItemForm({
 
   /**
    * Families that are ticked *because* a sub-category is, mapped to the label
-   * that implies them (#206). Ticking Jeans means the piece is in Trousers —
+   * that implies them (#206). Ticking Jeans means the piece is in Trousers,
    * so Trousers shows ticked, marked "via Jeans", and is not editable: it is a
    * consequence, not a choice.
    *
@@ -234,12 +234,12 @@ export function ItemForm({
         </div>
         {/* Categories (#206). Two controls, clearly separated: one required
             primary, and the extras. The primary is NOT repeated in the extras
-            list — it is set here, and offering it there as a locked tick box
+            list: it is set here, and offering it there as a locked tick box
             was a dead end the owner reasonably tried to use. */}
         <div>
           <Label htmlFor="category">Main category *</Label>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Where this piece lives. Every piece has exactly one — change it here to move it.
+            Where this piece lives. Every piece has exactly one. Change it here to move it.
           </p>
           <select
             id="category"
@@ -264,21 +264,21 @@ export function ItemForm({
           <Label>Also in</Label>
           <p className="mt-0.5 text-xs text-muted-foreground">
             Extra categories this piece also belongs to. Ticking a sub-category ticks its
-            family too — a pair of jeans is also in Trousers.
+            family too: a pair of jeans is also in Trousers.
           </p>
           {/* Families flow into columns rather than forming one long list
               (#206). An explicit count, not a column *width*: the owner wants
               four columns on a wide screen, and a width-based rule cannot
-              promise a number — it depends on the viewport, which is how this
+              promise a number. It depends on the viewport, which is how this
               ended up showing three. `break-inside-avoid` on each family keeps
               a parent with its sub-types; a break between "Tops" and "T-Shirts"
               would destroy the hierarchy the indentation conveys. The original
-              layout — one wrapping flex row — overflowed horizontally and
+              layout (one wrapping flex row) overflowed horizontally and
               pushed items off the right edge, unreachable.
 
               Sized by column *width* with tight spacing rather than a fixed
               count, so the browser fits as many as the space allows at every
-              width — no breakpoints to keep in sync. */}
+              width, with no breakpoints to keep in sync. */}
           <div className="mt-2 gap-x-3" style={{ columnWidth: "7.5rem" }}>
             {TOP_LEVEL_CATEGORIES.map((top) => {
               const kids = childrenOf(top.slug);
@@ -308,7 +308,7 @@ export function ItemForm({
                         >
                           <input
                             type="checkbox"
-                            // An implied family is ticked and not editable — it
+                            // An implied family is ticked and not editable: it
                             // is a consequence of the sub-category, not a
                             // choice. It carries no name: the server re-derives
                             // it, so nothing depends on it being submitted.
@@ -393,7 +393,7 @@ export function ItemForm({
             maxLength={31}
           />
           <p className="mt-1 text-xs text-muted-foreground">
-            Where it&apos;s kept — so you can find it fast.
+            Where it&apos;s kept, so you can find it fast.
           </p>
           <FieldError errors={errors.storageLocation} />
         </div>
@@ -445,7 +445,7 @@ export function ItemForm({
           <Label htmlFor="priorWears">Prior wears</Label>
           <Input id="priorWears" name="priorWears" type="number" min="0" step="1" defaultValue={values.priorWears ?? ""} placeholder="not recorded" />
           <FieldError errors={errors.priorWears} />
-          <p className="mt-1 text-xs text-muted-foreground">Estimated wears before tracking — counts toward cost-per-wear.</p>
+          <p className="mt-1 text-xs text-muted-foreground">Estimated wears before tracking. Counts toward cost-per-wear.</p>
         </div>
         <div>
           <Label htmlFor="returnBy">Return by</Label>
@@ -594,7 +594,7 @@ export function ItemForm({
               }
               className={cn(inputCls, "w-auto capitalize")}
             >
-              <option value="">— occasion —</option>
+              <option value="">Occasion…</option>
               {occasionTags.map((t) => (
                 <option key={t} value={t}>
                   {t}
@@ -643,7 +643,7 @@ export function ItemForm({
               {officialUrls.map((url) => (
                 <div key={url} className="w-24">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-md bg-muted">
-                    {/* External retailer CDN — plain img (arbitrary hosts, no next/image config) */}
+                    {/* External retailer CDN: plain img (arbitrary hosts, no next/image config) */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={url} alt="" className="size-full object-cover" />
                   </div>

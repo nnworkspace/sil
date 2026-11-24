@@ -22,7 +22,7 @@ import { WardrobePicker, type PickerItem } from "@/components/wardrobe-picker";
  * wearing on Tuesday*. Both are kept, switchable, because a suitcase is packed
  * by category and a trip is lived by day.
  *
- * Each day is a **plain list**, not a set of category slots — the owner was
+ * Each day is a **plain list**, not a set of category slots. The owner was
  * explicit: "make each day's slots simple, do not need to be categorized,
  * simply let me pick pieces to add to the day". So there is no target, no
  * fill-count, and nothing to satisfy. A day is done when it looks done.
@@ -42,7 +42,7 @@ const byName = (a: DayRow, b: DayRow) => a.name.localeCompare(b.name);
 const NO_DAYS: Record<string, string> = {
   "no-dates": "This trip has no dates yet, so there are no days to plan.",
   "bad-range": "The end date is before the start date, so there are no days to plan.",
-  "too-long": `This trip is longer than ${MAX_TRIP_DAYS} days — too long to plan a day at a time.`,
+  "too-long": `This trip is longer than ${MAX_TRIP_DAYS} days, which is too long to plan a day at a time.`,
 };
 
 export function DayPlan({
@@ -88,7 +88,7 @@ export function DayPlan({
 
       {groups.map((group) => {
         // An empty day is worth showing; an empty "not scheduled" or "orphaned"
-        // group is not — those exist only to surface a problem.
+        // group is not; those exist only to surface a problem.
         if (group.rows.length === 0 && group.kind !== "day" && group.kind !== "all") return null;
 
         return (
@@ -178,7 +178,7 @@ export function DayPlan({
                       {r.name}
                     </Link>
 
-                    {/* Remove from *this* group only. The piece stays packed —
+                    {/* Remove from *this* group only. The piece stays packed:
                         taking it off Tuesday is not the same as not taking it. */}
                     <form
                       action={group.kind === "day" ? unassignFromDay : setEveryDay}
@@ -205,7 +205,7 @@ export function DayPlan({
             )}
 
             {/* From "not scheduled yet", the useful next move is usually
-                "this one is for the whole trip" — offered inline. */}
+                "this one is for the whole trip", offered inline. */}
             {group.kind === "unscheduled" && group.rows.length > 0 ? (
               <p className="mt-2 text-xs text-muted-foreground">
                 Use <span className="font-medium">Add</span> on a day above to place these, or move

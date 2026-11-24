@@ -54,7 +54,7 @@ export function ItemCard({
                 "relative z-10 opacity-0 transition-opacity",
                 "group-hover/name:opacity-100 focus-visible:opacity-100",
                 // No hover on a phone, which is where copying a name is most
-                // useful — so there it simply stays put.
+                // useful, so there it simply stays put.
                 "[@media(hover:none)]:opacity-100",
               )}
             />

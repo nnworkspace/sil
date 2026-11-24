@@ -18,7 +18,7 @@ import {
 
 /**
  * @param icon render as a bare icon, for a trip card (#290). The **dialog is
- *   unconditional** — an icon that deleted a trip and its packing list on one
+ *   unconditional**: an icon that deleted a trip and its packing list on one
  *   click would be the smallest control in the app doing the most damage. A
  *   destructive action asks first, whatever it looks like (ADR-0015).
  * @param name shown in the confirmation, because on a list of cards the icon

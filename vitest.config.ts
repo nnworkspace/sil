@@ -6,7 +6,7 @@ const alias = { "@": path.resolve(__dirname, "src") };
 /**
  * Two tiers, two environments, one command (ADR-0015).
  *
- * `unit` is pure logic and stays in `node` — it runs in a few hundred
+ * `unit` is pure logic and stays in `node`. It runs in a few hundred
  * milliseconds and is meant to be run constantly. `components` renders real
  * components in jsdom to assert behaviour that cannot be expressed as a
  * function, above all that **destructive actions ask first** (#195, #198).
@@ -22,7 +22,7 @@ export default defineConfig({
         resolve: { alias },
         test: {
           name: "unit",
-          // Layer 1 is pure logic — no DOM, no database, no Next runtime.
+          // Layer 1 is pure logic: no DOM, no database, no Next runtime.
           environment: "node",
           include: ["src/**/*.test.ts"],
         },

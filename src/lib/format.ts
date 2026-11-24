@@ -11,7 +11,7 @@ export function formatPrice(
 }
 
 /**
- * Format a date-only value for display — year-first (`YYYY-MM-DD`).
+ * Format a date-only value for display, year-first (`YYYY-MM-DD`).
  *
  * Stored dates are already `YYYY-MM-DD`, so we render them as-is rather than
  * round-tripping through `Date`, which would shift a date-only value across

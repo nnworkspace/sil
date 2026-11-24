@@ -13,7 +13,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  * test keeps it true.
  *
  * Asserted through the accessibility tree (roles and accessible names), so the
- * tests break when the behaviour breaks rather than when a class changes — and
+ * tests break when the behaviour breaks rather than when a class changes, and
  * they double as a check that each control stays reachable without a mouse.
  *
  * Not asserted here: the viewer's zoom and pan. They depend on measured
@@ -55,7 +55,7 @@ beforeEach(() => {
   vi.clearAllMocks();
 });
 
-describe("VAL-LOOK-12 — a look's photos open the shared viewer", () => {
+describe("VAL-LOOK-12: a look's photos open the shared viewer", () => {
   it("opens the viewer when a photo is clicked", async () => {
     const user = userEvent.setup();
     renderPhotos();
@@ -87,8 +87,8 @@ describe("VAL-LOOK-12 — a look's photos open the shared viewer", () => {
   });
 });
 
-describe("VAL-LOOK-13 — deleting asks first, setting the cover does not", () => {
-  it("does NOT delete when the ✕ is clicked — it asks", async () => {
+describe("VAL-LOOK-13: deleting asks first, setting the cover does not", () => {
+  it("does NOT delete when the ✕ is clicked: it asks", async () => {
     const user = userEvent.setup();
     renderPhotos();
 

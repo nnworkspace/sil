@@ -20,7 +20,7 @@ const piece = (p: { material?: string; description?: string; notes?: string }) =
 const slugs = (p: Parameters<typeof entriesForPiece>[0]) =>
   entriesForPiece(p).map((e) => e.slug);
 
-describe("VAL-COMP-09 — entries for a piece", () => {
+describe("VAL-COMP-09: entries for a piece", () => {
   it("names every fibre in a blend, not just the first", () => {
     expect(slugs(piece({ material: "72% cotton, 23% nylon, 5% elastane" }))).toEqual([
       "cotton",
@@ -46,10 +46,10 @@ describe("VAL-COMP-09 — entries for a piece", () => {
   });
 
   it("keeps declaration order: fibre, then construction, then finish", () => {
-    // So the line reads as a sentence — what it is made of, how that became
-    // cloth, what was done to the cloth — rather than as an arbitrary list.
+    // So the line reads as a sentence (what it is made of, how that became
+    // cloth, what was done to the cloth) rather than as an arbitrary list.
     const found = slugs(
-      piece({ material: "100% cotton (mercerised — silky sheen)", description: "poplin" }),
+      piece({ material: "100% cotton (mercerised, silky sheen)", description: "poplin" }),
     );
     expect(found).toEqual(["cotton", "poplin", "mercerised"]);
   });
@@ -58,7 +58,7 @@ describe("VAL-COMP-09 — entries for a piece", () => {
     // A real-world label string on a cotton top. This is the case that
     // justifies both-sided token boundaries, and it is worth pinning here too
     // because it is now visible on an item page rather than buried in a count.
-    expect(slugs(piece({ material: "100% cotton (mercerised — silky sheen)" }))).not.toContain(
+    expect(slugs(piece({ material: "100% cotton (mercerised, silky sheen)" }))).not.toContain(
       "silk",
     );
   });
@@ -72,7 +72,7 @@ describe("VAL-COMP-09 — entries for a piece", () => {
   });
 
   it("#213: recognises a double-faced knit however the phrase is written", () => {
-    // The pieces that record it each write it differently — which is
+    // The pieces that record it each write it differently, which is
     // why the entry carries the variants rather than trusting one spelling.
     for (const text of [
       "a fine-gauge double-faced knit, grey on the face and cobalt on the reverse",
@@ -91,11 +91,11 @@ describe("VAL-COMP-09 — entries for a piece", () => {
   });
 });
 
-describe("#235 — acetate, acrylic and metallic yarn", () => {
+describe("#235: acetate, acrylic and metallic yarn", () => {
   it("reads acetate however the label spells it", () => {
     // Both are real strings in this catalogue; `Acetat` is what a German label
     // prints. Triacetate used to be asserted here too and deliberately is not
-    // any more — it became its own entry in #261, because the two behave
+    // any more: it became its own entry in #261, because the two behave
     // differently in every way that matters to a wearer.
     expect(slugs(piece({ material: "Shell 100% Linen, Lining: 100% acetate" }))).toContain(
       "acetate",
@@ -131,7 +131,7 @@ describe("#235 — acetate, acrylic and metallic yarn", () => {
   });
 
   it("every see-also points at an entry that exists", () => {
-    // Cheap, and it fails loudly the next time an entry is renamed — a slug is
+    // Cheap, and it fails loudly the next time an entry is renamed: a slug is
     // a contract once an item page links to it (SPEC-COMPENDIUM-INT §1).
     const known = new Set(COMPENDIUM_ENTRIES.map((e) => e.slug));
     for (const entry of COMPENDIUM_ENTRIES) {
@@ -159,7 +159,7 @@ describe("#235 — acetate, acrylic and metallic yarn", () => {
  * completely different weave. The Compendium existed for exactly that
  * distinction and could not make it.
  */
-describe("#273 — chambray is not denim", () => {
+describe("#273: chambray is not denim", () => {
   it("files a chambray piece under Chambray", () => {
     expect(slugs(piece({ material: "100% cotton (chambray)" }))).toContain("chambray");
   });
@@ -171,7 +171,7 @@ describe("#273 — chambray is not denim", () => {
   });
 
   it("reads the word from prose, where a weave is actually named", () => {
-    // No composition label in this catalogue says "chambray" — a label lists
+    // No composition label in this catalogue says "chambray"; a label lists
     // fibres. It is the description that ever mentions a weave.
     expect(
       slugs(piece({ material: "100% cotton", description: "a soft chambray shirt dress" })),
@@ -199,7 +199,7 @@ describe("#273 — chambray is not denim", () => {
   });
 });
 
-describe("#261 — triacetate is its own entry", () => {
+describe("#261: triacetate is its own entry", () => {
   it("files a triacetate piece under Triacetate", () => {
     expect(slugs(piece({ material: "70% triacetate, 30% polyester" }))).toContain("triacetate");
   });
@@ -239,7 +239,7 @@ describe("#261 — triacetate is its own entry", () => {
  * is the point of these tests: the danger with a silhouette is that its name is
  * also an ordinary English word.
  */
-describe("#264 — silhouettes as Cuts", () => {
+describe("#264: silhouettes as Cuts", () => {
   it("reads a silhouette named outright", () => {
     expect(slugs(piece({ description: "A minimal sleeveless shift dress in a fluid fabric" }))).toContain(
       "shift",
@@ -289,11 +289,11 @@ describe("#264 — silhouettes as Cuts", () => {
   });
 });
 
-describe("#264 — a-line and shift are not exclusive", () => {
+describe("#264: a-line and shift are not exclusive", () => {
   it("files a piece described as an A-line shift under both", () => {
     // A fitting-room correction, and a retailer's own words for two dresses:
     // "a straight A-line shift". Shift describes the waist, A-line the hem, so
-    // a garment can be both — the first version of these entries implied it
+    // a garment can be both; the first version of these entries implied it
     // could not.
     const found = slugs(
       piece({ description: "a straight, A-line shift falling to an above-knee hem" }),
@@ -303,22 +303,22 @@ describe("#264 — a-line and shift are not exclusive", () => {
   });
 });
 
-describe("#318 — ramie", () => {
+describe("#318: ramie", () => {
   it("is recognised in a composition, like its two relatives", () => {
-    // Declaration order, not the order the label happens to list them in —
+    // Declaration order, not the order the label happens to list them in:
     // cotton is declared first in this file, so it comes first here.
     expect(slugs(piece({ material: "55% ramie, 45% cotton" }))).toEqual(["cotton", "ramie"]);
   });
 
   it("reads the accented spelling and the trade name", () => {
-    // Italian labels write `ramié`, and nothing normalises accents away — the
+    // Italian labels write `ramié`, and nothing normalises accents away: the
     // spelling variant is the entry's job, as it is for elastane/elastan.
     expect(slugs(piece({ material: "100% ramié" }))).toEqual(["ramie"]);
     expect(slugs(piece({ material: "100% china grass" }))).toEqual(["ramie"]);
   });
 
   it("does not fire on `Made in China`, which care labels are full of", () => {
-    // The token is the whole phrase, never the bare country — the same reason
+    // The token is the whole phrase, never the bare country: the same reason
     // `metallic` alone was rejected for metallic yarn.
     expect(slugs(piece({ material: "100% cotton, made in China" }))).toEqual(["cotton"]);
   });
@@ -336,7 +336,7 @@ describe("#318 — ramie", () => {
   });
 });
 
-describe("#318 — the bast fibres reach each other", () => {
+describe("#318: the bast fibres reach each other", () => {
   it("links all three ways, so no member of the family is a dead end", () => {
     // Before this, hemp named only linen and linen named only hemp: ramie was
     // unreachable from either, which is worse than not having the entry.

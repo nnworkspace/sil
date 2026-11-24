@@ -16,7 +16,7 @@ import type { TripDay } from "@/lib/trip-days";
  *
  *     This is the reverse of what #259 decided, and that decision was reasoned
  *     wrongly. It argued that "a piece must appear exactly once, and its
- *     primary category is the one place it certainly belongs" — but that risk
+ *     primary category is the one place it certainly belongs", but that risk
  *     belongs to **secondary** categories, which really would duplicate a
  *     piece. Rolling the **primary** up cannot: every piece has exactly one
  *     primary, so it lands in exactly one top-level group.
@@ -26,7 +26,7 @@ import type { TripDay } from "@/lib/trip-days";
  *     dresses, not one dress and three shirt dresses with the shoes between
  *     them.
  *   - **In `TOP_LEVEL_CATEGORIES` order, not alphabetically.** That order is roughly how
- *     a wardrobe is walked — dresses, tops, trousers, outerwear, shoes — so the
+ *     a wardrobe is walked (dresses, tops, trousers, outerwear, shoes), so the
  *     sheet reads in the order things are actually picked up.
  *   - **Inside a group, by the day a piece is first worn** (#288), falling back
  *     to name when the trip has no day plan. See `dayOrder`.
@@ -56,7 +56,7 @@ export type PackingGroup<T> = {
  * and wasted paper in print.
  */
 /**
- * Where a piece sits in the trip's sequence — the index of the **first** day it
+ * Where a piece sits in the trip's sequence: the index of the **first** day it
  * is worn, or `null` if it has no day (#288).
  *
  * An **every-day** piece keys on day 1, because that is literally its first
@@ -65,7 +65,7 @@ export type PackingGroup<T> = {
  * whatever else starts on Monday, and the name tie-break settles the rest.
  *
  * A stored day **outside the trip's range** is ignored rather than treated as
- * day zero — shortening a trip strands assignments (#270), and a stranded one
+ * day zero: shortening a trip strands assignments (#270), and a stranded one
  * must not silently drag a piece to the top of the list.
  */
 function dayOrder(row: Scheduled, days: readonly TripDay[]): number | null {

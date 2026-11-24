@@ -7,7 +7,7 @@
  *
  *     makeItem({ category: "culottes", secondaryCategories: ["skirts"] })
  *
- * When a column is added to the schema — as `storageLocation` was — exactly one
+ * When a column is added to the schema, as `storageLocation` was, exactly one
  * default changes, instead of every fixture in the suite.
  */
 
@@ -53,9 +53,9 @@ export function makeItem(overrides: Partial<TestItem> = {}): TestItem {
     tags: [],
     pricePaidCents: 5000,
     purchasedAt: "2024-01-01",
-    // Fixed, not `new Date()` — a clock in a fixture makes ordering tests flaky.
+    // Fixed, not `new Date()`: a clock in a fixture makes ordering tests flaky.
     createdAt: new Date("2024-01-01T00:00:00Z"),
-    priorWears: null, // not recorded — the honest default (#191)
+    priorWears: null, // not recorded, the honest default (#191)
     wearEvents: [],
     favorite: false,
     archivedAt: null,

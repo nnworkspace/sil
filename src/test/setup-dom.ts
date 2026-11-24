@@ -2,7 +2,7 @@
  * Setup for the component tier (ADR-0015, #198).
  *
  * jsdom is not a browser. It has no layout engine and omits several APIs the
- * components legitimately use, so the gaps are stubbed here — deliberately and
+ * components legitimately use, so the gaps are stubbed here, deliberately and
  * in one place, because each stub is a spot where the test environment can
  * drift from reality. Nothing here should grow into simulated behaviour: a stub
  * exists so a component can *mount*, not so a test can assert against it.
@@ -44,7 +44,7 @@ if (!window.matchMedia) {
 /**
  * The photo viewer sizes itself to the *visual* viewport (#131). jsdom has no
  * `visualViewport`; the component already falls back to `window.inner*`, so it
- * is left undefined rather than faked — a fake here would assert that the
+ * is left undefined rather than faked. A fake here would assert that the
  * fallback works when it is the fake being exercised.
  */
 

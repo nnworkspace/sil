@@ -65,7 +65,7 @@ export async function suggestTripPlan(formData: FormData): Promise<void> {
   await writePlan(tripId, suggestPlan(days, trip.type, present));
 }
 
-/** Set (or add) a slot's target — the ± handle (OP-TRIP-PLAN-SET-TARGET). */
+/** Set (or add) a slot's target: the ± handle (OP-TRIP-PLAN-SET-TARGET). */
 export async function setSlotTarget(formData: FormData): Promise<void> {
   const tripId = text(formData, "tripId");
   const category = text(formData, "category");

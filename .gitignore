@@ -37,13 +37,13 @@ yarn-error.log*
 # local dev photo uploads (production uses Vercel Blob)
 /public/uploads
 
-# local data backups (pnpm db:backup) — personal data, never committed
+# local data backups (pnpm db:backup): personal data, never committed
 /backups
 
 # vercel
 .vercel
 
-# claude code — per-user local settings (shared config in .claude/*.json stays tracked)
+# claude code: per-user local settings (shared config in .claude/*.json stays tracked)
 .claude/settings.local.json
 
 # typescript

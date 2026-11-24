@@ -1,7 +1,7 @@
 /**
  * Parse a *saved* product page (ADR-0009; specs/ai-import, OP-IMPORT-HTML).
  *
- * Server-only, dependency-free. We never fetch the retailer's page — the owner
+ * Server-only, dependency-free. We never fetch the retailer's page. The owner
  * saves it in their browser (Save As → Webpage, Complete) and uploads the file;
  * here we pull out the useful bits: the embedded JSON-LD `Product` (preferred),
  * `og:`/`<title>` fallbacks, the official image URLs, the source URL, and the
@@ -12,7 +12,7 @@
  * Facts recovered from structured data the retailer embeds in the page for
  * sections it renders client-side (#66). COS keeps its Details, Care Guide and
  * Materials-and-Suppliers tabs as JSON in a script, so they are absent from the
- * visible text — but perfectly parseable, and deterministic enough that no model
+ * visible text, but perfectly parseable, and deterministic enough that no model
  * call is needed for them.
  */
 export type EmbeddedFacts = {
@@ -140,7 +140,7 @@ function httpOnly(urls: (string | null | undefined)[]): string[] {
 
 const NON_PRODUCT_IMAGE = /thumbnail|swatch|sprite|icon|logo|placeholder|favicon/i;
 
-/** The product key of a seed image URL — the longest digit run in its *path*.
+/** The product key of a seed image URL: the longest digit run in its *path*.
  *  Used to keep sibling ("you may also like") products out of the harvested
  *  gallery. The query string is ignored: cache-busting stamps like
  *  `?ts=1616710855` are longer than the product id and would win. */
@@ -162,7 +162,7 @@ function variantKey(url: string): string {
 /** Drop a CDN resize-transform path segment so the full-size original is used:
  *  `/small_light(dw=81,ch=158,of=webp)/pub/…` → `/pub/…`. Markup often only
  *  carries tiny thumbnails of the secondary shots, which are not worth storing.
- *  Applied to harvested images only — never to the seed, so the existing
+ *  Applied to harvested images only, never to the seed, so the existing
  *  primary-photo behaviour cannot regress. */
 function stripTransform(url: string): string {
   return url.replace(/\/[a-z_]+\([^)]*=[^)]*\)(?=\/)/gi, "");
@@ -244,7 +244,7 @@ function visibleText(html: string): string {
 }
 
 /** Pull an embedded JSON payload following `"key":` by balancing brackets. A
- *  malformed or truncated payload yields null — never throws. */
+ *  malformed or truncated payload yields null and never throws. */
 function embeddedJson(src: string, key: string): unknown {
   const at = src.indexOf(`"${key}":`);
   if (at < 0) return null;
@@ -351,7 +351,7 @@ function embeddedFacts(html: string): EmbeddedFacts | null {
       const workers = s.noOfWorkers ? ` (${s.noOfWorkers} employees)` : "";
       facts.details.push({
         label: "Factory",
-        value: titleish(`${factory}${where ? ` — ${where}` : ""}`) + workers,
+        value: titleish(`${factory}${where ? `, ${where}` : ""}`) + workers,
       });
     }
   }
