@@ -14,7 +14,7 @@ Defines how wear tracking is exposed and wired: the wear summary + history + qui
 
 A **"Worn"** block, below the item's details:
 
-- **Summary line**: "Worn **N** times · Last worn **{date}** · **{cost}/wear**". The cost segment appears only when price paid is set and N > 0 (`VAL-WEAR-05`); when N = 0, the block reads "Not worn yet."
+- **Summary line**: "Worn **N** times · last worn **{date}** · **{cost}**/wear". The cost segment appears only when price paid is set and N > 0 (`VAL-WEAR-05`). When N = 0 the block reads one of two texts, because a total of 0 can mean two different things (#191): **"Never worn."** when the prior count is recorded as 0, and **"No wear history recorded. Log a wear, or set the prior count when editing."** when `prior_wears` is NULL and nothing is logged.
 - **History**: the wears, most recent first. Each row is **read-only** (`worn_at` · occasion · note) with an **Edit** (pencil) and a **remove** (✕) control. Clicking **Edit** turns the row's date, occasion selector, and note into editable fields with **Save** / **Cancel**; Save calls `updateWear` (`OP-EDIT-WEAR`), remove calls `removeWear` (`OP-REMOVE-WEAR`).
 - **Quick "Log a wear"**: a compact inline form with, left to right, a **date** input (`defaultValue` = today, `max` = today), an **occasion tag** selector (the occasion vocabulary + a "none" option, `VAL-WEAR-06`), a free-text **note** input (`VAL-WEAR-03`), and a **Log** button (`OP-LOG-WEAR`).
 
@@ -73,7 +73,8 @@ sequenceDiagram
 
 ## 6. UI states
 
-- **No wears:** "Not worn yet" + the quick-log control.
+- **No wears, recorded:** "Never worn." + the quick-log control (`prior_wears` = 0, nothing logged).
+- **No wears, not recorded:** "No wear history recorded. Log a wear, or set the prior count when editing." + the quick-log control (`prior_wears` NULL, nothing logged).
 - **Has wears:** summary line (with cost-per-wear when priced) + history + quick-log.
 - **Error:** a validation message on the offending field; the page/form stays usable.
 - Wear tracking is additive: an item works exactly as before without ever logging a wear.

@@ -39,11 +39,11 @@ Computed on read (never stored), per `SPEC-WEAR-FUNC` §3:
 
 | Stat | Derivation |
 |:--|:--|
-| worn count | `items.prior_wears + count(wear_events where item_id = :id)` |
+| worn count | `coalesce(items.prior_wears, 0) + count(wear_events where item_id = :id)` |
 | last worn | `max(worn_at)` for the item (null ⇒ "never"); `prior_wears` carries no date |
 | cost per wear | `price_paid_cents / worn_count`, only when `price_paid_cents` is set and worn_count > 0 (`VAL-WEAR-05`) |
 
-`items.prior_wears` (`integer NOT NULL DEFAULT 0`, #69) is an owner-set estimate of wears before tracking began: a baseline added to the logged wears so long-owned pieces have a meaningful cost-per-wear from day one.
+`items.prior_wears` (`integer`, nullable, no default; #69, made nullable by #191 in migration 0014) is an owner-set estimate of wears before tracking began: a baseline added to the logged wears so long-owned pieces have a meaningful cost-per-wear from day one. `NULL` means the history was never recorded; `0` means recorded as genuinely never worn. Both add nothing to the count, but the item page words them differently (`SPEC-WEAR-INT` §2.1).
 
 The item detail query loads the item's wears (ordered by `worn_at` desc) with the item; count / max / cost-per-wear are computed in the read layer.
 

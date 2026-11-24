@@ -53,11 +53,11 @@ Computed from an item's `wear_events`, never stored (single source of truth, `SP
 
 | Stat | Definition |
 |:--|:--|
-| **worn count** | `items.prior_wears` + number of `wear_events` for the item |
+| **worn count** | `items.prior_wears` (NULL counts as 0) + number of `wear_events` for the item |
 | **last worn** | the most recent `worn_at` (or "never" when none), from logged events only; `prior_wears` carries no date |
 | **cost per wear** | `price_paid_cents ÷ worn count`, shown only when **price paid is set** and **worn count > 0** (`VAL-WEAR-05`) |
 
-`prior_wears` is an owner-set **estimate** of wears before tracking began (default 0), so cost-per-wear reads sensibly for long-owned pieces added to the app years later. It has no dates and does not appear in the history list. When it is set, the count is shown as approximate ("Worn ~82 times") with a note ("incl. ~80 before tracking"). Cost-per-wear is formatted in the item's currency (reusing `formatPrice`).
+`prior_wears` is an owner-set **estimate** of wears before tracking began. It is **nullable** (#191): NULL means the history was never recorded, 0 means recorded as genuinely never worn, and the item page says which. It lets cost-per-wear read sensibly for long-owned pieces added to the app years later. It has no dates and does not appear in the history list. When it is set, the count is shown as approximate ("Worn ~82 times") with a note ("incl. ~80 before tracking"). Cost-per-wear is formatted in the item's currency (reusing `formatPrice`).
 
 ## 4. Business validation rules
 
