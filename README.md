@@ -66,7 +66,7 @@ pnpm db:seed-demo            # invent about 30 pieces, 3 looks, 2 trips and thei
 pnpm dev                     # http://localhost:3000
 ```
 
-On an empty database, `pnpm db:migrate` prints a few Postgres `NOTICE` blocks such as *trigger "items_touch" for relation "public.items" does not exist, skipping* before *migrations applied successfully!*. They are harmless: one migration drops each update trigger before it creates it, so that it can safely run again, and on a fresh database there is nothing to drop yet.
+On an empty database, `pnpm db:migrate` prints several Postgres `NOTICE` blocks (one per table) such as *trigger "items_touch" for relation "public.items" does not exist, skipping* before *migrations applied successfully!*. They are harmless: one migration drops each update trigger before it creates it, so that it can safely run again, and on a fresh database there is nothing to drop yet.
 
 With `DEMO_MODE=1` every request is treated as the single owner under a fixed demo identity ("Demo", `demo@example.com`), and every page shows a small banner saying that sign-in is off and all data is invented. Without it, the app is gated exactly as before and anyone not signed in is sent to `/signin`.
 
