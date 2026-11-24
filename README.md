@@ -40,13 +40,51 @@ Issue numbers such as "#105" in commit messages, specs and ADRs refer to the pri
 
 Personal data has been removed. Names, brands, counts, prices, trips and places in examples are invented.
 
-## Local development
+## Demo mode
 
-Prerequisites: Node 26 (via nvm), pnpm, Docker.
+Demo mode runs the whole app on your own machine with an invented wardrobe and no Google sign-in, so you can click through every page without any accounts or cloud services. It is the way to try a fresh clone.
+
+Prerequisites: Node 26 (`nvm use` reads it from `.nvmrc`), pnpm, Docker.
 
 ```sh
 pnpm install                 # install dependencies
-cp .env.example .env.local   # then fill in values (defaults work for local)
+cp .env.example .env.local   # DATABASE_URL already points at the Docker database
+```
+
+In `.env.local`, set one value and leave the rest as they are:
+
+```sh
+DEMO_MODE=1
+```
+
+Then start the database, apply the schema, seed the demo data and run the app:
+
+```sh
+docker compose up -d         # local Postgres "sil" on port 5434, reachable from this machine only
+pnpm db:migrate              # apply the schema
+pnpm db:seed-demo            # invent about 30 pieces, 3 looks, 2 trips and their wears
+pnpm dev                     # http://localhost:3000
+```
+
+On an empty database, `pnpm db:migrate` prints several Postgres `NOTICE` blocks (one per table) such as *trigger "items_touch" for relation "public.items" does not exist, skipping* before *migrations applied successfully!*. They are harmless: one migration drops each update trigger before it creates it, so that it can safely run again, and on a fresh database there is nothing to drop yet.
+
+With `DEMO_MODE=1` every request is treated as the single owner under a fixed demo identity ("Demo", `demo@example.com`), and every page shows a small banner saying that sign-in is off and all data is invented. Without it, the app is gated exactly as before and anyone not signed in is sent to `/signin`.
+
+The seed script refuses to run unless `DEMO_MODE=1` is set and `DATABASE_URL` points at the database named `sil` on `localhost` or `127.0.0.1`. It also refuses if the catalogue already holds anything; `pnpm db:seed-demo --reset` clears every catalogue table (and the local photo files those rows referenced) and seeds afresh. Placeholder photos are generated with `sharp` and written to `public/uploads/`, just as the app stores uploads in development.
+
+AI-assisted import and the AI trip planner call Google Gemini, so they need a `GEMINI_API_KEY` in `.env.local`. They are optional: everything else works without one.
+
+Demo mode must never be used for a real deployment holding personal data. It switches off the only thing that stands between the internet and the wardrobe.
+
+## Local development
+
+Running the app on your own data, with demo mode off, needs the sign-in it is built around: in `.env.local`, an `AUTH_SECRET`, a Google OAuth client (`AUTH_GOOGLE_ID` and `AUTH_GOOGLE_SECRET`, with `http://localhost:3000/api/auth/callback/google` registered as a redirect URI) and your Google address in `OWNER_EMAIL`. `.env.example` explains each one, and [`specs/auth/`](specs/auth/) has the details. Without them every page sends you to `/signin`; to look around, use [demo mode](#demo-mode) instead.
+
+Prerequisites: Node 26 (`nvm use` reads it from `.nvmrc`), pnpm, Docker.
+
+```sh
+pnpm install                 # install dependencies
+cp .env.example .env.local   # then add the sign-in values above
 docker compose up -d         # start local Postgres (port 5434)
 pnpm db:migrate              # apply the schema
 pnpm dev                     # http://localhost:3000
@@ -85,38 +123,6 @@ pnpm db:restore                      # restore the most recent snapshot
 - The `backups/` folder is **gitignored**: it holds personal data and is never committed. Copy it wherever you keep your backups.
 - `db:restore` **replaces** the current data and asks for confirmation first.
 - Requires the DB container running (`docker compose up -d`).
-
-## Demo mode
-
-Demo mode runs the whole app on your own machine with an invented wardrobe and no Google sign-in, so you can click through every page without any accounts or cloud services.
-
-```sh
-cp .env.example .env.local   # then edit .env.local as below
-```
-
-In `.env.local`, set these two values and leave the rest empty:
-
-```sh
-DATABASE_URL=postgres://sil:sil@localhost:5434/sil
-DEMO_MODE=1
-```
-
-Then start the database, apply the schema, seed the demo data and run the app:
-
-```sh
-docker compose up -d         # local Postgres "sil" on port 5434
-pnpm db:migrate              # apply the schema
-pnpm db:seed-demo            # invent about 30 pieces, 3 looks, 2 trips and their wears
-pnpm dev                     # http://localhost:3000
-```
-
-With `DEMO_MODE=1` every request is treated as the single owner under a fixed demo identity ("Demo", `demo@example.com`), and every page shows a small banner saying that sign-in is off and all data is invented. Without it, the app is gated exactly as before and anyone not signed in is sent to `/signin`.
-
-The seed script refuses to run unless `DEMO_MODE=1` is set and `DATABASE_URL` points at the database named `sil` on `localhost` or `127.0.0.1`. It also refuses if the catalogue already holds anything; `pnpm db:seed-demo --reset` clears every catalogue table (and the local photo files those rows referenced) and seeds afresh. Placeholder photos are generated with `sharp` and written to `public/uploads/`, just as the app stores uploads in development.
-
-AI-assisted import and the AI trip planner call Google Gemini, so they need a `GEMINI_API_KEY` in `.env.local`. They are optional: everything else works without one.
-
-Demo mode must never be used for a real deployment holding personal data. It switches off the only thing that stands between the internet and the wardrobe.
 
 ## Tests
 

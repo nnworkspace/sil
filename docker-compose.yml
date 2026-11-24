@@ -12,7 +12,10 @@ services:
       POSTGRES_PASSWORD: sil
       POSTGRES_DB: sil
     ports:
-      - "5434:5432"
+      # Published on this machine only. A bare "5434:5432" listens on every
+      # network interface, which puts a database with a public password on the
+      # local network (and on Linux, Docker's own firewall rules bypass ufw).
+      - "127.0.0.1:5434:5432"
     volumes:
       - sil-pgdata:/var/lib/postgresql/data
     healthcheck:
