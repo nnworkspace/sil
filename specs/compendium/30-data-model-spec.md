@@ -107,7 +107,6 @@ depth    := "F" | "B"
 | `unit` | `W2R3`, `W7R2`, `C1`, `C1R1` | The furniture and which part of it: **W** wardrobe or **C** cabinet, numbered, then an **optional Rack** *n* (#251). `W7R2` is wardrobe 7, rack 2; `C1` is cabinet 1, undivided |
 | `place` | `S2`–`S6`, `D1`–`D2`, `H1` | **S**helf, **D**rawer, **H**anging rail |
 | `position` | `L`, `R`, `M`, `F`, `B`, `LB`, `LF` | A **side** (**L**eft, **R**ight, **M**iddle) or a **depth** (**F**ront, **B**ack), or the two together: `LB` left-back, `LF` left-front |
-
 | `container` | `BB`, `BT` | A **box inside the place** (#277): `BB` the bottom box, `BT` the top |
 
 **The position composes; it is not a closed list.** The rule was first written as the six values then in use, and rejected `R1-W2R3-D1-LF` when the owner filed it. `VAL-COMP-12` decides that case: the catalogue is authoritative, so the grammar was what needed correcting. Side-and-depth is what the notation *is*; the six values were only the examples that happened to exist. A future `RF` or `MB` needs no code change.
